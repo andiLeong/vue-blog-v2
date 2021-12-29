@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .go-back-btn {
+    @apply uppercase inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none;
+  }
+
+  .primary-btn {
+    @apply bg-gradient-to-r 
+
+    from-sky-500 
+    to-sky-300
+     flex justify-center  duration-150 ease-in-out font-semibold hover:bg-sky-900 inline-flex items-center leading-6 px-4 py-2 rounded-md shadow text-sm text-white transition;
+  }
+}
