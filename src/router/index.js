@@ -50,9 +50,9 @@ const routes = [
     component: () => import('@/views/SimpleForm.vue'),
   },
   {
-    path: '/event',
-    name: 'event',
-    component: () => import('@/views/ComponentsForm.vue'),
+    path: '/tabs',
+    name: 'tabs',
+    component: () => import('@/views/Tabs.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
