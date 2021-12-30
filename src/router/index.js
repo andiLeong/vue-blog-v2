@@ -55,6 +55,11 @@ const routes = [
     component: () => import('@/views/Tabs.vue'),
   },
   {
+    path: '/uploader',
+    name: 'uploader',
+    component: () => import('@/views/Uploader.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
