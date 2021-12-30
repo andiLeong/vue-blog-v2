@@ -19,7 +19,7 @@ const myTheme = ref();
 const user = localStorage.getItem('user');
 
 isLogin(user);
-console.log('app component is created !');
+// console.log('app component is created !');
 
 // if (user) {
 //   const userData = JSON.parse(user);
@@ -30,14 +30,14 @@ function isLogin(user) {
   // console.log('exprie time is   ' + JSON.parse(user).experieAt);
   //userstill login if expire time greate than now
   if (user !== null && Date.now() < JSON.parse(user).experieAt) {
-    console.log('persisting user to vue x');
+    // console.log('persisting user to vue x');
     const userData = JSON.parse(user);
     store.commit('SET_USER_DATA', userData);
     return;
   } else {
     if (user !== null) {
       localStorage.removeItem('user');
-      console.log('user expired !! removing from storage');
+      // console.log('user expired !! removing from storage');
     }
   }
 }

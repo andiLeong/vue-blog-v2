@@ -1,21 +1,25 @@
 <template>
-  <div id="app" class="container">
+  <div class="max-w-7xl mx-auto mt-10 px-4">
     <Uploader
       :options="{
-        baseURL: 'http://vue-uploader.test:8000/api',
-         maxConcurrentUploads: 2
+        baseURL: 'http://localhost:8000/api',
+        maxConcurrentUploads: 2,
       }"
-
       :handlers="{
-        'video/mp4': {
-          endpoint: 'uploads/video'
-        }
+        'image/jpg': {
+          endpoint: 'files',
+        },
+        'image/jpeg': {
+          endpoint: 'files',
+        },
+        'image/png': {
+          endpoint: 'files',
+        },
       }"
     />
   </div>
 </template>
 
-
 <script setup>
-  import Uploader from '@/uploader/components/Uploader'
+import Uploader from '@/components/uploader/components/Uploader.vue';
 </script>
