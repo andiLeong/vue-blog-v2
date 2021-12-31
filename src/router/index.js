@@ -60,6 +60,11 @@ const routes = [
     component: () => import('@/views/Uploader.vue'),
   },
   {
+    path: '/gallery',
+    name: 'gallery',
+    component: () => import('@/views/Gallery.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
