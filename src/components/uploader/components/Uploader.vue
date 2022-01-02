@@ -2,7 +2,9 @@
   <div>
     <UploaderForm @chosen="handleFilesChosen" />
 
-    <div class="mb-4 flex justify-between px-4 text-gray-600 text-sm">
+    <div
+      class="mb-4 flex justify-between px-4 text-gray-600 text-sm dark:text-gray-100"
+    >
       <span
         >{{ this.uploads.length }} uploads ({{ currentUploadCount }} in progress
         / {{ completedUploadCount }} complete)</span

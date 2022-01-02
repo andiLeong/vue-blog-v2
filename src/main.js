@@ -7,7 +7,7 @@ import { ObserveVisibility } from 'vue-observe-visibility';
 import './index.css';
 
 import store from './store';
-
+window.axios = axios;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
 

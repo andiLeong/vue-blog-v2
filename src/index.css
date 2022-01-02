@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .validation-error {
+    @apply text-red-500 text-xs italic mt-1;
+  }
+
   .go-back-btn {
     @apply uppercase inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none;
   }

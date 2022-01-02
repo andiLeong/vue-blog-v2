@@ -38,26 +38,7 @@
           </template>
           <template v-slot:loading>
             <div v-show="noMorePost === false && fetching === true">
-              <svg
-                class="animate-spin -ml-1 mr-3 h-5 w-5 text-sky-600"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
+              <Spinner class="animate-spin -ml-1 mr-3 h-5 w-5 text-sky-600" />
             </div>
           </template>
         </InfiniteScroll>
@@ -68,6 +49,13 @@
         >
           No more post
         </div>
+      </div>
+
+      <div
+        v-else-if="noMorePost"
+        class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-sky-500 to-lime-200 text-center text-md"
+      >
+        No post at the moment !
       </div>
 
       <div
@@ -84,9 +72,9 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import PostsSkeletons from '@/components/PostsSkeletons.vue';
-import PostsSkeleton from '@/components/PostsSkeleton.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 import AppLink from '@/components/AppLink.vue';
+import Spinner from '@/components/Spinner.vue';
 
 const posts = ref([]);
 const lastPage = ref(1);
@@ -100,6 +88,7 @@ function fetch(page) {
   if (page !== 1) {
     fetching.value = true;
   }
+
   axios
     .get(`/api/posts?page=${page}`)
     .then(function (response) {
@@ -111,7 +100,7 @@ function fetch(page) {
       lastPage.value = response.data.last_page;
     })
     .catch(function (error) {
-      alert(error);
+      alert('remote server response with: ' + error.response.status);
       console.log(error);
     });
 }

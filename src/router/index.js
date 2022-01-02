@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
 
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
 const routes = [
   { path: '/', name: 'home', component: Home },
   {
@@ -74,7 +77,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  linkActiveClass: 'border-sky-500 text-gray-900 border-b-2',
+  linkActiveClass: 'border-b-sky-500 text-gray-900 border-b-2',
   scrollBehavior(to, from, savedPosition) {
     return (
       savedPosition ||

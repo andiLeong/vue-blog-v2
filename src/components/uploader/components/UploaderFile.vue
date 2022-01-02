@@ -117,8 +117,10 @@ export default {
     makeFormData(file) {
       const form = new FormData();
       form.append('file', file, file.name);
-      form.append('lastModified', file.lastModified);
-      console.log('lst modify from form data  ::  ' + file.lastModified);
+      form.append('last_modified', file.lastModified);
+      form.append('fileable_id', 1);
+      form.append('fileable_type', 'Gallery');
+      console.log('submit data is   ::  ' + JSON.stringify(form));
 
       return form;
     },

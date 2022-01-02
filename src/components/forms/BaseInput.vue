@@ -12,7 +12,7 @@
   />
   <p
     v-if="error"
-    class="text-red-500 text-xs italic mt-1"
+    class="validation-error"
     :id="`${uuid}-error`"
     aria-live="assertive"
   >

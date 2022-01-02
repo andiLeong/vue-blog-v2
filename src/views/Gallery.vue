@@ -1,168 +1,189 @@
-<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
--->
 <template>
-  <!--
-    This example requires updating your template:
-
-    ```
-    <html class="h-full bg-gray-50">
-    <body class="h-full overflow-hidden">
-    ```
-  -->
   <div class="h-full flex">
-
-
     <!-- Content area -->
     <div class="flex-1 flex flex-col overflow-hidden">
-
       <!-- Main content -->
       <div class="flex-1 flex items-stretch overflow-hidden">
         <main class="flex-1 overflow-y-auto">
           <div class="pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex">
-              <h1 class="flex-1 text-2xl font-bold text-gray-900">Photos</h1>
-              <div class="ml-6 bg-gray-100 p-0.5 rounded-lg flex items-center sm:hidden">
-                <button type="button" class="p-1.5 rounded-md text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                  <ViewListIcon class="h-5 w-5" aria-hidden="true" />
-                  <span class="sr-only">Use list view</span>
-                </button>
-                <button type="button" class="ml-0.5 bg-white p-1.5 rounded-md shadow-sm text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                  <ViewGridIconSolid class="h-5 w-5" aria-hidden="true" />
-                  <span class="sr-only">Use grid view</span>
-                </button>
-              </div>
+              <h1
+                class="flex-1 text-2xl font-bold text-sky-700 dark:text-white"
+              >
+                Leong Jun Sing
+              </h1>
             </div>
 
-            <!-- Tabs -->
-            <div class="mt-3 sm:mt-2">
-              <div class="sm:hidden">
-                <label for="tabs" class="sr-only">Select a tab</label>
-                <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-                <select id="tabs" name="tabs" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                  <option selected="">Recently Viewed</option>
-                  <option>Recently Added</option>
-                  <option>Favorited</option>
-                </select>
+            <section class="mt-8 pb-16" aria-labelledby="gallery-heading">
+              <ul
+                v-if="files.length > 0"
+                role="list"
+                class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+              >
+                <InfiniteScroll :items="files" @refetch="fetch">
+                  <template v-slot:item="{ item }">
+                    <li class="relative">
+                      <div
+                        :class="[
+                          item.pinned
+                            ? 'ring-2 ring-offset-2 ring-sky-500'
+                            : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-sky-500',
+                          'group block w-full aspect-w-10 aspect-h-12 rounded-lg bg-gray-100 overflow-hidden dark:rounded-md',
+                        ]"
+                      >
+                        <img
+                          :src="item.url"
+                          alt=""
+                          :class="[
+                            item.pinned ? '' : 'group-hover:opacity-75',
+                            'object-cover pointer-events-none dark:border dark:border-2 dark:border-white',
+                          ]"
+                        />
+                        <button
+                          type="button"
+                          class="absolute inset-0 focus:outline-none"
+                        >
+                          <span class="sr-only"
+                            >View details for {{ item.name }}</span
+                          >
+                        </button>
+                      </div>
+                      <p
+                        class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none dark:text-gray-200"
+                      >
+                        {{ item.name }}
+                      </p>
+                      <p
+                        class="block text-sm font-medium text-gray-500 pointer-events-none dark:text-gray-100"
+                      >
+                        {{ item.size }} MB
+                      </p>
+                    </li>
+                  </template>
+                  <template v-slot:loading>
+                    <div v-show="noMoreFiles === false && fetching === true">
+                      <Spinner
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-sky-600"
+                      />
+                    </div>
+                  </template>
+                </InfiniteScroll>
+              </ul>
+
+              <div v-else>
+                <Spinner class="animate-spin -ml-1 h-5 w-5 text-sky-600" />
               </div>
-              <div class="hidden sm:block">
-                <div class="flex items-center border-b border-gray-200">
-                  <nav class="flex-1 -mb-px flex space-x-6 xl:space-x-8" aria-label="Tabs">
-                    <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :aria-current="tab.current ? 'page' : undefined" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']">
-                      {{ tab.name }}
-                    </a>
-                  </nav>
-                  <div class="hidden ml-6 bg-gray-100 p-0.5 rounded-lg items-center sm:flex">
-                    <button type="button" class="p-1.5 rounded-md text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                      <ViewListIcon class="h-5 w-5" aria-hidden="true" />
-                      <span class="sr-only">Use list view</span>
-                    </button>
-                    <button type="button" class="ml-0.5 bg-white p-1.5 rounded-md shadow-sm text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                      <ViewGridIconSolid class="h-5 w-5" aria-hidden="true" />
-                      <span class="sr-only">Use grid view</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </section>
 
             <!-- Gallery -->
-            <section class="mt-8 pb-16" aria-labelledby="gallery-heading">
-              <h2 id="gallery-heading" class="sr-only">Recently viewed</h2>
-              <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                <li v-for="file in files" :key="file.name" class="relative">
-                  <div :class="[file.current ? 'ring-2 ring-offset-2 ring-indigo-500' : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500', 'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden']">
-                    <img :src="file.source" alt="" :class="[file.current ? '' : 'group-hover:opacity-75', 'object-cover pointer-events-none']" />
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                      <span class="sr-only">View details for {{ file.name }}</span>
+            <!-- <section class="mt-8 pb-16" aria-labelledby="gallery-heading">
+              <ul
+                v-if="files.length > 0"
+                role="list"
+                class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+              >
+                <li v-for="file in files" :key="file.id" class="relative">
+                  <div
+                    :class="[
+                      file.pinned
+                        ? 'ring-2 ring-offset-2 ring-sky-500'
+                        : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-sky-500',
+                      'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden',
+                    ]"
+                  >
+                    <img
+                      :src="file.url"
+                      alt=""
+                      :class="[
+                        file.pinned ? '' : 'group-hover:opacity-75',
+                        'object-cover pointer-events-none dark:border dark:border-2 dark:border-white',
+                      ]"
+                    />
+                    <button
+                      type="button"
+                      class="absolute inset-0 focus:outline-none"
+                    >
+                      <span class="sr-only"
+                        >View details for {{ file.name }}</span
+                      >
                     </button>
                   </div>
-                  <p class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">{{ file.name }}</p>
-                  <p class="block text-sm font-medium text-gray-500 pointer-events-none">{{ file.size }}</p>
+                  <p
+                    class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none"
+                  >
+                    {{ file.name }}
+                  </p>
+                  <p
+                    class="block text-sm font-medium text-gray-500 pointer-events-none"
+                  >
+                    {{ file.size }} MB
+                  </p>
                 </li>
               </ul>
-            </section>
+
+              <div v-else>
+                <Spinner class="animate-spin -ml-1 h-5 w-5 text-sky-600" />
+              </div>
+            </section> -->
           </div>
         </main>
 
         <!-- Details sidebar -->
-        <aside class="hidden w-96 bg-white p-8 border-l border-gray-200 overflow-y-auto lg:block">
+        <aside
+          class="hidden w-96 bg-white dark:bg-gray-800 p-8 border-l dark:border-l-2 border-gray-200 border-t border-t-sky-500 border-t-2 overflow-y-auto lg:block"
+        >
           <div class="pb-16 space-y-6">
             <div>
-              <div class="block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden">
+              <div
+                class="block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden"
+              >
                 <img :src="currentFile.source" alt="" class="object-cover" />
               </div>
               <div class="mt-4 flex items-start justify-between">
                 <div>
-                  <h2 class="text-lg font-medium text-gray-900"><span class="sr-only">Details for </span>{{ currentFile.name }}</h2>
-                  <p class="text-sm font-medium text-gray-500">{{ currentFile.size }}</p>
+                  <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+                    <span class="sr-only">Details for </span
+                    >{{ currentFile.name }}
+                  </h2>
+                  <p
+                    class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                  >
+                    {{ currentFile.size }}
+                  </p>
                 </div>
-                <button type="button" class="ml-4 bg-white rounded-full h-8 w-8 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  <HeartIcon class="h-6 w-6" aria-hidden="true" />
-                  <span class="sr-only">Favorite</span>
-                </button>
               </div>
             </div>
             <div>
-              <h3 class="font-medium text-gray-900">Information</h3>
-              <dl class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200">
-                <div v-for="key in Object.keys(currentFile.information)" :key="key" class="py-3 flex justify-between text-sm font-medium">
-                  <dt class="text-gray-500">{{ key }}</dt>
-                  <dd class="text-gray-900">{{ currentFile.information[key] }}</dd>
+              <h3 class="font-medium text-gray-900 dark:text-gray-200">
+                Information
+              </h3>
+              <dl
+                class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+              >
+                <div
+                  v-for="key in Object.keys(currentFile.information)"
+                  :key="key"
+                  class="py-3 flex justify-between text-sm font-medium"
+                >
+                  <dt class="text-gray-500 dark:text-gray-200">{{ key }}</dt>
+                  <dd class="text-gray-900 dark:text-white">
+                    {{ currentFile.information[key] }}
+                  </dd>
                 </div>
               </dl>
             </div>
-            <div>
-              <h3 class="font-medium text-gray-900">Description</h3>
-              <div class="mt-2 flex items-center justify-between">
-                <p class="text-sm text-gray-500 italic">Add a description to this image.</p>
-                <button type="button" class="bg-white rounded-full h-8 w-8 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  <PencilIcon class="h-5 w-5" aria-hidden="true" />
-                  <span class="sr-only">Add description</span>
-                </button>
-              </div>
-            </div>
-            <div>
-              <h3 class="font-medium text-gray-900">Shared with</h3>
-              <ul role="list" class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200">
-                <li v-for="person in currentFile.sharedWith" :key="person.id" class="py-3 flex justify-between items-center">
-                  <div class="flex items-center">
-                    <img :src="person.imageUrl" alt="" class="w-8 h-8 rounded-full" />
-                    <p class="ml-4 text-sm font-medium text-gray-900">{{ person.name }}</p>
-                  </div>
-                  <button type="button" class="ml-6 bg-white rounded-md text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Remove<span class="sr-only"> {{ person.name }}</span>
-                  </button>
-                </li>
-                <li class="py-2 flex justify-between items-center">
-                  <button type="button" class="group -ml-1 bg-white p-1 rounded-md flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <span class="w-8 h-8 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">
-                      <PlusSmIconSolid class="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <span class="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">Share</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
+
             <div class="flex">
-              <button type="button" class="flex-1 bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button
+                type="button"
+                class="flex-1 bg-sky-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+              >
                 Download
               </button>
-              <button type="button" class="flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button
+                type="button"
+                class="flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+              >
                 Delete
               </button>
             </div>
@@ -173,124 +194,51 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
-import {
-  Dialog,
-  DialogOverlay,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
-import {
-  CogIcon,
-  CollectionIcon,
-  HeartIcon,
-  HomeIcon,
-  MenuAlt2Icon,
-  PhotographIcon,
-  PlusSmIcon as PlusSmIconOutline,
-  UserGroupIcon,
-  ViewGridIcon as ViewGridIconOutline,
-  XIcon,
-} from '@heroicons/vue/outline'
-import {
-  PencilIcon,
-  PlusSmIcon as PlusSmIconSolid,
-  SearchIcon,
-  ViewGridIcon as ViewGridIconSolid,
-  ViewListIcon,
-} from '@heroicons/vue/solid'
+<script setup>
+import { ref } from 'vue';
+import Spinner from '@/components/Spinner.vue';
+import InfiniteScroll from '@/components/InfiniteScroll.vue';
 
-const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: false },
-  { name: 'All Files', href: '#', icon: ViewGridIconOutline, current: false },
-  { name: 'Photos', href: '#', icon: PhotographIcon, current: true },
-  { name: 'Shared', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Albums', href: '#', icon: CollectionIcon, current: false },
-  { name: 'Settings', href: '#', icon: CogIcon, current: false },
-]
-const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
-const tabs = [
-  { name: 'Recently Viewed', href: '#', current: true },
-  { name: 'Recently Added', href: '#', current: false },
-  { name: 'Favorited', href: '#', current: false },
-]
-const files = [
-  {
-    name: 'IMG_4985.HEIC',
-    size: '3.9 MB',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    current: true,
-  },
-  // More files...
-]
 const currentFile = {
   name: 'IMG_4985.HEIC',
   size: '3.9 MB',
   source:
     'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
   information: {
-    'Uploaded by': 'Marie Culver',
     Created: 'June 8, 2020',
     'Last modified': 'June 8, 2020',
     Dimensions: '4032 x 3024',
-    Resolution: '72 x 72',
   },
-  sharedWith: [
-    {
-      id: 1,
-      name: 'Aimee Douglas',
-      imageUrl:
-        'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=1024&h=1024&q=80',
-    },
-    {
-      id: 2,
-      name: 'Andrea McMillan',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=oilqXxSqey&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  ],
+};
+
+const files = ref([]);
+const lastPage = ref(1);
+const noMoreFiles = ref(false);
+const fetching = ref(false);
+
+function fetch(page) {
+  if (page > lastPage.value) {
+    return;
+  }
+  if (page !== 1) {
+    fetching.value = true;
+  }
+
+  axios
+    .get(`/api/gallery/1?page=${page}`)
+    .then(function (response) {
+      if (response.data.next_page_url === null) {
+        noMoreFiles.value = true;
+      }
+
+      files.value.push(...response.data.data);
+      lastPage.value = response.data.last_page;
+    })
+    .catch(function (error) {
+      alert('remote server response with: ' + error.response.status);
+      console.log(error);
+    });
 }
 
-export default {
-  components: {
-    Dialog,
-    DialogOverlay,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    TransitionChild,
-    TransitionRoot,
-    HeartIcon,
-    MenuAlt2Icon,
-    PencilIcon,
-    PlusSmIconOutline,
-    PlusSmIconSolid,
-    SearchIcon,
-    ViewGridIconSolid,
-    ViewListIcon,
-    XIcon,
-  },
-  setup() {
-    const mobileMenuOpen = ref(false)
-
-    return {
-      navigation,
-      userNavigation,
-      tabs,
-      files,
-      currentFile,
-      mobileMenuOpen,
-    }
-  },
-}
+fetch(1);
 </script>
