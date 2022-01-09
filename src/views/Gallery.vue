@@ -40,6 +40,7 @@
                           ]"
                         />
                         <button
+                          @mouseover.prevent="updateFeatureGallery(item)"
                           type="button"
                           class="absolute inset-0 focus:outline-none"
                         >
@@ -130,64 +131,76 @@
 
         <!-- Details sidebar -->
         <aside
-          class="hidden w-96 bg-white dark:bg-gray-800 p-8 border-l dark:border-l-2 border-gray-200 border-t border-t-sky-500 border-t-2 overflow-y-auto lg:block"
+          class="hidden w-96 bg-white dark:bg-gray-800 p-8 border-l dark:border-l-2 border-gray-200 border-t-2 overflow-y-auto lg:block"
         >
-          <div class="pb-16 space-y-6">
-            <div>
-              <div
-                class="block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden"
-              >
-                <img :src="currentFile.source" alt="" class="object-cover" />
-              </div>
-              <div class="mt-4 flex items-start justify-between">
-                <div>
-                  <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-                    <span class="sr-only">Details for </span
-                    >{{ currentFile.name }}
-                  </h2>
-                  <p
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400"
-                  >
-                    {{ currentFile.size }}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 class="font-medium text-gray-900 dark:text-gray-200">
-                Information
-              </h3>
-              <dl
-                class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-              >
+          <Pinned>
+            <div class="pb-16 space-y-6" v-if="currentFile">
+              <div>
                 <div
-                  v-for="key in Object.keys(currentFile.information)"
-                  :key="key"
-                  class="py-3 flex justify-between text-sm font-medium"
+                  class="block w-full aspect-w-10 aspect-h-12 rounded-lg overflow-hidden"
                 >
-                  <dt class="text-gray-500 dark:text-gray-200">{{ key }}</dt>
-                  <dd class="text-gray-900 dark:text-white">
-                    {{ currentFile.information[key] }}
-                  </dd>
+                  <!-- :src="generateImageUrl(currentFile.url)" -->
+                  <img :src="currentFile.url" alt="" class="object-cover" />
                 </div>
-              </dl>
-            </div>
+                <div class="mt-4 flex items-start justify-between">
+                  <div>
+                    <h2
+                      class="text-lg font-medium text-gray-900 dark:text-white"
+                    >
+                      <span class="sr-only">Details for </span
+                      >{{ currentFile.name }}
+                    </h2>
+                    <p
+                      class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                    >
+                      {{ currentFile.size }} MB
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-900 dark:text-gray-200">
+                  Information
+                </h3>
+                <dl
+                  class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+                >
+                  <div class="py-3 flex justify-between text-sm font-medium">
+                    <dt class="text-gray-500 dark:text-gray-200">
+                      Created at :
+                    </dt>
+                    <dd class="text-gray-900 dark:text-white">
+                      {{ currentFile.created_at }}
+                    </dd>
+                  </div>
 
-            <div class="flex">
-              <button
-                type="button"
-                class="flex-1 bg-sky-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-              >
-                Download
-              </button>
-              <button
-                type="button"
-                class="flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-              >
-                Delete
-              </button>
+                  <div class="py-3 flex justify-between text-sm font-medium">
+                    <dt class="text-gray-500 dark:text-gray-200">
+                      Last modified :
+                    </dt>
+                    <dd class="text-gray-900 dark:text-white">
+                      {{ currentFile.last_modified }}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class="flex">
+                <button
+                  type="button"
+                  class="flex-1 bg-sky-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                >
+                  Download
+                </button>
+                <button
+                  type="button"
+                  class="flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
+          </Pinned>
         </aside>
       </div>
     </div>
@@ -198,23 +211,29 @@
 import { ref } from 'vue';
 import Spinner from '@/components/Spinner.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
+import Pinned from '@/components/Pinned.vue';
+import _ from 'lodash';
 
-const currentFile = {
-  name: 'IMG_4985.HEIC',
-  size: '3.9 MB',
-  source:
-    'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  information: {
-    Created: 'June 8, 2020',
-    'Last modified': 'June 8, 2020',
-    Dimensions: '4032 x 3024',
-  },
-};
+const currentFile = ref(null);
 
 const files = ref([]);
 const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
+
+// const updateFeatureGallery = function (gallery) {
+//   currentFile.value = gallery;
+//   console.log('called   ');
+// };
+
+const updateFeatureGallery = _.debounce(function (gallery) {
+  currentFile.value = gallery;
+  console.log('called   ');
+}, 300);
+
+function generateImageUrl(url) {
+  return url + '?q=' + Math.random();
+}
 
 function fetch(page) {
   if (page > lastPage.value) {
@@ -229,6 +248,10 @@ function fetch(page) {
     .then(function (response) {
       if (response.data.next_page_url === null) {
         noMoreFiles.value = true;
+      }
+
+      if (page == 1) {
+        currentFile.value = response.data.data[0];
       }
 
       files.value.push(...response.data.data);

@@ -10,9 +10,6 @@ export default createStore({
   },
   mutations: {
     SET_USER_DATA(state, userData) {
-      let twoHour = 2 * 1000 * 60 * 60;
-      // console.log(now + twoHour);
-      userData.experieAt = Date.now() + twoHour;
       state.user = userData;
       state.loggedIn = true;
       localStorage.setItem('user', JSON.stringify(userData));
