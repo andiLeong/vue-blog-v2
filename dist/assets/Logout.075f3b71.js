@@ -1,0 +1,1 @@
+import{a3 as e}from"./vendor.47665e28.js";const s={setup(o){return e(),console.log("hi"),localStorage.removeItem("isLogin"),localStorage.removeItem("user"),window.location.replace("/"),(r,t)=>"logging out"}};export{s as default};
