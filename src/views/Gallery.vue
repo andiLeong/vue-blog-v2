@@ -75,55 +75,6 @@
                 <Spinner class="animate-spin -ml-1 h-5 w-5 text-sky-600" />
               </div>
             </section>
-
-              <ul
-                v-if="files.length > 0"
-                role="list"
-                class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-              >
-                <li v-for="file in files" :key="file.id" class="relative">
-                  <div
-                    :class="[
-                      file.pinned
-                        ? 'ring-2 ring-offset-2 ring-sky-500'
-                        : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-sky-500',
-                      'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden',
-                    ]"
-                  >
-                    <img
-                      :src="file.url"
-                      alt=""
-                      :class="[
-                        file.pinned ? '' : 'group-hover:opacity-75',
-                        'object-cover pointer-events-none dark:border dark:border-2 dark:border-white',
-                      ]"
-                    />
-                    <button
-                      type="button"
-                      class="absolute inset-0 focus:outline-none"
-                    >
-                      <span class="sr-only"
-                        >View details for {{ file.name }}</span
-                      >
-                    </button>
-                  </div>
-                  <p
-                    class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none"
-                  >
-                    {{ file.name }}
-                  </p>
-                  <p
-                    class="block text-sm font-medium text-gray-500 pointer-events-none"
-                  >
-                    {{ file.size }} MB
-                  </p>
-                </li>
-              </ul>
-
-              <div v-else>
-                <Spinner class="animate-spin -ml-1 h-5 w-5 text-sky-600" />
-              </div>
-            </section> -->
           </div>
         </main>
 
@@ -222,8 +173,6 @@ const updateFeatureGallery = _.debounce(function (gallery) {
   currentFile.value = gallery;
   console.log('called   ');
 }, 300);
-
-
 
 function fetch(page) {
   if (page > lastPage.value) {
