@@ -4,7 +4,7 @@
   <div class="max-w-7xl mx-auto mt-10 px-4">
     <Uploader
       :options="{
-        baseURL: 'https://api.andilaing.com/api',
+        baseURL: 'https://api.andiliang.com/api',
         maxConcurrentUploads: 2,
       }"
       :handlers="{
