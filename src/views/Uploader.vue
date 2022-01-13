@@ -1,8 +1,10 @@
 <template>
+  <!-- baseURL: 'http://localhost:8000/api', -->
+
   <div class="max-w-7xl mx-auto mt-10 px-4">
     <Uploader
       :options="{
-        baseURL: 'http://localhost:8000/api',
+        baseURL: 'https://api.andilaing.com/api',
         maxConcurrentUploads: 2,
       }"
       :handlers="{

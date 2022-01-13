@@ -60,6 +60,9 @@
             >{{ post.title }}</span
           >
         </h1>
+        <p class="text-center text-xs mt-1 text-gryay-600 dark:text-gray-400">
+          {{ published_at }}
+        </p>
         <p
           class="mt-8 text-xl text-gray-500 dark:text-white leading-8"
           v-html="post.body"
@@ -74,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onUpdated } from 'vue';
+import { ref, defineProps, onUpdated, computed } from 'vue';
 import axios from 'axios';
 import SvgPattern from '@/components/SvgPattern.vue';
 import GoBack from '@/components/GoBack.vue';
@@ -83,6 +86,7 @@ import PostUpdateButton from '@/views/post/PostUpdateButton.vue';
 import { useRouter } from 'vue-router';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/base16/materia.css';
+import moment from 'moment';
 
 const patterns = ref([
   {
@@ -117,6 +121,9 @@ const props = defineProps({
 });
 const deleting = ref(false);
 const deletingError = ref('');
+const published_at = computed(() =>
+  moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
+);
 
 function fetch(slug) {
   axios

@@ -9,13 +9,6 @@
       >
         <InfiniteScroll :items="posts" @refetch="fetch">
           <template v-slot:item="{ item }">
-            <!-- <div>
-                <a href="#" class="inline-block">
-                  <span class="dark:bg-white dark:text-gray-500 bg-indigo-100 text-indigo-800 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium">
-                    category name
-                  </span>
-                </a>
-              </div> -->
             <AppLink
               class="block mt-4"
               :to="{ name: 'posts.show', params: { slug: item.slug } }"
@@ -27,14 +20,6 @@
                 {{ item.shortDescription }}
               </p>
             </AppLink>
-            <!-- <a href="#" class="block mt-4">
-                <p class="text-xl font-semibold text-gray-900">
-                  {{ item.title }}
-                </p>
-                <p class="mt-3 text-base text-gray-500">
-                  {{ item.body }}
-                </p>
-              </a> -->
           </template>
           <template v-slot:loading>
             <div v-show="noMorePost === false && fetching === true">

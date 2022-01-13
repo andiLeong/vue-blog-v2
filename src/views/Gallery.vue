@@ -76,8 +76,6 @@
               </div>
             </section>
 
-            <!-- Gallery -->
-            <!-- <section class="mt-8 pb-16" aria-labelledby="gallery-heading">
               <ul
                 v-if="files.length > 0"
                 role="list"
@@ -139,7 +137,6 @@
                 <div
                   class="block w-full aspect-w-10 aspect-h-12 rounded-lg overflow-hidden"
                 >
-                  <!-- :src="generateImageUrl(currentFile.url)" -->
                   <img :src="currentFile.url" alt="" class="object-cover" />
                 </div>
                 <div class="mt-4 flex items-start justify-between">
@@ -221,19 +218,12 @@ const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
 
-// const updateFeatureGallery = function (gallery) {
-//   currentFile.value = gallery;
-//   console.log('called   ');
-// };
-
 const updateFeatureGallery = _.debounce(function (gallery) {
   currentFile.value = gallery;
   console.log('called   ');
 }, 300);
 
-function generateImageUrl(url) {
-  return url + '?q=' + Math.random();
-}
+
 
 function fetch(page) {
   if (page > lastPage.value) {
