@@ -83,7 +83,7 @@
           class="hidden w-96 bg-white dark:bg-gray-800 p-8 border-l dark:border-l-2 border-gray-200 border-t-2 overflow-y-auto lg:block"
         >
           <Pinned>
-            <div class="pb-16 space-y-6" v-if="currentFile">
+            <div class="space-y-6 mr-20 w-full" v-if="currentFile">
               <div>
                 <div
                   class="block w-full aspect-w-10 aspect-h-12 rounded-lg overflow-hidden"
@@ -118,7 +118,7 @@
                       Created at :
                     </dt>
                     <dd class="text-gray-900 dark:text-white">
-                      {{ currentFile.created_at }}
+                      {{ published_at }}
                     </dd>
                   </div>
 
@@ -132,21 +132,6 @@
                   </div>
                 </dl>
               </div>
-
-              <div class="flex">
-                <button
-                  type="button"
-                  class="flex-1 bg-sky-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-                >
-                  Download
-                </button>
-                <button
-                  type="button"
-                  class="flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-                >
-                  Delete
-                </button>
-              </div>
             </div>
           </Pinned>
         </aside>
@@ -156,11 +141,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Spinner from '@/components/Spinner.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 import Pinned from '@/components/Pinned.vue';
 import _ from 'lodash';
+import moment from 'moment';
 
 const currentFile = ref(null);
 
@@ -168,6 +154,10 @@ const files = ref([]);
 const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
+
+const published_at = computed(() =>
+  moment(currentFile.value.created_at).format('YYYY-MM-DD HH:mm:ss')
+);
 
 const updateFeatureGallery = _.debounce(function (gallery) {
   currentFile.value = gallery;

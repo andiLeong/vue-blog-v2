@@ -60,7 +60,7 @@
             >{{ post.title }}</span
           >
         </h1>
-        <p class="text-center text-xs mt-1 text-gryay-600 dark:text-gray-400">
+        <p class="text-center text-xs mt-4 text-gryay-600 dark:text-gray-400">
           {{ published_at }}
         </p>
         <p
