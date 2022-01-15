@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
+import snack from './snack';
 
 export default createStore({
   state: {
@@ -52,5 +53,9 @@ export default createStore({
     loggedIn(state) {
       return !!state.user;
     },
+  },
+
+  modules: {
+    snack,
   },
 });

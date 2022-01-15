@@ -1,4 +1,6 @@
 <template>
+  <snack type="primary" />
+
   <form
     @submit.prevent="store"
     @keydown="form.errors.clear($event.target.name)"
@@ -31,11 +33,7 @@
             <p class="mt-2 text-sm text-gray-500 dark:text-white">
               Describe the post
             </p>
-
-            <!-- <textarea name="" id="" cols="30" rows="10"> -->
-
-            <tiptap v-model="form.body" id="about" />
-            <!-- </textarea> -->
+            <tiptap v-model="form.body" />
           </div>
         </div>
       </div>
@@ -65,13 +63,6 @@
           />
           {{ isLoading ? 'Saving In' : 'Save' }}
         </button>
-
-        <Notification
-          v-if="submitted"
-          timeout="1000"
-          body="Your post had been submitted"
-          footer="You can view it now."
-        />
       </div>
     </div>
   </form>
@@ -80,18 +71,18 @@
 <script>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
-import Notification from '@/components/Notification.vue';
 import axios from 'axios';
 import Tiptap from '@/components/Tiptap.vue';
-import { useStore } from 'vuex';
+import { useStore, mapActions } from 'vuex';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
+import Snack from '@/components/Snack.vue';
 
 export default {
   components: {
     BaseInput,
-    Notification,
     Tiptap,
     LoadingIndicator,
+    Snack,
   },
   data() {
     return {
@@ -107,6 +98,10 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      snack: 'snack/snack',
+    }),
+
     store() {
       this.isLoading = true;
 
@@ -116,6 +111,7 @@ export default {
           this.form.title = this.form.body = '';
           this.isLoading = false;
           this.submitted = true;
+          this.notification();
         })
         .catch((error) => {
           this.isLoading = false;
@@ -134,6 +130,13 @@ export default {
         });
 
       this.submitted = false;
+    },
+
+    notification() {
+      this.snack({
+        text: 'Post succesfully created',
+        delay: 10,
+      });
     },
   },
 };

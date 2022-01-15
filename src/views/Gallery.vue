@@ -160,8 +160,10 @@ const published_at = computed(() =>
 );
 
 const updateFeatureGallery = _.debounce(function (gallery) {
-  currentFile.value = gallery;
-  console.log('called   ');
+  if (window.innerWidth >= 988) {
+    currentFile.value = gallery;
+    console.log('called   ');
+  }
 }, 300);
 
 function fetch(page) {
