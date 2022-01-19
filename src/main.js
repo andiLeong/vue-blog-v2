@@ -7,10 +7,13 @@ import { ObserveVisibility } from 'vue-observe-visibility';
 import './index.css';
 
 import store from './store';
+import appUrl from '../appconfig.js';
+
 window.axios = axios;
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'https://api.andiliang.com';
-// axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = appUrl;
+
+console.log('hiiii ' + appUrl);
 
 const app = createApp(App)
   .component('AppLink', AppLink)

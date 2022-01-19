@@ -1,11 +1,8 @@
 <template>
-  <!-- baseURL: 'http://localhost:8000/api', -->
-  <!-- https://api.andiliang.com/api -->
-
   <div class="max-w-7xl mx-auto mt-10 px-4">
     <Uploader
       :options="{
-        baseURL: 'https://api.andiliang.com/api',
+        baseURL: appUrl + '/api',
         maxConcurrentUploads: 2,
       }"
       :handlers="{
@@ -24,5 +21,6 @@
 </template>
 
 <script setup>
+import appUrl from '../../appconfig.js';
 import Uploader from '@/components/uploader/components/Uploader.vue';
 </script>
