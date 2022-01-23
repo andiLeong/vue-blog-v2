@@ -68,6 +68,11 @@ const routes = [
     component: () => import('@/views/Gallery.vue'),
   },
   {
+    path: '/pagination',
+    name: 'pagination',
+    component: () => import('@/views/Pagination.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
