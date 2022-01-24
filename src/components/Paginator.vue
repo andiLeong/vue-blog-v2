@@ -57,28 +57,27 @@
               />
             </svg>
           </button>
-          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
 
           <!-- first page and section -->
           <template v-if="section > 1">
             <button
               @click.prevent="switchPage(1)"
-              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             >
               1
             </button>
 
             <button
               @click.prevent="goBackSection()"
-              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             >
               ...
             </button>
-
           </template>
 
+          <!-- {{ pages }} -->
           <button
-            v-for="(page, index) in parseInt(pagination.last_page)"
+            v-for="(page, index) in pages"
             :key="index"
             @click.prevent="switchPage(page)"
             :class="{
@@ -93,28 +92,20 @@
 
           <!-- last page and section-->
           <template v-if="section < sections">
-
             <button
               @click.prevent="goForwardSection()"
-              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             >
               ...
             </button>
 
-
             <button
               @click.prevent="switchPage(pagination.last_page)"
-              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             >
-              {{pagination.last_page}}
+              {{ pagination.last_page }}
             </button>
           </template>
-
-          <!-- <span
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
-          >
-            ...
-          </span> -->
 
           <button
             :class="{
@@ -145,10 +136,10 @@
     </div>
   </div>
 
-  <p>section : {{ section}}</p>
-  <p>sections : {{ sections}}</p>
-  <p>lastPage : {{ lastPage}}</p>
-  {{ pagination }}
+  <!-- <p>section : {{ section }}</p>
+  <p>sections : {{ sections }}</p>
+  <p>lastPage : {{ lastPage }}</p>
+  <p>pages : {{ pages }}</p> -->
 </template>
 
 <script>
@@ -169,39 +160,36 @@ export default {
 
   emits: ['switched-page'],
   mounted() {
-    if(this.pagination.current_page > this.pagination.last_page){
-      this.switchPage(this.pagination.last_page)
-    }
-    // console.log(this.pagination);
+    // if (this.pagination.current_page > this.pagination.last_page) {
+    //   this.switchPage(this.pagination.last_page);
+    // }
   },
 
   computed: {
-
-    sections(){
-      return Math.ceil(this.pagination.last_page / this.perSection)
+    sections() {
+      return Math.ceil(this.pagination.last_page / this.perSection);
     },
 
-    section(){
-      return Math.ceil(this.pagination.current_page / this.perSection)
+    section() {
+      return Math.ceil(this.pagination.current_page / this.perSection);
     },
 
-    lastPage(){
-      let lastPage = ((this.section - 1) * this.perSection) + this.perSection
+    lastPage() {
+      let lastPage = (this.section - 1) * this.perSection + this.perSection;
 
-      if(this.section === this.sections){
-        lastPage = this.pagination.last_page
+      if (this.section === this.sections) {
+        lastPage = this.pagination.last_page;
       }
 
       return lastPage;
     },
 
-    pages(){
+    pages() {
       return _.range(
-        (this.section - 1) * this.perSection + 1, 
+        (this.section - 1) * this.perSection + 1,
         this.lastPage + 1
       );
-    }
-
+    },
   },
 
   methods: {
@@ -209,29 +197,20 @@ export default {
       if (page < 1 || page > this.pagination.total_pages) {
         return;
       }
-
-      console.log(page);
-
       this.$emit('switched-page', page);
-      // this.$emit(this.for + '.switched-page', page);
     },
 
-    goBackSection(){
-      this.switchPage(
-        this.fitstPageOfSecton(this.section - 1)
-      )
+    goBackSection() {
+      this.switchPage(this.fitstPageOfSecton(this.section - 1));
     },
 
-    goForwardSection(){
-      this.switchPage(
-        this.fitstPageOfSecton(this.section + 1)
-      )
+    goForwardSection() {
+      this.switchPage(this.fitstPageOfSecton(this.section + 1));
     },
 
-    fitstPageOfSecton(section){
+    fitstPageOfSecton(section) {
       return (section - 1) * this.perSection + 1;
-    }
-
+    },
   },
 };
 </script>
