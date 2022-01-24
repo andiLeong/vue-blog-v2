@@ -169,6 +169,9 @@ export default {
 
   emits: ['switched-page'],
   mounted() {
+    if(this.pagination.current_page > this.pagination.last_page){
+      this.switchPage(this.pagination.last_page)
+    }
     // console.log(this.pagination);
   },
 

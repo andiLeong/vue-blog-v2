@@ -30,7 +30,8 @@
                 </tr>
               </tbody>
 
-              <Paginator :pagination="pagination" @switched-page="fetch" />
+              <Paginator v-if="pagination.current_page" :pagination="pagination" @switched-page="switchPage" />
+              <!-- <Paginator :pagination="pagination" @switched-page="fetch" /> -->
             </table>
           </div>
         </div>
@@ -42,9 +43,28 @@
 <script setup>
 import Paginator from '@/components/Paginator.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const posts = ref([]);
 const pagination = ref({});
+const router = useRouter();
+const page = router.query.page;
+
+// watch:{
+//   '$route.query' (query){
+//     this.fetch(query.page)
+//   }
+// },
+
+watch(
+  () => router.query.page,
+  (page, prevPage) => {
+    this.fetch(page)
+  }
+)
+
+
+
 
 function fetch(page) {
   console.log('fetching data at page   :   ' + page);
@@ -58,6 +78,15 @@ function fetch(page) {
     .catch(function (error) {
       console.log(error);
     });
+}
+
+function switchPage(page) {
+  router.replace({
+    name:"pagination",
+    query:{
+      page
+    }
+  });
 }
 
 fetch(1);
