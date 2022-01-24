@@ -59,6 +59,24 @@
           </button>
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
 
+          <!-- first page and section -->
+          <template v-if="section > 1">
+            <button
+              @click.prevent="switchPage(1)"
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              1
+            </button>
+
+            <button
+              @click.prevent="goBackSection()"
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              ...
+            </button>
+
+          </template>
+
           <button
             v-for="(page, index) in parseInt(pagination.last_page)"
             :key="index"
@@ -72,6 +90,25 @@
           >
             {{ page }}
           </button>
+
+          <!-- last page and section-->
+          <template v-if="section < sections">
+
+            <button
+              @click.prevent="goForwardSection()"
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              ...
+            </button>
+
+
+            <button
+              @click.prevent="switchPage(pagination.last_page)"
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              {{pagination.last_page}}
+            </button>
+          </template>
 
           <!-- <span
             class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
@@ -108,10 +145,15 @@
     </div>
   </div>
 
+  <p>section : {{ section}}</p>
+  <p>sections : {{ sections}}</p>
+  <p>lastPage : {{ lastPage}}</p>
   {{ pagination }}
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   props: {
     pagination: Object,
@@ -119,11 +161,44 @@ export default {
       type: String,
       default: 'default',
     },
+    perSection: {
+      type: Number,
+      default: 7,
+    },
   },
 
   emits: ['switched-page'],
   mounted() {
     // console.log(this.pagination);
+  },
+
+  computed: {
+
+    sections(){
+      return Math.ceil(this.pagination.last_page / this.perSection)
+    },
+
+    section(){
+      return Math.ceil(this.pagination.current_page / this.perSection)
+    },
+
+    lastPage(){
+      let lastPage = ((this.section - 1) * this.perSection) + this.perSection
+
+      if(this.section === this.sections){
+        lastPage = this.pagination.last_page
+      }
+
+      return lastPage;
+    },
+
+    pages(){
+      return _.range(
+        (this.section - 1) * this.perSection + 1, 
+        this.lastPage + 1
+      );
+    }
+
   },
 
   methods: {
@@ -137,6 +212,23 @@ export default {
       this.$emit('switched-page', page);
       // this.$emit(this.for + '.switched-page', page);
     },
+
+    goBackSection(){
+      this.switchPage(
+        this.fitstPageOfSecton(this.section - 1)
+      )
+    },
+
+    goForwardSection(){
+      this.switchPage(
+        this.fitstPageOfSecton(this.section + 1)
+      )
+    },
+
+    fitstPageOfSecton(section){
+      return (section - 1) * this.perSection + 1;
+    }
+
   },
 };
 </script>
