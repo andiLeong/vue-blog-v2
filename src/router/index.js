@@ -73,6 +73,11 @@ const routes = [
     component: () => import('@/views/Pagination.vue'),
   },
   {
+    path: '/order',
+    name: 'order.index',
+    component: () => import('@/views/order/Index.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
