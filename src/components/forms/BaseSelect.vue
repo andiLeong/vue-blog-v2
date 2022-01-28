@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label">{{ label }}</label>
+  <label v-if="label" :class="labelClass">{{ label }}</label>
   <select
     class="field"
     :value="modelValue"
@@ -10,6 +10,7 @@
       },
     }"
   >
+    <option disabled value>please select</option>
     <option
       v-for="option in options"
       :value="option"
@@ -25,6 +26,10 @@
 export default {
   props: {
     label: {
+      type: String,
+      default: '',
+    },
+    labelClass: {
       type: String,
       default: '',
     },

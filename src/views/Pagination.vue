@@ -1,23 +1,21 @@
 <template>
   <section class="max-w-7xl mx-auto mt-10">
     <AppTableLayout>
-      <template v-slot:th>
+      <template v-slot:title>
         <h2 class="text-gray-600 mb-10">Paginator example</h2>
       </template>
 
       <AppTable>
         <template v-slot:th>
-          <th scope="col" class="table-heading">
-            
-          </th>
+          <th scope="col" class="table-heading">Title</th>
         </template>
 
         <template v-slot:tb>
-            <tr class="bg-white" v-for="post in posts" :key="post.id">
-                <td class="table-data">
-                    {{ post.id }}
-                </td>
-            </tr>
+          <tr class="bg-white" v-for="post in posts" :key="post.id">
+            <td class="table-data">
+              {{ post.title }}
+            </td>
+          </tr>
         </template>
 
         <template v-slot:footer>

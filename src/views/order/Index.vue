@@ -1,154 +1,235 @@
 <template>
-    <section class="max-w-7xl mx-auto mt-10">
-        <AppTableLayout>
-            <template v-slot:title>
-                <h2 class="text-gray-600 mb-10">Datatable example</h2>
-            </template>
-            <AppTable>
-                <template v-slot:th>
-                  <th scope="col" class="table-heading" v-for="column in columns" :key="column">
-                    {{column}}
-                  </th>
-                </template>
+  <section class="max-w-7xl mx-auto mt-10">
+    {{ queryString }}
+    <!-- {{ selected }} -->
+    <AppTableLayout>
+      <template v-slot:title>
+        <h2 class="text-gray-600">Datatable example</h2>
 
-                <template v-slot:tb>
-                    <tr class="bg-white" v-for="order in orders" :key="order.id">
-                        <td class="table-data">
-                            {{ order.id }}
-                        </td>
+        <div class="my-2">
+          <button
+            class="go-back-btn"
+            @click.prevent="this.showPannel = !this.showPannel"
+          >
+            {{ showPannel ? 'hide pennel' : 'open pennel' }}
+          </button>
+        </div>
 
-                        <td class="table-data">
-                            {{ order.number }}
-                        </td>
+        <template v-if="showPannel">
+          <OrderSearchPanel
+            @search-query="getherQuery"
+            @reset-query="resetQuery"
+          />
+        </template>
+      </template>
 
-                        <td class="table-data">
-                            {{ order.total_price }}
-                        </td>
+      <div class="my-2 ml-2" v-if="selected.length > 0">
+        <OrderDeletion :id="selected" @deleted="deleted" :endpoint="endpoint" />
+      </div>
 
-                        <td class="table-data">
-                            {{ order.paid }}
-                        </td>
-                        
-                        <td class="table-data">
-                            {{ order.status }}
-                        </td>
+      <AppTable>
+        <template v-slot:th>
+          <th class="table-heading">
+            <input
+              type="checkbox"
+              @change="toggleSelectAll"
+              :checked="orders.length === selected.length"
+            />
+          </th>
 
-                        <td class="table-data">
-                            {{ order.customer }}
-                        </td>
+          <th
+            scope="col"
+            class="table-heading"
+            v-for="column in columns"
+            :key="column"
+          >
+            <OrderSorting
+              :column="column"
+              :sortedColumn="defaultSortColumn"
+              @sort="getherQuery"
+              @sortedColumn="setDefaultSortColumn"
+            />
+          </th>
+          <th>
+            <p class="sr-only">delete</p>
+          </th>
+        </template>
 
-                        <td class="table-data">
-                            {{ order.country }}
-                        </td>
-                    </tr>
-                </template>
+        <template v-slot:tb>
+          <tr
+            :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-100'"
+            v-for="(order, index) in orders"
+            :key="order.id"
+          >
+            <td class="table-data">
+              <input type="checkbox" :value="order.id" v-model="selected" />
+            </td>
 
-                <template v-slot:footer>
-                    <p>Here's some contact info</p>
-                </template>
-            </AppTable>
-        </AppTableLayout>
-    </section>
+            <td class="table-data">
+              {{ order.id }}
+            </td>
+
+            <td class="table-data">
+              {{ order.number }}
+            </td>
+
+            <td class="table-data">
+              {{ order.price }}
+            </td>
+
+            <td class="table-data">
+              <span
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                :class="
+                  order.paid == 1
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                "
+              >
+                {{ order.paid == 1 ? 'YES' : 'NO' }}
+              </span>
+            </td>
+
+            <td class="table-data">
+              {{ order.status }}
+            </td>
+
+            <td class="table-data">
+              {{ order.customer }}
+            </td>
+
+            <td class="table-data">
+              {{ order.country }}
+            </td>
+
+            <td class="table-data">
+              <OrderDeletion
+                :id="order.id"
+                @deleted="deleted"
+                :endpoint="endpoint"
+              />
+            </td>
+          </tr>
+        </template>
+      </AppTable>
+    </AppTableLayout>
+
+    <div class="my-4">
+      <Paginator
+        :perSection="3"
+        v-if="pagination.current_page"
+        :pagination="pagination"
+        @switched-page="switchPage"
+      />
+    </div>
+  </section>
 </template>
 
 <script>
 import Paginator from '@/components/Paginator.vue';
 import AppTable from '@/components/AppTable.vue';
+import OrderSearchPanel from '@/components/order/OrderSearchPanel.vue';
 import AppTableLayout from '@/components/AppTableLayout.vue';
-    export default {
-        components:{
-            AppTableLayout,AppTable,Paginator
-        },
-        data () {
-            return {
-                endpoint:'',
-                editing: {
-                    id: null,
-                    form: {},
-                    errors: []
-                },
-                sort: {
-                    key: 'id',
-                    order: 'asc'
-                },
-                columns: [
-                    'id',
-                    'number',
-                    'Price',
-                    'Payment',
-                    'Status',
-                    'Customer',
-                    'Country',
-                ],
-                per_page: 10,
-                orders: [],
-                selected: []
-            }
-        },
-        computed: {
-            filteredRecords () {
-                let data = this.response.records
-                return data
-            }
-        },
-        methods: {
-            fetch () {
-                return axios.get(`${this.endpoint}`).then((response) => {
-                    this.orders = response.data.data
-                });
-            },
-            getQueryParameters() {
-                return {
-                    per_page: this.per_page,
-                }
-            },
-            sortBy (key) {
-                this.sort.key = key
-                this.sort.order = this.sort.order === 'asc' ? 'desc' : 'asc'
-            },
-            edit (record) {
-                this.editing.errors = []
-                this.editing.id = record.id
-                this.editing.form = _.pick(record, this.response.updatable)
-            },
-            update () {
-                axios.patch(`${this.endpoint}/${this.editing.id}`, this.editing.form).then(() => {
-                    this.getRecords().then(() => {
-                        this.editing.id = null
-                        this.editing.form = null
-                    })
-                }).catch((error) => {
-                    if (error.response.status === 422) {
-                        this.editing.errors = error.response.data
-                    }
-                })
-            },
-            
-            destroy (record) {
-                if (!window.confirm(`Are you sure you want to delete this?`)) {
-                    return
-                }
+import OrderSorting from '@/components/order/OrderSorting.vue';
+import OrderDeletion from '@/components/order/OrderDeletion.vue';
+import _ from 'lodash';
 
-                axios.delete(`${this.endpoint}/${record}`).then(() => {
-                    this.getRecords()
+export default {
+  components: {
+    AppTableLayout,
+    AppTable,
+    Paginator,
+    OrderSearchPanel,
+    OrderSorting,
+    OrderDeletion,
+  },
+  data() {
+    return {
+      endpoint: '/api/order',
+      defaultSortColumn: 'id',
+      columns: [
+        'id',
+        'number',
+        'price',
+        'paid',
+        'status',
+        'customer',
+        'country',
+      ],
+      per_page: 10,
+      orders: [],
+      pagination: {},
+      page: this.$route.query.page || 1,
+      selected: [],
+      queryString: {},
+      showPannel: false,
+    };
+  },
+  computed: {},
+  methods: {
+    fetch(page, query = '') {
+      return axios
+        .get(`${this.endpoint}?page=${page}&${query}`)
+        .then((response) => {
+          this.orders = response.data.data;
+          this.pagination = response.data;
+          delete this.pagination.data;
+        });
+    },
 
-                    if (this.selected.length) {
-                        this.toggleSelectAll()
-                    }
-                })
-            },
+    getherQuery(query) {
+      Object.assign(this.queryString, query);
+      this.fetch(this.page, this.toQueryString(this.queryString));
+    },
 
-            toggleSelectAll () {
-                if (this.selected.length > 0) {
-                    this.selected = []
-                    return
-                }
+    toQueryString(query) {
+      return new URLSearchParams(query).toString();
+    },
 
-                this.selected = _.map(this.filteredRecords, 'id')
-            }
+    resetQuery() {
+      this.queryString = {};
+      this.fetch(this.page);
+    },
+
+    switchPage(page) {
+      this.$router.replace({
+        name: 'order.index',
+        query: {
+          page,
         },
-        mounted () {
-            this.fetch()
-        }
-    }
+      });
+    },
+
+    setDefaultSortColumn(column) {
+      this.defaultSortColumn = column;
+    },
+
+    deleted() {
+      if (this.selected.length) {
+        this.toggleSelectAll();
+      }
+
+      this.fetch(this.$route.query.page, this.toQueryString(this.queryString));
+    },
+
+    toggleSelectAll() {
+      if (this.selected.length > 0) {
+        this.selected = [];
+        return;
+      }
+
+      this.selected = _.map(this.orders, 'id');
+    },
+  },
+
+  watch: {
+    '$route.query.page'(page, prevPage) {
+      this.fetch(page, this.toQueryString(this.queryString));
+    },
+  },
+
+  created() {
+    this.fetch(this.page);
+  },
+};
 </script>
