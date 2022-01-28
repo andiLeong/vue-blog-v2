@@ -58,14 +58,6 @@ export default {
   },
   methods: {
     sortBy(key, direction = 'desc') {
-      // if (key == 'payment') {
-      //   key = 'paid';
-      // }
-
-      // if (key == 'price') {
-      //   key = 'total_price';
-      // }
-
       this.sort.order_by = key;
       this.sort.direction = this.sort.direction === 'asc' ? 'desc' : 'asc';
 
