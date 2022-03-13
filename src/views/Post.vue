@@ -138,6 +138,10 @@ function fetch(slug) {
 }
 
 function destroy(slug) {
+  if (confirm('Are you sure you want to delete this post ?') == false) {
+    return;
+  }
+
   deleting.value = true;
 
   axios
