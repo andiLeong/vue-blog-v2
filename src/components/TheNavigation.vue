@@ -75,7 +75,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
           <!-- Profile dropdown -->
-          <Menu as="div" class="ml-3 relative z-10" v-if="authenticated">
+          <Menu as="div" class="ml-3 relative z-20" v-if="authenticated">
             <div class="">
               <MenuButton
                 class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
