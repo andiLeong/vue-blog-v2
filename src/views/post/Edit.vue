@@ -1,4 +1,6 @@
 <template>
+  <snack type="primary" />
+
   <form
     @submit.prevent="update"
     class="space-y-8 divide-y divide-gray-200 my-10 mb-10 max-w-7xl mx-auto px-6"
@@ -75,12 +77,6 @@
           </svg>
           {{ isLoading ? 'Updating In' : 'Update' }}
         </button>
-
-        <Notification
-          v-if="submitted"
-          body="Your post had been edited"
-          footer="You can view it now."
-        />
       </div>
     </div>
   </form>
@@ -89,10 +85,10 @@
 <script>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
-import Notification from '@/components/Notification.vue';
 import axios from 'axios';
 import Tiptap from '@/components/Tiptap.vue';
-import { useStore } from 'vuex';
+import { useStore, mapActions } from 'vuex';
+import Snack from '@/components/Snack.vue';
 
 export default {
   props: ['slug'],
@@ -100,6 +96,7 @@ export default {
     BaseInput,
     Notification,
     Tiptap,
+    Snack,
   },
   data() {
     return {
@@ -117,6 +114,10 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      snack: 'snack/snack',
+    }),
+
     fetch(slug) {
       axios
         .get(`/api/posts/${slug}`)
@@ -132,31 +133,12 @@ export default {
     update() {
       this.isLoading = true;
 
-      //     await axios.get('/sanctum/csrf-cookie')
-      //     await axios.post('/login',{'email':'andiliang9988@gmail.com','password':'password'})
-
-      //       let response = await axios.get('/api/user')
-
-      // console.log(response)
-
-      // axios.get(`/api/user`)
-      //   .then( (response) => {
-      //     this.isLoading = false;
-      //     this.submitted = true;
-      //     console.log(response.data)
-      //   })
-      //   .catch( (error) => {
-      //     this.isLoading = false;
-      //     alert(error)
-      //     this.errors = error
-      //     console.log(error);
-      //   })
-
       axios
         .patch(`/api/posts/${this.slug}`, this.post)
         .then((response) => {
           this.isLoading = false;
           this.submitted = true;
+          this.notification();
           console.log(response.data);
         })
         .catch((error) => {
@@ -172,6 +154,13 @@ export default {
           this.errors = error.response.data.errors;
           console.log(error.response.data.errors);
         });
+    },
+
+    notification() {
+      this.snack({
+        text: 'Your post had been edited',
+        delay: 10,
+      });
     },
   },
 };
