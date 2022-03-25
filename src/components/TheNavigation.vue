@@ -170,7 +170,7 @@ const routes = ref([
   { name: 'login' },
   { name: 'posts' },
   // { name: 'post.create' },
-  { name: 'gallery' },
+  // { name: 'gallery' },
   // { name: 'uploader' },
 ]);
 

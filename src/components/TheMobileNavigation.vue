@@ -77,7 +77,7 @@ function capitalRouteName(value) {
 const routes = ref([
   { name: 'home' },
   { name: 'posts' },
-  { name: 'gallery' },
+  // { name: 'gallery' },
   { name: 'login' },
 ]);
 
