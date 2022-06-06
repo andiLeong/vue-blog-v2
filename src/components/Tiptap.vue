@@ -281,8 +281,12 @@ export default {
 
       content: this.modelValue,
       onUpdate: () => {
+
+          let html = this.editor.getHTML();
+          if (html === '<p></p>') html = ''
+
         // HTML
-        this.$emit('update:modelValue', this.editor.getHTML());
+        this.$emit('update:modelValue', html);
 
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())
