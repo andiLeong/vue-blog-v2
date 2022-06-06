@@ -63,7 +63,7 @@ import SubmitButton from '@/components/forms/SubmitButton.vue'
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import {ref} from "vue";
 
-import useUnauthenticated from "@/composable/useUnauthenticated"
+import useHandleAjaxError from "@/composable/useHandleAjaxError"
 
 const form = ref(new Form({
     title: '',
@@ -86,17 +86,7 @@ function store() {
         })
         .catch((error) => {
             isLoading.value = false;
-            let status = error.response.status;
-
-            if (status === 401) {
-                return useUnauthenticated()
-            }
-
-            if (status === 403 || status === 401) {
-                return alert(error.response.data.message);
-            }
-            errors.value = error.response.data.errors;
-            console.log(error.response.data.errors);
+            errors.value = useHandleAjaxError(error)
         });
 
     submitted.value = false;
