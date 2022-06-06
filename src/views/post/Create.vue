@@ -1,129 +1,118 @@
 <template>
-  <snack type="primary" />
+    <Snack v-if="submitted" type="primary" text="Hey, post was created!"/>
 
-  <form
-    @submit.prevent="store"
-    @keydown="form.errors.clear($event.target.name)"
-    class="space-y-8 divide-y divide-gray-200 my-10 mb-10 max-w-7xl mx-auto px-6"
-  >
-    <div class="space-y-8 divide-y divide-gray-200">
-      <div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-          <div class="sm:col-span-4">
-            <BaseInput
-              labelClass="block text-sm font-medium text-gray-700 dark:text-white"
-              placeHolder="Wite a nice title"
-              class="mt-1 shadow-sm focus:ring-sky-500 focus:border-sky-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              label="Title"
-              type="text"
-              v-model="form.title"
-              :error="form.errors.get('title')"
-            />
-          </div>
+    <form
+        @submit.prevent="store"
+        @keydown="form.errors.clear($event.target.name)"
+        class="space-y-8 divide-y divide-gray-200 my-10 mb-10 max-w-7xl mx-auto px-6"
+    >
+        <div class="space-y-8 divide-y divide-gray-200">
+            <div>
+                <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-4">
+                        <BaseInput
+                            labelClass="block text-sm font-medium text-gray-700 dark:text-white"
+                            placeHolder="Wite a nice title"
+                            class="mt-1 shadow-sm focus:ring-sky-500 focus:border-sky-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            label="Title"
+                            type="text"
+                            v-model="form.title"
+                            :error="form.errors.get('title')"
+                        />
+                    </div>
 
-          <div class="sm:col-span-4">
-            {{ form.body }}
-            <label
-              for="about"
-              class="block text-sm font-medium text-gray-700 dark:text-white"
-            >
-              About
-            </label>
+                    <div class="sm:col-span-4">
+                        {{ form.body }}
+                        <label
+                            for="about"
+                            class="block text-sm font-medium text-gray-700 dark:text-white"
+                        >
+                            About
+                        </label>
 
-            <p class="mt-2 text-sm text-gray-500 dark:text-white">
-              Describe the post
-            </p>
-            <tiptap v-model="form.body" />
-          </div>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-white">
+                            Describe the post
+                        </p>
+                        <tiptap v-model="form.body"/>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="pt-5">
-      <div class="mb-2">
-        <ValidationErrors v-if="errors" :errors="errors"/>
-      </div>
-      <div class="flex justify-start">
-        <SubmitButton :loading="isLoading" />
-      </div>
-    </div>
-  </form>
+        <div class="pt-5">
+            <div class="mb-2">
+                <ValidationErrors v-if="errors" :errors="errors"/>
+            </div>
+            <div class="flex justify-start">
+                <SubmitButton :loading="isLoading"/>
+            </div>
+        </div>
+
+        <button @click.prevent="logout">logout</button>
+    </form>
 </template>
 
-<script>
+<script setup>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
 import axios from 'axios';
 import Tiptap from '@/components/Tiptap.vue';
-import { useStore, mapActions } from 'vuex';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import Snack from '@/components/Snack.vue';
-import SubmitButton from '@/components/forms/SubmitBUtton.vue'
+import SubmitButton from '@/components/forms/SubmitButton.vue'
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
+import {ref} from "vue";
 
-export default {
-  components: {
-    ValidationErrors,
-    SubmitButton,
-    BaseInput,
-    Tiptap,
-    LoadingIndicator,
-    Snack,
-  },
-  data() {
-    return {
-      form: new Form({
-        title: '',
-        body: '',
-      }),
-      errors: {},
-      isLoading: false,
-      submitted: false,
-      useStore: useStore(),
-    };
-  },
+import useUnauthenticated from "@/composable/useUnauthenticated"
 
-  methods: {
-    ...mapActions({
-      snack: 'snack/snack',
-    }),
+const form = ref(new Form({
+    title: '',
+    body: '',
+}))
+const errors = ref({})
+const isLoading = ref(false)
+const submitted = ref(false)
 
-    store() {
-      this.isLoading = true;
 
-      axios
-        .post(`/api/posts`, this.form)
-        .then((data) => {
-          this.form.title = this.form.body = '';
-          this.isLoading = false;
-          this.submitted = true;
-          this.notification();
+function store() {
+    isLoading.value = true;
+
+    axios
+        .post(`/api/posts`, form.value)
+        .then(() => {
+            form.value.reset()
+            isLoading.value = false;
+            submitted.value = true;
         })
         .catch((error) => {
-          this.isLoading = false;
-          let status = error.response.status;
+            isLoading.value = false;
+            let status = error.response.status;
 
-          if (status == '401') {
-            this.useStore.dispatch('logout');
-            return router.push({ name: 'login' });
-          }
+            if (status === 401) {
+                return useUnauthenticated()
+            }
 
-          if (status == '403' || status == '401') {
-            return alert(error.response.data.message);
-          }
-          this.errors = error.response.data.errors;
-          console.log(error.response.data.errors);
+            if (status === 403 || status === 401) {
+                return alert(error.response.data.message);
+            }
+            errors.value = error.response.data.errors;
+            console.log(error.response.data.errors);
         });
 
-      this.submitted = false;
-    },
+    submitted.value = false;
+}
 
-    notification() {
-      this.snack({
-        text: 'Post succesfully created',
-        delay: 10,
-      });
-    },
-  },
-};
+
+function logout(){
+
+    axios
+        .post(`/logout`)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
 </script>
