@@ -41,28 +41,10 @@
 
     <div class="pt-5">
       <div class="mb-2">
-        <p
-          class="mt-1 text-sm text-red-500 italic"
-          v-if="errors"
-          v-for="(error, index) in errors"
-          :key="index"
-        >
-          {{ error[0] }}
-        </p>
+        <ValidationErrors v-if="errors" :errors="errors"/>
       </div>
       <div class="flex justify-start">
-        <button
-          type="submit"
-          :disabled="isLoading"
-          :class="{ 'cursor-not-allowed ': isLoading }"
-          class="primary-btn"
-        >
-          <LoadingIndicator
-            v-if="isLoading"
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-          />
-          {{ isLoading ? 'Saving In' : 'Save' }}
-        </button>
+        <SubmitButton :loading="isLoading" />
       </div>
     </div>
   </form>
@@ -76,9 +58,13 @@ import Tiptap from '@/components/Tiptap.vue';
 import { useStore, mapActions } from 'vuex';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import Snack from '@/components/Snack.vue';
+import SubmitButton from '@/components/forms/SubmitBUtton.vue'
+import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 
 export default {
   components: {
+    ValidationErrors,
+    SubmitButton,
     BaseInput,
     Tiptap,
     LoadingIndicator,
