@@ -48,7 +48,6 @@
             </div>
         </div>
 
-        <button @click.prevent="logout">logout</button>
     </form>
 </template>
 
@@ -92,17 +91,5 @@ function store() {
     submitted.value = false;
 }
 
-
-function logout(){
-
-    axios
-        .post(`/logout`)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}
 
 </script>
