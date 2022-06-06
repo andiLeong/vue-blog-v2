@@ -33,7 +33,7 @@
             </div>
 
             <div>
-              <SubmitButton  :loading="isLoading" />
+              <SubmitButton  :loading="isLoading" saving="Logging In" not-saving="Login"/>
             </div>
 
             <div class="text-red-500 text-sm italic font-medium">
