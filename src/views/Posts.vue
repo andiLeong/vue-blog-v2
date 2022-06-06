@@ -55,7 +55,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
 import PostsSkeletons from '@/components/PostsSkeletons.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 import AppLink from '@/components/AppLink.vue';

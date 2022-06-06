@@ -50,9 +50,6 @@
 <script setup>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Tiptap from '@/components/Tiptap.vue';
-import Snack from '@/components/Snack.vue';
-import SubmitButton from '@/components/forms/SubmitButton.vue'
-import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import {ref} from "vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError";
 import {useFetchAPost} from "@/composable/useFetchAPost";

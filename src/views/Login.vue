@@ -33,19 +33,7 @@
             </div>
 
             <div>
-              <button
-                type="submit"
-                :disabled="isLoading"
-                :class="{ 'cursor-not-allowed ': isLoading }"
-                class="w-full primary-btn"
-              >
-                <LoadingIndicator
-                  v-if="isLoading"
-                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                />
-
-                {{ isLoading ? 'Signing In' : 'Sign In' }}
-              </button>
+              <SubmitButton  :loading="isLoading" />
             </div>
 
             <div class="text-red-500 text-sm italic font-medium">
@@ -65,7 +53,6 @@ import { object, string, number, boolean } from 'yup';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import BaseInput from '@/components/forms/BaseInput.vue';
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
 const validationSchema = ref(
   object({

@@ -55,10 +55,6 @@
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
 import Tiptap from '@/components/Tiptap.vue';
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
-import Snack from '@/components/Snack.vue';
-import SubmitButton from '@/components/forms/SubmitButton.vue'
-import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import {ref} from "vue";
 
 import useHandleAjaxError from "@/composable/useHandleAjaxError"

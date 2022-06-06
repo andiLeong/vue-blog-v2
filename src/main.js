@@ -8,6 +8,9 @@ import './index.css';
 
 import store from './store';
 import appUrl from '../appconfig.js';
+import SubmitButton from '@/components/forms/SubmitButton.vue';
+import ValidationErrors from '@/components/validation/ValidationErrors.vue'
+import Snack from '@/components/Snack.vue'
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
@@ -17,6 +20,9 @@ console.log('hiiii ' + appUrl);
 
 const app = createApp(App)
   .component('AppLink', AppLink)
+  .component('SubmitButton', SubmitButton)
+  .component('ValidationErrors', ValidationErrors)
+  .component('Snack', Snack)
   .use(router)
   .use(store)
   .directive('observe-visibility', {
