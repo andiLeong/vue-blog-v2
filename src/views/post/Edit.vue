@@ -49,13 +49,13 @@
 
 <script setup>
 import BaseInput from '@/components/forms/BaseInput.vue';
-import axios from 'axios';
 import Tiptap from '@/components/Tiptap.vue';
 import Snack from '@/components/Snack.vue';
 import SubmitButton from '@/components/forms/SubmitButton.vue'
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import {ref} from "vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError";
+import {useFetchAPost} from "@/composable/useFetchAPost";
 
 const props = defineProps(['slug'])
 
@@ -63,19 +63,6 @@ const post = ref('')
 const errors = ref({})
 const isLoading = ref(false)
 const submitted = ref(false)
-
-
-function fetch(slug) {
-  axios
-      .get(`/api/posts/${slug}`)
-      .then((response) => {
-        post.value = response.data;
-      })
-      .catch((error) => {
-        alert(error);
-        console.log(error);
-      });
-}
 
 function update() {
   isLoading.value = true;
@@ -93,6 +80,6 @@ function update() {
       });
 }
 
-fetch(props.slug);
+useFetchAPost(props.slug,post);
 
 </script>

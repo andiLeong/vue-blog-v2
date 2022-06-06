@@ -54,7 +54,6 @@
 <script setup>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
-import axios from 'axios';
 import Tiptap from '@/components/Tiptap.vue';
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import Snack from '@/components/Snack.vue';

@@ -41,18 +41,10 @@
             <GoBack />
           </div>
           <div class="space-x-2" v-if="isAdmin">
-            <button
-              type="button"
-              @click.prevent="destroy(post.slug)"
-              class="go-back-btn"
-            >
-              delete
-            </button>
+            <PostDeleteButton @postDeleted="onDeleted" :slug="post.slug" />
             <PostUpdateButton :slug="post.slug" />
           </div>
         </div>
-
-        <div v-if="deletingError">{{ deletingError }}</div>
 
         <h1>
           <span
@@ -78,7 +70,6 @@
 
 <script setup>
 import { ref, defineProps, onUpdated, computed } from 'vue';
-import axios from 'axios';
 import SvgPattern from '@/components/SvgPattern.vue';
 import GoBack from '@/components/GoBack.vue';
 import PostSkeleton from '@/components/PostSkeleton.vue';
@@ -87,6 +78,8 @@ import { useRouter } from 'vue-router';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';
+import PostDeleteButton from "@/views/post/PostDeleteButton.vue";
+import {useFetchAPost} from "@/composable/useFetchAPost";
 
 const patterns = ref([
   {
@@ -119,42 +112,12 @@ const props = defineProps({
     required: true,
   },
 });
-const deleting = ref(false);
-const deletingError = ref('');
 const published_at = computed(() =>
   moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
 );
 
-function fetch(slug) {
-  axios
-    .get(`/api/posts/${slug}`)
-    .then(function (response) {
-      post.value = response.data;
-    })
-    .catch(function (error) {
-      alert(error);
-      console.log(error);
-    });
-}
-
-function destroy(slug) {
-  if (confirm('Are you sure you want to delete this post ?') == false) {
-    return;
-  }
-
-  deleting.value = true;
-
-  axios
-    .delete(`/api/posts/${slug}`)
-    .then(function (response) {
-      console.log('redireting');
-      router.push('/');
-    })
-    .catch(function (error) {
-      deletingError.value = error.response.data.message;
-      deleting.value = false;
-      console.log(error.response.data.message);
-    });
+function onDeleted(){
+  router.push('/');
 }
 
 let user = JSON.parse(localStorage.getItem('user'));
@@ -162,7 +125,8 @@ if (user !== null && user.email == 'andiliang9988@gmail.com') {
   isAdmin.value = true;
 }
 
-fetch(props.slug);
+
+useFetchAPost(props.slug,post);
 
 onUpdated(() => {
   console.log('on updated is trigger');
