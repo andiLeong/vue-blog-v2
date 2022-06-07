@@ -59,11 +59,14 @@ import PostsSkeletons from '@/components/PostsSkeletons.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
 import AppLink from '@/components/AppLink.vue';
 import Spinner from '@/components/Spinner.vue';
+import { useMeta } from 'vue-meta'
 
 const posts = ref([]);
 const lastPage = ref(1);
 const noMorePost = ref(false);
 const fetching = ref(false);
+
+useMeta({ title: `Andi Liang's Posts Page` })
 
 function fetch(page) {
   if (page > lastPage.value) {

@@ -1,4 +1,8 @@
 <template>
+    <metainfo>
+        <template v-slot:title="{ content }">{{ content ? `${content}` : `Andi Liang's Blog` }}</template>
+    </metainfo>
+
   <div :class="myTheme" class="flex flex-col items-stretch min-h-screen">
     <TheNavigation @change="action"></TheNavigation>
 
@@ -11,7 +15,8 @@
 <script setup>
 import TheNavigation from '@/components/TheNavigation.vue';
 import { useStore } from 'vuex';
-import { ref, computed, onMounted } from 'vue';
+import { ref } from 'vue';
+import { useMeta } from 'vue-meta'
 
 const store = useStore();
 const myTheme = ref();
@@ -51,4 +56,10 @@ if (localTheme) {
   myTheme.value = localTheme;
   store.commit('SET_THEME', localTheme);
 }
+
+useMeta({
+    title: '',
+    htmlAttrs: { lang: 'en', amp: true }
+})
+
 </script>

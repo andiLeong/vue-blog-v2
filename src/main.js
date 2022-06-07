@@ -11,6 +11,7 @@ import appUrl from '../appconfig.js';
 import SubmitButton from '@/components/forms/SubmitButton.vue';
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import Snack from '@/components/Snack.vue'
+import { createMetaManager } from 'vue-meta'
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
@@ -23,6 +24,7 @@ const app = createApp(App)
   .component('SubmitButton', SubmitButton)
   .component('ValidationErrors', ValidationErrors)
   .component('Snack', Snack)
+  .use(createMetaManager())
   .use(router)
   .use(store)
   .directive('observe-visibility', {

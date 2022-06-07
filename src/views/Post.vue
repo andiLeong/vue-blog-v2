@@ -41,7 +41,7 @@
             <GoBack />
           </div>
           <div class="space-x-2" v-if="isAdmin">
-            <PostDeleteButton @postDeleted="onDeleted" :slug="post.slug" />
+            <PostDeleteButton @postDeleted="router.push('/')" :slug="post.slug" />
             <PostUpdateButton :slug="post.slug" />
           </div>
         </div>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onUpdated, computed } from 'vue';
+import {ref, defineProps, onUpdated, computed, watch} from 'vue';
 import SvgPattern from '@/components/SvgPattern.vue';
 import GoBack from '@/components/GoBack.vue';
 import PostSkeleton from '@/components/PostSkeleton.vue';
@@ -80,6 +80,7 @@ import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';
 import PostDeleteButton from "@/views/post/PostDeleteButton.vue";
 import {useFetchAPost} from "@/composable/useFetchAPost";
+import {useMeta} from 'vue-meta'
 
 const patterns = ref([
   {
@@ -116,17 +117,20 @@ const published_at = computed(() =>
   moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
 );
 
-function onDeleted(){
-  router.push('/');
-}
-
 let user = JSON.parse(localStorage.getItem('user'));
 if (user !== null && user.email == 'andiliang9988@gmail.com') {
   isAdmin.value = true;
 }
 
+const { meta } = useMeta({
+    title: 'My Title',
+})
 
 useFetchAPost(props.slug,post);
+
+watch( post, (newValue) => {
+    meta.title = newValue.title
+})
 
 onUpdated(() => {
   console.log('on updated is trigger');
