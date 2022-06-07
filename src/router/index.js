@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import useIsAdmin from "@/composable/useIsAdmin";
 
 const routes = [
   { path: '/', name: 'home', component: Home },
@@ -115,8 +116,7 @@ router.afterEach((to, from) => {
 router.beforeEach((to, from) => {
   let user = localStorage.getItem('user');
   let loggedIn = user;
-  let isAdmin =
-    user !== null && JSON.parse(user).email === 'andiliang9988@gmail.com';
+  let isAdmin = useIsAdmin();
 
   if (to.meta.adminOnly && !loggedIn) {
     return { name: 'login' };

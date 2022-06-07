@@ -80,6 +80,7 @@ import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';
 import PostDeleteButton from "@/views/post/PostDeleteButton.vue";
 import {useFetchAPost} from "@/composable/useFetchAPost";
+import useIsAdmin from "@/composable/useIsAdmin";
 import {useMeta} from 'vue-meta'
 
 const patterns = ref([
@@ -117,8 +118,7 @@ const published_at = computed(() =>
   moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
 );
 
-let user = JSON.parse(localStorage.getItem('user'));
-if (user !== null && user.email == 'andiliang9988@gmail.com') {
+if (useIsAdmin()) {
   isAdmin.value = true;
 }
 
