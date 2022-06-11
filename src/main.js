@@ -12,6 +12,7 @@ import SubmitButton from '@/components/forms/SubmitButton.vue';
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import Snack from '@/components/Snack.vue'
 import { createMetaManager } from 'vue-meta'
+import { createPinia } from 'pinia'
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
@@ -27,6 +28,7 @@ const app = createApp(App)
   .use(createMetaManager())
   .use(router)
   .use(store)
+  .use(createPinia())
   .directive('observe-visibility', {
     beforeMount: (el, binding, vnode) => {
       vnode.context = binding.instance;

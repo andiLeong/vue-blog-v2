@@ -7,7 +7,6 @@ export default createStore({
     user: null,
     loggedIn: false,
     isAdmin: false,
-    theme: 'light',
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -22,18 +21,6 @@ export default createStore({
       localStorage.removeItem('user');
       location.reload();
     },
-    SET_THEME(state, theme) {
-      state.theme = theme;
-    },
-    TOGGLE_THEME(state) {
-      if (state.theme === 'light') {
-        state.theme = 'dark';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        state.theme = 'light';
-        localStorage.setItem('theme', 'light');
-      }
-    },
   },
   actions: {
     async login({ commit }, credentials) {
@@ -44,9 +31,6 @@ export default createStore({
     },
     logout({ commit }) {
       commit('CLEAR_USER_DATA');
-    },
-    changeTheme({ commit }) {
-      commit('TOGGLE_THEME');
     },
   },
   getters: {

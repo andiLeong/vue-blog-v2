@@ -125,6 +125,8 @@ import useCapitalise from "@/composable/useCapitalise";
 import Sun from "@/components/svg/Sun.vue";
 import Moon from "@/components/svg/Moon.vue";
 import SignOut from "@/components/SignOut.vue";
+import { useThemeStore } from '@/store/theme'
+const themeStore = useThemeStore()
 
 const emit = defineEmits(['change']);
 
@@ -143,15 +145,14 @@ const dropdowns = ref([
   { path: '/posts/create', name: 'Create Post' },
 ]);
 
-const chosenTheme = ref(store.state.theme);
+const chosenTheme = ref(themeStore.theme);
 
 const authenticated = ref(store.state.loggedIn);
 console.log(authenticated.value);
 
 function change() {
-  store.dispatch('changeTheme');
-  let theme = store.state.theme;
-  chosenTheme.value = theme;
-  emit('change', theme);
+    emit('change',
+        themeStore.setTheme(chosenTheme)
+    );
 }
 </script>
