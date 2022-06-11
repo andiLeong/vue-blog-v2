@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <TheMobileNavigation />
+    <TheMobileNavigation :routes="routes" :dropdowns="dropdowns"/>
   </Disclosure>
 </template>
 
@@ -158,7 +158,7 @@ import {
 } from '@headlessui/vue';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import TheMobileNavigation from '@/components/TheMobileNavigation.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 

@@ -64,6 +64,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline';
 import { useStore } from 'vuex';
 import { ref } from 'vue';
 
+const props = defineProps(['routes','dropdowns'])
 const store = useStore();
 const auth = ref(store.state.loggedIn);
 const user = ref(store.state.user);
@@ -74,15 +75,5 @@ function capitalRouteName(value) {
   });
 }
 
-const routes = ref([
-  { name: 'home' },
-  { name: 'posts' },
-  // { name: 'gallery' },
-  { name: 'login' },
-]);
 
-const dropdowns = ref([
-  { path: '/uploader', name: 'Upload Gallery' },
-  { path: '/posts/create', name: 'Create Post' },
-]);
 </script>
