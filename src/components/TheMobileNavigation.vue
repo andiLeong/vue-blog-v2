@@ -8,7 +8,7 @@
         :to="route"
         class="dark:hover:text-gray-700 dark:text-gray-100 border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium"
       >
-        {{ capitalRouteName(route.name) }}
+        {{ useCapitalise(route.name) }}
       </AppLink>
     </div>
     <div class="pt-4 pb-3 border-t border-gray-200" v-if="auth">
@@ -63,6 +63,7 @@ import {
 import { MenuIcon, XIcon } from '@heroicons/vue/outline';
 import { useStore } from 'vuex';
 import { ref } from 'vue';
+import useCapitalise from "@/composable/useCapitalise";
 
 const props = defineProps(['routes','dropdowns'])
 const store = useStore();

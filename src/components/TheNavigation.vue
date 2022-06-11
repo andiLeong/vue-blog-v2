@@ -26,7 +26,7 @@
               :key="route.name"
               class="dark:text-white text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium"
             >
-              {{ capitalRouteName(route.name) }}
+              {{ useCapitalise(route.name) }}
             </AppLink>
 
             <a
@@ -161,6 +161,7 @@ import TheMobileNavigation from '@/components/TheMobileNavigation.vue';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import useCapitalise from "@/composable/useCapitalise";
 
 const emit = defineEmits(['change']);
 
@@ -180,12 +181,6 @@ const dropdowns = ref([
 ]);
 
 const chosenTheme = ref(store.state.theme);
-
-function capitalRouteName(value) {
-  return value.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-    return letter.toUpperCase();
-  });
-}
 
 const authenticated = ref(store.state.loggedIn);
 console.log(authenticated.value);
