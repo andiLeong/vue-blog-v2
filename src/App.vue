@@ -14,21 +14,14 @@
 
 <script setup>
 import TheNavigation from '@/components/TheNavigation.vue';
-import { useStore } from 'vuex';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta'
 import {useThemeStore} from '@/store/theme'
+import {useUserStore} from "@/store/user";
 
-const store = useStore();
 const myTheme = ref();
 useThemeStore().setLocalTheme(myTheme)
-
-const user = localStorage.getItem('user');
-
-if (user) {
-  const userData = JSON.parse(user);
-  store.commit('SET_USER_DATA', userData);
-}
+useUserStore().setUserFromStorage()
 
 useMeta({
     title: '',

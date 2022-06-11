@@ -80,7 +80,7 @@ import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';
 import PostDeleteButton from "@/views/post/PostDeleteButton.vue";
 import {useFetchAPost} from "@/composable/useFetchAPost";
-import useIsAdmin from "@/composable/useIsAdmin";
+import {useUserStore} from '@/store/user'
 import {useMeta} from 'vue-meta'
 
 const patterns = ref([
@@ -105,7 +105,7 @@ const patterns = ref([
   // },
 ]);
 
-const isAdmin = ref(false);
+const isAdmin = ref(useUserStore().isAdmin);
 const router = useRouter();
 const post = ref('');
 const props = defineProps({
@@ -117,10 +117,6 @@ const props = defineProps({
 const published_at = computed(() =>
   moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
 );
-
-if (useIsAdmin()) {
-  isAdmin.value = true;
-}
 
 const { meta } = useMeta({
     title: 'My Title',

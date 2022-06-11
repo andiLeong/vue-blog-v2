@@ -50,9 +50,8 @@
 import { ref } from 'vue';
 import { useField, useForm } from 'vee-validate';
 import { object, string, number, boolean } from 'yup';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import BaseInput from '@/components/forms/BaseInput.vue';
+import { useUserStore } from '@/store/user'
 
 const validationSchema = ref(
   object({
@@ -77,13 +76,10 @@ const submit = ref(
   })
 );
 
-const store = useStore();
-const router = useRouter();
 
 async function login(credentials) {
   isLoading.value = true;
-  store
-    .dispatch('login', credentials)
+    useUserStore().login(credentials)
     .then(() => {
       isLoading.value = false;
       window.location = '/';
@@ -95,25 +91,4 @@ async function login(credentials) {
     });
 }
 
-// const login = async (credentials) => {
-
-//   await axios.get('/sanctum/csrf-cookie')
-//   await axios.post('/login',credentials)
-
-//   try{
-//     let response = await axios.get('/api/user')
-
-//     localStorage.setItem('isLogin',true)
-//     localStorage.setItem('user', JSON.stringify(response.data)  )
-
-//     window.location.replace("/");
-
-//   } catch(e) {
-
-//     localStorage.removeItem('isLogin');
-//     localStorage.removeItem('user');
-
-//   }
-
-// }
 </script>

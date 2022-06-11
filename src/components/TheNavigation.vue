@@ -120,24 +120,21 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import TheMobileNavigation from '@/components/TheMobileNavigation.vue';
 import { ref } from 'vue';
-import { useStore } from 'vuex';
 import useCapitalise from "@/composable/useCapitalise";
 import Sun from "@/components/svg/Sun.vue";
 import Moon from "@/components/svg/Moon.vue";
 import SignOut from "@/components/SignOut.vue";
 import { useThemeStore } from '@/store/theme'
+import { useUserStore } from '@/store/user'
 const themeStore = useThemeStore()
 
 const emit = defineEmits(['change']);
 
-const store = useStore();
 const routes = ref([
   { name: 'home' },
   { name: 'login' },
   { name: 'posts' },
-  // { name: 'post.create' },
   // { name: 'gallery' },
-  // { name: 'uploader' },
 ]);
 
 const dropdowns = ref([
@@ -146,9 +143,7 @@ const dropdowns = ref([
 ]);
 
 const chosenTheme = ref(themeStore.theme);
-
-const authenticated = ref(store.state.loggedIn);
-console.log(authenticated.value);
+const authenticated = ref(useUserStore().isLoggedIn);
 
 function change() {
     emit('change',

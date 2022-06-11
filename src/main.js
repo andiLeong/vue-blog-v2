@@ -27,7 +27,7 @@ const app = createApp(App)
   .component('Snack', Snack)
   .use(createMetaManager())
   .use(router)
-  .use(store)
+  // .use(store)
   .use(createPinia())
   .directive('observe-visibility', {
     beforeMount: (el, binding, vnode) => {

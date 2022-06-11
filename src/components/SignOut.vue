@@ -10,17 +10,16 @@
 </template>
 
 <script setup>
-import {useStore} from "vuex";
+import {useUserStore} from "@/store/user"
 
 defineProps(['active'])
-const store = useStore();
 
 function logout() {
     axios
         .post(`/logout`)
         .then((response) => {
             console.log(response);
-            store.dispatch('logout');
+            useUserStore().logout()
         })
         .catch((error) => {
             console.log(error);

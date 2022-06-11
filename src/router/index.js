@@ -3,7 +3,7 @@ import Home from '@/views/Home.vue';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import useIsAdmin from "@/composable/useIsAdmin";
+import { useUserStore } from '@/store/user'
 
 const routes = [
   { path: '/', name: 'home', component: Home },
@@ -19,11 +19,11 @@ const routes = [
     component: () => import('@/views/Login.vue'),
     meta: { redirectIfLogged: true },
   },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: () => import('@/views/Logout.vue'),
-  },
+  // {
+  //   path: '/logout',
+  //   name: 'logout',
+  //   component: () => import('@/views/Logout.vue'),
+  // },
   {
     path: '/posts',
     name: 'posts',
@@ -114,9 +114,9 @@ router.afterEach((to, from) => {
 });
 
 router.beforeEach((to, from) => {
-  let user = localStorage.getItem('user');
-  let loggedIn = user;
-  let isAdmin = useIsAdmin();
+  const userStore = useUserStore()
+  let loggedIn = userStore.isLoggedIn;
+  let isAdmin = userStore.isAdmin;
 
   if (to.meta.adminOnly && !loggedIn) {
     return { name: 'login' };

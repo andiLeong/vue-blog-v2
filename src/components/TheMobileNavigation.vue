@@ -61,20 +61,16 @@ import {
   MenuItems,
 } from '@headlessui/vue';
 import { MenuIcon, XIcon } from '@heroicons/vue/outline';
-import { useStore } from 'vuex';
+import {useUserStore} from '@/store/user'
 import { ref } from 'vue';
 import useCapitalise from "@/composable/useCapitalise";
 
 const props = defineProps(['routes','dropdowns'])
-const store = useStore();
-const auth = ref(store.state.loggedIn);
-const user = ref(store.state.user);
 
-function capitalRouteName(value) {
-  return value.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-    return letter.toUpperCase();
-  });
-}
+const userStore = useUserStore();
+const auth = ref(userStore.isLoggedIn);
+const user = ref(userStore.user);
+const isAdmin = ref(userStore.isAdmin);
 
 
 </script>
