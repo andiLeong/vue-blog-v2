@@ -33,7 +33,7 @@
               @click.prevent="change"
               class="cursor-pointer dark:text-white text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium"
             >
-              <span v-if="chosenTheme === 'dark'" class="dark:inline">
+              <span v-if="themeStore.theme === 'dark'" class="dark:inline">
                   <Moon  class="w-6 h-6"/>
               </span>
               <span v-else>
@@ -44,7 +44,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
           <!-- Profile dropdown -->
-          <Menu as="div" class="ml-3 relative z-20" v-if="authenticated">
+          <Menu as="div" class="ml-3 relative z-20" v-if="useUserStore().isLoggedIn">
             <div class="">
               <MenuButton
                 class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
@@ -142,12 +142,7 @@ const dropdowns = ref([
   { path: '/posts/create', name: 'Create Post' },
 ]);
 
-const chosenTheme = ref(themeStore.theme);
-const authenticated = ref(useUserStore().isLoggedIn);
-
 function change() {
-    emit('change',
-        themeStore.setTheme(chosenTheme)
-    );
+  emit('change', themeStore.setTheme());
 }
 </script>

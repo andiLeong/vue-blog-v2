@@ -4,8 +4,8 @@
             <div class="max-w-max lg:max-w-7xl mx-auto">
                 <div class="relative z-10 mb-8 md:mb-2 md:px-6">
                     <div class="text-base max-w-prose lg:max-w-none">
-                        <p class="dark:text-white" v-if="auth">welcome {{ user.name }}</p>
-                        <p class="dark:text-white" v-if="isAdmin">welcome admin</p>
+                        <p class="dark:text-white" v-if="userStore.isLoggedIn">welcome {{ userStore.user.name }}</p>
+                        <p class="dark:text-white" v-if="userStore.isAdmin">welcome admin</p>
 
                         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
                             Hi, I am andi liang,
@@ -16,7 +16,7 @@
                     <div class="px-4 py-2 relative dark:bg-gray-600 rounded bg-zinc-100 md:p-6">
                         <div class="lg:grid lg:grid-cols-2 lg:gap-6">
                             <div class="prose prose-indigo prose-lg text-gray-500 dark:text-white lg:max-w-none">
-                                <p>
+                              <p>
                                     Ultrices ultricies a in odio consequat egestas rutrum. Ut
                                     vitae aliquam in ipsum. Duis nullam placerat cursus risus
                                     ultrices nisi, vitae tellus in. Qui non fugiat aut minus aut
@@ -63,11 +63,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
 import {useUserStore} from '@/store/user'
 
 const userStore = useUserStore();
-const auth = ref(userStore.isLoggedIn);
-const user = ref(userStore.user);
-const isAdmin = ref(userStore.isAdmin);
 </script>
