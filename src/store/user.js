@@ -23,12 +23,12 @@ export const useUserStore = defineStore({
             const user = localStorage.getItem('user');
             if (user !== null) {
                 const userData = JSON.parse(user);
-                if (userData.email === 'andiliang9988@gmail.com') {
+                if (userData.id === 1) {
                     return true;
                 }
             }
 
-            if (state.user?.email === 'andiliang9988@gmail.com') {
+            if (state.user?.id === 1) {
                 return true;
             }
             return false;
