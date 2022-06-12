@@ -1,10 +1,12 @@
-import useUnauthenticated from "@/composable/useUnauthenticated";
+import {useUserStore} from "@/store/user"
+import router from "@/router";
 
 export default function useHandleAjaxError(error){
 
     let status = error.response.status;
     if (status === 401) {
-        return useUnauthenticated()
+        useUserStore().logout()
+        return router.push({name: 'login'});
     }
 
     if (status === 403 || status === 401) {

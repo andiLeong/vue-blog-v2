@@ -1,4 +1,3 @@
-import useUnauthenticated from "@/composable/useUnauthenticated";
 
 export function useFetchAPost(slug,post){
 
