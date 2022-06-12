@@ -134,7 +134,6 @@ import OrderDeletion from '@/components/order/OrderDeletion.vue';
 import _ from 'lodash';
 import {ref, watch} from "vue";
 import {useRoute, useRouter} from 'vue-router'
-import Item from "@/views/order/Item.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -154,7 +153,7 @@ const per_page = ref(10)
 const orders = ref([])
 const pagination = ref({})
 const page = ref(route.query.page || 1)
-const selected = ref([66,65])
+const selected = ref([])
 const queryString = ref({})
 const showPannel = ref(false)
 
@@ -205,11 +204,9 @@ function deleted() {
 
 function toggleSelectAll() {
     if (selected.value.length > 0) {
-        console.log('selecte larger than 0 ')
         selected.value = [];
         return;
     }
-    console.log('selecte NOT larger than 0 ')
     selected.value = _.map(orders.value, 'id');
 }
 
