@@ -79,6 +79,11 @@ const routes = [
     component: () => import('@/views/order/Index.vue'),
   },
   {
+    path: '/notes',
+    name: 'notes',
+    component: () => import('@/views/Notes.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
