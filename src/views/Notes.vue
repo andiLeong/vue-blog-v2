@@ -75,6 +75,7 @@ const save = async () => {
             content: content.value,
             created
         };
+        content.value = ''
         notes.value.unshift(note)
         transaction.objectStore('notes').add(note);
     });
