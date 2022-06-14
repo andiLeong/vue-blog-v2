@@ -1,5 +1,9 @@
 <template>
 
+    <div v-if="isOffline" class="w-full absolute top-0 left-0 z-10 opacity-75 text-center py-2 bg-red-300 border-b border-red-500 text-red-700">
+        Sorry, it looks like you're offline.
+    </div>
+
     <div class="max-w-6xl mx-auto grid grid-cols-3 gap-5 my-10">
         <div>
             <h1 class="text-gray-700">Notes</h1>
@@ -33,8 +37,7 @@ import {ref, onMounted,onBeforeMount} from "vue";
 const content = ref('');
 const notes = ref([]);
 const database = ref('');
-
-
+const isOffline = ref(!navigator.onLine);
 
 
 
@@ -93,6 +96,14 @@ onBeforeMount(  async () => {
     database.value =  await getDatabase()
     let myNotes = await getNotes();
     notes.value = myNotes.reverse();
+
+  window.addEventListener('offline', () => {
+    isOffline.value = true;
+  });
+  window.addEventListener('online', () => {
+    isOffline.value = false;
+
+  });
 })
 
 
