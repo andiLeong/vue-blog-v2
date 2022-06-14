@@ -4,7 +4,7 @@
         Sorry, it looks like you're offline.
     </div>
 
-    <div class="max-w-6xl mx-auto grid grid-cols-3 gap-5 my-10">
+    <div class="max-w-6xl md:mx-auto mx-4 md:grid grid-cols-3 gap-5 my-10 space-y-4 md:space-y-0">
         <div>
             <h1 class="text-gray-700">Notes</h1>
 
@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-2 ">
             <h2 class="text-gray-700">Create Notes</h2>
             <form @submit.prevent="save">
             <textarea v-model="content" cols="30" rows="10" placeholder="Write your note" class="w-full"></textarea>
