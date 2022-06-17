@@ -25,16 +25,17 @@
                 </LoadMore>
             </div>
 
-            <div v-else class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-                <PostsSkeletons/>
-            </div>
-
             <div
-                v-if="noPosts"
+                v-else-if="noPosts"
                 class="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-sky-500 to-lime-200 text-center text-md"
             >
                 No post at the moment !
             </div>
+
+            <div v-else class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
+                <PostsSkeletons/>
+            </div>
+
         </div>
     </div>
 </template>
@@ -73,7 +74,6 @@ function fetch() {
             console.log(error);
         });
 }
-
 
 function loadMore() {
     // console.log('loading more')
