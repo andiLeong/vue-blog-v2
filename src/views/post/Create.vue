@@ -75,6 +75,7 @@ function store() {
         .post(`/api/posts`, form.value)
         .then(() => {
             form.value.reset()
+            localStorage.removeItem('content')
             isLoading.value = false;
             submitted.value = true;
         })

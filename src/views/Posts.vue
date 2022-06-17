@@ -5,7 +5,7 @@
                 v-if="posts.length"
                 class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12 "
             >
-                <div v-for="post in posts" :key="post.id" class="mb-4">
+                <div v-for="post in posts" :key="post.id" class="mb-6">
                     <AppLink
                         class="block mt-4"
                         :to="{ name: 'posts.show', params: { slug: post.slug } }"
