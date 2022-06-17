@@ -234,6 +234,7 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 
 export default {
+  emits: ["typing"],
   components: {
     EditorContent,
   },
@@ -286,7 +287,8 @@ export default {
           if (html === '<p></p>') html = ''
 
         // HTML
-        this.$emit('update:modelValue', html);
+        // this.$emit('update:modelValue', html);
+        this.$emit('typing', html);
 
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())

@@ -33,7 +33,7 @@
                         <p class="mt-2 text-sm text-gray-500 dark:text-white">
                             Describe the post
                         </p>
-                        <tiptap v-model="form.body"/>
+                        <tiptap v-model="form.body" @typing="updateBody"/>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@ import useHandleAjaxError from "@/composable/useHandleAjaxError"
 
 const form = ref(new Form({
     title: '',
-    body: '',
+    body: getBody()
 }))
 const errors = ref({})
 const isLoading = ref(false)
@@ -86,5 +86,13 @@ function store() {
     submitted.value = false;
 }
 
+function getBody(){
+    return localStorage.getItem('content');
+}
+
+function updateBody(value){
+    form.value.body = value
+    localStorage.setItem('content',value)
+}
 
 </script>
