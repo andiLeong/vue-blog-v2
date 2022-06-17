@@ -32,7 +32,7 @@
 
 <script>
 import states from '@/components/uploader/states.js';
-import axios from 'axios';
+import useHandleAjaxError from "@/composable/useHandleAjaxError";
 
 import UploaderProgress from '@/components/uploader/components/UploaderProgress.vue';
 
@@ -144,6 +144,8 @@ export default {
           this.state = states.COMPLETE;
         })
         .catch((e) => {
+           useHandleAjaxError(e)
+
           if (e instanceof axios.Cancel) {
             return (this.state = states.CANCELLED);
           }
