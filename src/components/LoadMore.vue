@@ -1,21 +1,25 @@
 <template>
-    <div v-observe-visibility="{
-        callback: toBottom,
-        intersection: {
-            threshold : '0.9'
-        },
-    }">
+    <div ref="more">
         <slot/>
     </div>
 </template>
 
 <script setup>
-const emit = defineEmits(['load'])
+import {ref,onMounted} from "vue";
 
-function toBottom(inView) {
-    if (inView) {
-        console.log('bottom now')
-        emit('load')
-    }
-}
+const emit = defineEmits(['load'])
+const more = ref(null)
+
+onMounted( () => {
+
+    let observer = new IntersectionObserver(entries => {
+        // console.log(entries)
+        if(entries[0].isIntersecting){
+            // console.log('bottom now')
+            emit('load')
+        }
+    })
+    observer.observe(more.value)
+})
+
 </script>
