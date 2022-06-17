@@ -62,6 +62,7 @@ const routes = [
     path: '/uploader',
     name: 'uploader',
     component: () => import('@/views/Uploader.vue'),
+    meta: { adminOnly: true },
   },
   {
     path: '/gallery',
