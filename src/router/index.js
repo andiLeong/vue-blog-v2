@@ -70,6 +70,11 @@ const routes = [
     component: () => import('@/views/Gallery.vue'),
   },
   {
+    path: '/when-visible',
+    name: 'when-visible',
+    component: () => import('@/views/WhenVisible.vue'),
+  },
+  {
     path: '/pagination',
     name: 'pagination',
     component: () => import('@/views/Pagination.vue'),
