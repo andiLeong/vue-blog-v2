@@ -64,7 +64,7 @@
             vel veritatis, vero! Eveniet!</p>
     </div>
 
-    <FixToTop class="mt-4">
+    <FixToTop>
         <div class="w-full   bg-gray-300" >
             <nav class="mx-auto max-w-6xl p-4 flex justify-between items-center">
                 <div class="flex items-center space-x-2">

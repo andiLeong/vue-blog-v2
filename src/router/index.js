@@ -60,12 +60,12 @@ const routes = [
   },
   {
     path: '/when-visible',
-    name: 'when-visible',
+    name: 'when.visible',
     component: () => import('@/views/WhenVisible.vue'),
   },
   {
     path: '/fix-to-top',
-    name: 'fix-to-top',
+    name: 'fix.to.top',
     component: () => import('@/views/FixToTopPage.vue'),
   },
   {

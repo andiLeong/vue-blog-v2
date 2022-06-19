@@ -73,15 +73,17 @@
                   v-slot="{ active }"
                   v-for="(dropdown, index) in dropdowns"
                   :key="index"
+                  as="AppLink"
                 >
-                  <a
-                    :href="dropdown.path"
+                  <AppLink
+                    :to="dropdown.name"
+                    active-class=""
                     :class="[
                       active ? 'bg-gray-100' : '',
                       'block px-4 py-2 text-sm text-gray-700',
                     ]"
-                    >{{ dropdown.name }}</a
-                  >
+                    >{{ dropdown.description }}
+                  </AppLink>
                 </MenuItem>
 
                 <MenuItem v-slot="{ active }">
@@ -142,8 +144,10 @@ const routes = ref([
 ]);
 
 const dropdowns = ref([
-  { path: '/uploader', name: 'Upload Gallery' },
-  { path: '/posts/create', name: 'Create Post' },
+    { description: 'Upload Gallery',name:{ name: 'gallery' }},
+    { description: 'Create Post', name:{name: 'post.create'} },
+    { description: 'Fix To Top', name:{name: 'fix.to.top'} },
+    { description: 'When Visible', name:{name: 'when.visible'} },
 ]);
 
 function change() {
