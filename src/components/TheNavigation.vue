@@ -144,10 +144,13 @@ const routes = ref([
 ]);
 
 const dropdowns = ref([
-    { description: 'Upload Gallery',name:{ name: 'gallery' }},
+    { description: 'Upload Gallery',name:{ name: 'uploader' }},
+    { description: 'View Gallery',name:{ name: 'gallery' }},
     { description: 'Create Post', name:{name: 'post.create'} },
     { description: 'Fix To Top', name:{name: 'fix.to.top'} },
     { description: 'When Visible', name:{name: 'when.visible'} },
+    { description: 'Tabs', name:{name: 'tabs'} },
+    { description: 'Data Table', name:{name: 'order.index'} },
 ]);
 
 function change() {

@@ -30,14 +30,14 @@
         </div>
       </div>
       <div class="mt-3 space-y-1">
-        <DisclosureButton
+        <AppLink
           v-for="(dropdown, index) in dropdowns"
           :key="index"
-          as="a"
-          :href="dropdown.path"
+          :to="dropdown.name"
+          active-class=""
           class="dark:hover:text-gray-700 dark:text-gray-100 block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-          >{{ dropdown.name }}</DisclosureButton
-        >
+          >{{ dropdown.description }}
+        </AppLink>
 
         <DisclosureButton
           as="a"
