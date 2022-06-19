@@ -8,22 +8,11 @@ import { useUserStore } from '@/store/user'
 const routes = [
   { path: '/', name: 'home', component: Home },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/About.vue'),
-  },
-
-  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue'),
     meta: { redirectIfLogged: true },
   },
-  // {
-  //   path: '/logout',
-  //   name: 'logout',
-  //   component: () => import('@/views/Logout.vue'),
-  // },
   {
     path: '/posts',
     name: 'posts',
@@ -73,6 +62,11 @@ const routes = [
     path: '/when-visible',
     name: 'when-visible',
     component: () => import('@/views/WhenVisible.vue'),
+  },
+  {
+    path: '/fix-to-top',
+    name: 'fix-to-top',
+    component: () => import('@/views/FixToTopPage.vue'),
   },
   {
     path: '/pagination',
