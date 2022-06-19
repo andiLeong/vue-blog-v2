@@ -61,6 +61,7 @@
                     class="drop-down-item"
                     >{{ dropdown.description }}
                     </a>
+                    <SignOut />
                 </div>
             </AppDropDown>
         </div>
