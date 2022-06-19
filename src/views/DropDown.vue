@@ -2,7 +2,23 @@
 
     <div class="md:mx-auto mx-4 max-w-6xl my-10">
 
-        <div class="grid grid-cols-3">
+        <div class="md:grid grid-cols-3 md:space-y-0 flex justify-between">
+            <div>
+                <AppDropDown direction="left">
+                    <template #trigger>
+                        <button class="bg-red-400 text-white p-3 rounded">
+                            Left align
+                        </button>
+                    </template>
+
+                    <div class="py-1" role="none">
+                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">Account settings</a>
+                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">Support</a>
+                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">License</a>
+                    </div>
+                </AppDropDown>
+            </div>
+
             <div>
                 <AppDropDown>
                     <template #trigger>
@@ -20,21 +36,7 @@
                 </AppDropDown>
             </div>
 
-            <div>
-                <AppDropDown direction="left">
-                    <template #trigger>
-                        <button class="bg-red-400 text-white p-3 rounded">
-                            Left align
-                        </button>
-                    </template>
 
-                    <div class="py-1" role="none">
-                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">Account settings</a>
-                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">Support</a>
-                        <a href="#" class="drop-down-item" role="menuitem" tabindex="-1">License</a>
-                    </div>
-                </AppDropDown>
-            </div>
         </div>
     </div>
 </template>

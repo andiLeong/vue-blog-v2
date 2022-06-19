@@ -54,14 +54,13 @@
                 </template>
 
                 <div class="py-1" role="none">
-                    <AppLink
+                    <a
                     v-for="(dropdown,index) in dropdowns"
                     :key="index"
-                    :to="dropdown.name"
-                    active-class=""
+                    :href="dropdown.url"
                     class="drop-down-item"
                     >{{ dropdown.description }}
-                    </AppLink>
+                    </a>
                 </div>
             </AppDropDown>
         </div>
@@ -117,14 +116,14 @@ const routes = ref([
 ]);
 
 const dropdowns = ref([
-    { description: 'Upload Gallery',name:{ name: 'uploader' }},
-    { description: 'View Gallery',name:{ name: 'gallery' }},
-    { description: 'Create Post', name:{name: 'post.create'} },
-    { description: 'Fix To Top', name:{name: 'fix.to.top'} },
-    { description: 'When Visible', name:{name: 'when.visible'} },
-    { description: 'Tabs', name:{name: 'tabs'} },
-    { description: 'Data Table', name:{name: 'order.index'} },
-    { description: 'Drop Down', name:{name: 'drop.down'} },
+    { description: 'Upload Gallery',name:{ name: 'uploader' },url:'/uploader'},
+    { description: 'View Gallery',name:{ name: 'gallery'} ,url:'/gallery'},
+    { description: 'Create Post', name:{name: 'post.create'} ,url:'/posts/create'},
+    { description: 'Fix To Top', name:{name: 'fix.to.top'},url:'/fix-to-top'},
+    { description: 'When Visible', name:{name: 'when.visible'},url:'/when-visible'},
+    { description: 'Tabs', name:{name: 'tabs'} ,url:'/tabs'},
+    { description: 'Data Table', name:{name: 'order.index'},url:'/order'},
+    { description: 'Drop Down', name:{name: 'drop.down'},url:'/drop-down' },
 ]);
 
 function change() {
