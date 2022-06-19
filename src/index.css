@@ -51,4 +51,8 @@
   .snack-leave-to {
     @apply transform -translate-y-24;
   }
+
+  .drop-down-item {
+    @apply text-gray-700 block px-4 py-2 text-sm;
+  }
 }

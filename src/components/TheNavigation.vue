@@ -44,54 +44,26 @@
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
-          <!-- Profile dropdown -->
-          <Menu as="div" class="ml-3 relative z-20" v-if="useUserStore().isLoggedIn">
-            <div class="">
-              <MenuButton
-                class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-              >
-                <span class="sr-only">Open user menu</span>
-                <img
-                  class="h-8 w-8 rounded-full"
-                  src="https://avatars.githubusercontent.com/u/68339288?s=48&v=4"
-                  alt=""
-                />
-              </MenuButton>
-            </div>
-            <transition
-              enter-active-class="transition ease-out duration-200"
-              enter-from-class="transform opacity-0 scale-95"
-              enter-to-class="transform opacity-100 scale-100"
-              leave-active-class="transition ease-in duration-75"
-              leave-from-class="transform opacity-100 scale-100"
-              leave-to-class="transform opacity-0 scale-95"
-            >
-              <MenuItems
-                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-              >
-                <MenuItem
-                  v-slot="{ active }"
-                  v-for="(dropdown, index) in dropdowns"
-                  :key="index"
-                  as="AppLink"
-                >
-                  <AppLink
+            <!-- Profile dropdown -->
+            <AppDropDown v-if="useUserStore().isLoggedIn">
+                <template #trigger>
+                    <button class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="h-8 w-8 rounded-full" src="https://avatars.githubusercontent.com/u/68339288?s=48&v=4" alt="profile-picture"/>
+                    </button>
+                </template>
+
+                <div class="py-1" role="none">
+                    <AppLink
+                    v-for="(dropdown,index) in dropdowns"
+                    :key="index"
                     :to="dropdown.name"
                     active-class=""
-                    :class="[
-                      active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700',
-                    ]"
+                    class="drop-down-item"
                     >{{ dropdown.description }}
-                  </AppLink>
-                </MenuItem>
-
-                <MenuItem v-slot="{ active }">
-                 <SignOut :active="active"/>
-                </MenuItem>
-              </MenuItems>
-            </transition>
-          </Menu>
+                    </AppLink>
+                </div>
+            </AppDropDown>
         </div>
         <div class="-mr-2 flex items-center sm:hidden">
           <!-- Mobile menu button -->
@@ -130,6 +102,7 @@ import SignOut from "@/components/SignOut.vue";
 import { useThemeStore } from '@/store/theme'
 import { useUserStore } from '@/store/user'
 import {useStickyNavStore} from "@/store/stickyNav";
+import AppDropDown from '@/components/AppDropDown.vue'
 
 const themeStore = useThemeStore()
 const apply = ref(false);
@@ -151,6 +124,7 @@ const dropdowns = ref([
     { description: 'When Visible', name:{name: 'when.visible'} },
     { description: 'Tabs', name:{name: 'tabs'} },
     { description: 'Data Table', name:{name: 'order.index'} },
+    { description: 'Drop Down', name:{name: 'drop.down'} },
 ]);
 
 function change() {
