@@ -56,10 +56,11 @@
                                 </p>
 
                                 <h3  class="dark:text-white">Code Review</h3>
-                                <p>
+                                <p class="sticky-nav">
                                     had done some side code project where you can check and view my code style
                                     including:
                                 </p>
+                                <div ref="stickyNav"></div>
                                 <div class="space-y-0">
                                     <div v-for="review in codeReviews" :key="review.name">
                                         <a class="text-sky-400 dark:text-blue-400" :href="review.url">{{review.name}}</a>
@@ -76,9 +77,12 @@
 
 <script setup>
 import {useUserStore} from '@/store/user'
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useStickyNavStore} from "@/store/stickyNav";
 
 const userStore = useUserStore();
+const useStickNavStore = useStickyNavStore();
+const stickyNav = ref()
 
 const skills = ref([
     'native php',
@@ -113,4 +117,16 @@ const advantages = ref([
     'Always write test first, or sometimes later to make sure the application is well tested before going live to reduce unnecessary bugs.',
     'Always write raw sql to see whats happening without reply on Eloquent too much.'
 ])
+
+onMounted( () => {
+
+    let observer = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+            useStickNavStore.apply(true)
+        }else{
+            useStickNavStore.apply(false)
+        }
+    },{threshold:.25})
+    observer.observe(stickyNav.value)
+})
 </script>

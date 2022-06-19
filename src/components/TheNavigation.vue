@@ -1,7 +1,8 @@
 <template>
   <Disclosure
     as="nav"
-    class="bg-white shadow dark:bg-gray-700"
+    class="bg-white shadow dark:bg-gray-700 "
+    :class="{ 'fixed top-0 w-full z-20' : apply}"
     v-slot="{ open }"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,14 +120,17 @@ import {
 } from '@headlessui/vue';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import TheMobileNavigation from '@/components/TheMobileNavigation.vue';
-import { ref } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import useCapitalise from "@/composable/useCapitalise";
 import Sun from "@/components/svg/Sun.vue";
 import Moon from "@/components/svg/Moon.vue";
 import SignOut from "@/components/SignOut.vue";
 import { useThemeStore } from '@/store/theme'
 import { useUserStore } from '@/store/user'
+import {useStickyNavStore} from "@/store/stickyNav";
+
 const themeStore = useThemeStore()
+const apply = ref(false);
 
 const emit = defineEmits(['change']);
 
@@ -145,4 +149,8 @@ const dropdowns = ref([
 function change() {
   emit('change', themeStore.setTheme());
 }
+
+watch( () => useStickyNavStore().shouldApply, (newValue) => {
+    apply.value = newValue
+})
 </script>
