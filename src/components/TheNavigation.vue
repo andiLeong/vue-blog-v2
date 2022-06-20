@@ -113,18 +113,13 @@ const routes = ref([
   { name: 'home' },
   { name: 'login' },
   { name: 'posts' },
-  // { name: 'gallery' },
+  { name: 'components' },
 ]);
 
 const dropdowns = ref([
     { description: 'Upload Gallery',name:{ name: 'uploader' },url:'/uploader'},
     { description: 'View Gallery',name:{ name: 'gallery'} ,url:'/gallery'},
     { description: 'Create Post', name:{name: 'post.create'} ,url:'/posts/create'},
-    { description: 'Fix To Top', name:{name: 'fix.to.top'},url:'/fix-to-top'},
-    { description: 'When Visible', name:{name: 'when.visible'},url:'/when-visible'},
-    { description: 'Tabs', name:{name: 'tabs'} ,url:'/tabs'},
-    { description: 'Data Table', name:{name: 'order.index'},url:'/order'},
-    { description: 'Drop Down', name:{name: 'drop.down'},url:'/drop-down' },
 ]);
 
 function change() {

@@ -105,8 +105,7 @@ const codeReviews = ref([
     {name:'a simple mvc php',url:'https://github.com/andiLeong/php-journey'},
     {name:'aliyun sms',url:'https://github.com/andiLeong/aliyunSms'},
     {name:'a simple e-commerce',url:'https://github.com/andiLeong/my-e-commence'},
-    {name:'a datatable with vue',url:'/order'},
-    {name:'vue paginator',url:'/pagination'}
+    {name:'vue component collection',url:'/components'},
 ])
 
 const advantages = ref([
