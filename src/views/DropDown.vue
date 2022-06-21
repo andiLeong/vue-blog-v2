@@ -1,7 +1,6 @@
 <template>
 
-    <div class="md:mx-auto mx-4 max-w-6xl my-10">
-
+    <ComponentLayout class="my-10" title="Drop Down">
         <div class="md:grid grid-cols-3 md:space-y-0 flex justify-between">
             <div>
                 <AppDropDown direction="left">
@@ -38,11 +37,12 @@
 
 
         </div>
-    </div>
+    </ComponentLayout>
 </template>
 
 <script setup>
 import AppDropDown from '@/components/AppDropDown.vue'
+import ComponentLayout from '@/components/ComponentLayout.vue'
 </script>
 
 <style scoped>

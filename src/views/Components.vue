@@ -18,6 +18,7 @@ const components = ref([
     {description: 'Tabs', name: {name: 'tabs'}, url: '/tabs'},
     {description: 'Data Table', name: {name: 'order.index'}, url: '/order'},
     {description: 'Drop Down', name: {name: 'drop.down'}, url: '/drop-down'},
-    {description:'Paginator',url:'/pagination'}
+    {description:'Paginator',url:'/pagination'},
+    // {description:'Modal',url:'/modal'}
 ])
 </script>

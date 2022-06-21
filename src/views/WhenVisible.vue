@@ -1,9 +1,6 @@
 <template>
 
-    <div class="mx-5 md:mx-auto max-w-6xl mt-10">
-
-        <h1 class="text-gray-700 text-lg my-2">Conditionally display/hide element based on other element is on viewport</h1>
-
+    <ComponentLayout  class=" my-10 " title="Conditionally display/hide element based on other element is on viewport">
         <div class="md:grid grid-cols-3 space-y-4 md:space-y-0">
             <div>
                 side bar
@@ -35,7 +32,7 @@
             </div>
         </div>
 
-        <div class="fixed bottom-0 right-0 mb-3 mr-4">
+        <div class="fixed bottom-0 right-0 pb-3 mr-4">
             <ShowWhenHidden element="#js-reply-button">
                 <button class="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-blue-500">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -44,13 +41,12 @@
                 </button>
             </ShowWhenHidden>
         </div>
-
-    </div>
+    </ComponentLayout>
 </template>
 
 <script setup>
 import ShowWhenHidden from "@/components/ShowWhenHidden.vue"
-
+import ComponentLayout from '@/components/ComponentLayout.vue'
 
 
 </script>

@@ -53,6 +53,11 @@ const routes = [
     component: () => import('@/views/DropDown.vue'),
   },
   {
+    path: '/modal',
+    name: 'modal',
+    component: () => import('@/views/Modal.vue'),
+  },
+  {
       path: '/components',
       name: 'components',
       component: () => import('@/views/Components.vue'),
