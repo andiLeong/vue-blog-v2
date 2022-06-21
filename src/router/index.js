@@ -63,6 +63,11 @@ const routes = [
     component: () => import('@/views/CountUp.vue'),
   },
   {
+    path: '/grid',
+    name: 'grid',
+    component: () => import('@/views/Grid.vue'),
+  },
+  {
       path: '/components',
       name: 'components',
       component: () => import('@/views/Components.vue'),
