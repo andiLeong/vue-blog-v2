@@ -58,6 +58,11 @@ const routes = [
     component: () => import('@/views/Modal.vue'),
   },
   {
+    path: '/count-up',
+    name: 'count.up',
+    component: () => import('@/views/CountUp.vue'),
+  },
+  {
       path: '/components',
       name: 'components',
       component: () => import('@/views/Components.vue'),
