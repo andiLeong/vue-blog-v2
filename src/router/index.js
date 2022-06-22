@@ -68,6 +68,11 @@ const routes = [
     component: () => import('@/views/Grid.vue'),
   },
   {
+    path: '/flex-grid',
+    name: 'flex.grid',
+    component: () => import('@/views/FlexGrid.vue'),
+  },
+  {
       path: '/components',
       name: 'components',
       component: () => import('@/views/Components.vue'),

@@ -20,6 +20,7 @@ const components = ref([
     {description: 'Drop Down', name: {name: 'drop.down'}, url: '/drop-down'},
     {description:'Paginator',url:'/pagination'},
     {description:'Counter',url:'/count-up'},
+    {description:'Flex Box Grid',url:'/flex-grid'},
     // {description:'Modal',url:'/modal'}
 ])
 </script>
