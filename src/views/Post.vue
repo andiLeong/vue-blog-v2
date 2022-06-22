@@ -36,11 +36,11 @@
     </div>
     <div class="relative px-4 sm:px-6 lg:px-8">
       <div v-if="post" class="text-lg max-w-prose mx-auto">
-        <div class="flex justify-between">
+        <div class="blog-button-group">
           <div>
             <GoBack />
           </div>
-          <div class="space-x-2" v-if="isAdmin">
+          <div class="blog-buttons" v-if="isAdmin">
             <PostDeleteButton @postDeleted="router.push('/')" :slug="post.slug" />
             <PostUpdateButton :slug="post.slug" />
           </div>

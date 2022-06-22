@@ -61,19 +61,30 @@
   }
 }
 
-.blog-container {
+.blogs-container {
   display: grid;
   gap:2rem;
 }
 
+.blog-button-group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.blog-buttons{
+  display:grid;
+  grid-template-columns: repeat(2,auto);
+  grid-column-gap: 0.7rem;
+}
+
 @media (min-width: 768px) {
-  .blog-container {
+  .blogs-container {
     grid-template-columns: repeat(2,1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .blog-container {
+  .blogs-container {
     grid-template-columns: repeat(3,1fr);
   }
 }
