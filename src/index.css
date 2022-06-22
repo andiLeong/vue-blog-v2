@@ -60,3 +60,20 @@
     @apply px-4 py-2 shadow-lg bg-blue-400 rounded text-white;
   }
 }
+
+.blog-container {
+  display: grid;
+  gap:2rem;
+}
+
+@media (min-width: 768px) {
+  .blog-container {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-container {
+    grid-template-columns: repeat(3,1fr);
+  }
+}

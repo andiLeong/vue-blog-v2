@@ -1,9 +1,11 @@
 <template>
+
+<!--    class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12 "-->
     <div class="pt-10 pb-20 px-4 sm:px-6 lg:pb-28 lg:px-8">
-        <div class="relative max-w-lg mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl">
+        <div class="relative mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl">
             <div
                 v-if="posts.length"
-                class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12 "
+                class="blog-container"
             >
                 <div v-for="post in posts" :key="post.id" class="mb-4">
                     <AppLink
