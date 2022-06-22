@@ -240,7 +240,7 @@
         <section class="left">
             <nav>
                 <div>
-                    <img src="logo.svg" alt="Logo" height="40" />
+                    <img src="https://andiliang.sgp1.digitaloceanspaces.com/junsing/F387748C-A9C7-4CC1-A1D0-81897749E2C4.jpeg" alt="Logo" height="40" />
                 </div>
             </nav>
         </section>
