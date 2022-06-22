@@ -75,9 +75,7 @@
   grid-template-columns: repeat(auto-fit,minmax(25rem,1fr));
 }
 
-.blogs-container > :first-child {
-    grid-column: span 2;
-}
+
 
 .blog-button-group {
   display: grid;
@@ -91,6 +89,10 @@
 }
 
 @media (min-width: 768px) {
+
+  .blogs-container > :first-child {
+    grid-column: span 2;
+  }
 
 }
 
