@@ -6,7 +6,7 @@
             <div v-if="posts.length" class="blogs-container">
                 <div v-for="post in posts" :key="post.id" class="mb-4">
                     <AppLink
-                        class="block mt-4"
+                        class="block mt-4 mb-3"
                         :to="{ name: 'posts.show', params: { slug: post.slug } }"
                     >
                         <p class="text-xl font-semibold text-gray-900 dark:text-white">
