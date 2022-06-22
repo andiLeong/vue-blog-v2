@@ -186,13 +186,105 @@
             </section>
         </div>
 
+        <div>
+            <h1>Example 9: cell merging
+                <pre class="text-red-500">grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;</pre>
+            </h1>
+            <section class="example-9 grid-container">
+                <div>
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="Full Name"/>
+                </div>
+                <div>
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Email Address"/>
+                </div>
+                <div id="message-block">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="Your Message" rows="7"></textarea>
+                </div>
+                <button class="bg-purple-500 text-white p-4 rounded inline-block" type="submit">Send a Message</button>
 
+            </section>
+        </div>
+
+        <div>
+            <h1>Example 10: name grid area
+                <pre class="text-red-500"> grid-template-areas:
+        "name message"
+        "email message"
+        "submit-button submit-button";</pre>
+            </h1>
+            <section class="example-10 grid-container">
+                <div id="name">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="Full Name"/>
+                </div>
+                <div id="email">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Email Address"/>
+                </div>
+                <div id="message">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="Your Message" rows="7"></textarea>
+                </div>
+                <button id="submit-button" class="bg-purple-500 text-white p-4 rounded inline-block" type="submit">Send a Message</button>
+
+            </section>
+        </div>
     </ComponentLayout>
+
+    <div class="dashboard">
+        <section class="left">
+            <nav>
+                <div>
+                    <img src="logo.svg" alt="Logo" height="40" />
+                </div>
+            </nav>
+        </section>
+        <section class="main">
+            <h3>Dashboard</h3>
+            <div class="container">
+                <div class="block block1">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <i style="justify-self:end;align-self: end;" class="fa-solid fa-ellipsis"></i>
+                    <div>
+                        <h3>$12,766</h3>
+                        <p>Today's Revenue</p>
+                    </div>
+                    <span style="justify-self:end;align-self: end;"> + 13% </span>
+                </div>
+                <div class="block block1">
+                    <p>Block 1</p>
+                </div>
+                <div class="block block1">
+                    <p>Block 1</p>
+                </div>
+                <div class="block block1">
+                    <p>Block 1</p>
+                </div>
+                <div class="block block2">
+                    <p>Block 2</p>
+                </div>
+                <div class="block block3">
+                    <p>Block 3</p>
+                </div>
+                <div class="block block4">
+                    <p>Block 4</p>
+                </div>
+                <div class="block block5">
+                    <p>Block 5</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
 </template>
 
 <script setup>
-import ComponentLayout from '@/components/ComponentLayout.vue'
+import ComponentLayout from "@/components/ComponentLayout.vue";
 import {onMounted} from "vue";
 
 onMounted( () => {
@@ -255,5 +347,88 @@ onMounted( () => {
     grid-template-columns: repeat(2,auto);
     justify-content: space-between;
     align-content: space-between;
+}
+
+.example-9 {
+    margin:2rem;
+    max-width: 34rem;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    align-items: center;
+    /*justify-items: center;*/
+}
+.example-9 > #message-block{
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+.example-9 > button{
+    grid-column-start: 1;
+    grid-column-end: span 2;
+}
+
+.example-10 {
+    margin:2rem;
+    max-width: 34rem;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    grid-template-areas:
+        "name message"
+        "email message"
+        "submit-button submit-button";
+}
+#name {
+    grid-area: name;
+}
+#email {
+    grid-area: email;
+}
+#message {
+    grid-area: message;
+}
+#submit-button {
+    grid-area: submit-button;
+}
+.dashboard{
+    max-width: 96rem;
+    margin:1rem auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.block {
+    background-color: #2a2d3e;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+.container {
+    display:grid;
+    grid-template-columns: repeat(8 ,1fr);
+    gap: 1.5rem;
+}
+.block1 {
+    height: 9rem;
+    grid-column: span 2;
+
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    /*justify-content: space-between;*/
+    /*align-content: space-between;*/
+    place-content: space-between;
+}
+.block2 {
+    grid-column: span 5;
+}
+.block3 {
+    grid-column: span 3;
+}
+.block4 {
+    grid-column: span 4;
+}
+.block5 {
+    grid-column: span 4;
 }
 </style>
