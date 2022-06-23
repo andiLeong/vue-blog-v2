@@ -1,5 +1,5 @@
 <template>
-    <snack type="primary" v-if="submitted" text="Hey, your post had been updated !"/>
+<!--    <snack type="primary" v-if="submitted" text="Hey, your post had been updated !"/>-->
 
     <form
         @submit.prevent="update"
@@ -54,6 +54,7 @@ import Tiptap from '@/components/Tiptap.vue';
 import {ref} from "vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError";
 import {useFetchAPost} from "@/composable/useFetchAPost";
+import {useRouter} from "vue-router";
 
 const props = defineProps(['slug'])
 
@@ -61,16 +62,18 @@ const post = ref('')
 const errors = ref({})
 const isLoading = ref(false)
 const submitted = ref(false)
+const router = useRouter()
 
 function update() {
     isLoading.value = true;
 
     axios
         .patch(`/api/posts/${props.slug}`, post.value)
-        .then((response) => {
+        .then(({data}) => {
             isLoading.value = false;
             submitted.value = true;
-            console.log(response.data);
+            router.push({ name: 'posts.show', params: { slug: data.slug } })
+            console.log(data);
         })
         .catch((error) => {
             isLoading.value = false;

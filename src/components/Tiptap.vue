@@ -224,6 +224,18 @@
         redo
       </button>
     </div>
+
+
+    <div class="mr-1 mt-2">
+      <button
+          type="button"
+          class="go-back-btn"
+          @click="setLink" :class="{ 'is-active': editor.isActive('link') }"
+      >
+          setLink
+      </button>
+    </div>
+
   </div>
 
   <editor-content :editor="editor" />
@@ -232,6 +244,7 @@
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
+import {Link} from "@tiptap/extension-link";
 
 export default {
   emits: ["typing"],
@@ -271,7 +284,16 @@ export default {
   mounted() {
     this.editor = new Editor({
       // element: document.querySelector('.element'),
-      extensions: [StarterKit],
+      extensions: [
+          StarterKit,
+          Link.configure({
+            openOnClick: false,
+              HTMLAttributes: {
+                  class: 'text-sky-400',
+              },
+          }),
+
+      ],
 
       editorProps: {
         attributes: {
@@ -299,6 +321,38 @@ export default {
   beforeUnmount() {
     this.editor.destroy();
   },
+
+    methods: {
+        setLink() {
+            const previousUrl = this.editor.getAttributes('link').href
+            const url = window.prompt('URL', previousUrl)
+
+            // cancelled
+            if (url === null) {
+                return
+            }
+
+            // empty
+            if (url === '') {
+                this.editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange('link')
+                    .unsetLink()
+                    .run()
+
+                return
+            }
+
+            // update link
+            this.editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .setLink({ href: url })
+                .run()
+        },
+    },
 };
 </script>
 
