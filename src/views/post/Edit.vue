@@ -28,7 +28,7 @@
                         </label>
                         {{post.body}}
                         <div class="mt-1">
-                            <tiptap v-model="post.body"/>
+                            <tiptap v-model="post.body" @typing="post.body = $event"/>
                         </div>
                     </div>
                 </div>
