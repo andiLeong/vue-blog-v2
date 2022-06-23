@@ -42,6 +42,7 @@
                             </div>
                             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 dark:text-white lg:mt-0">
                                 <h3 class="dark:text-white">Advantage</h3>
+                                <h3 class="dark:text-white">test deploy script</h3>
 
                                 <div class="space-y-2">
                                     <div v-for="advantage in advantages" :key="advantage"> {{advantage}}</div>
