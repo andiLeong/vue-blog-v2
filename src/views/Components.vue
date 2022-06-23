@@ -21,6 +21,7 @@ const components = ref([
     {description:'Paginator',url:'/pagination'},
     {description:'Counter',url:'/count-up'},
     {description:'Flex Box Grid',url:'/flex-grid'},
+    {description:'Css Grid Layout',url:'/css-grid'},
     // {description:'Modal',url:'/modal'}
 ])
 </script>
