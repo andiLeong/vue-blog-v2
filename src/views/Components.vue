@@ -22,6 +22,7 @@ const components = ref([
     {description:'Counter',url:'/count-up'},
     {description:'Flex Box Grid',url:'/flex-grid'},
     {description:'Css Grid Layout',url:'/css-grid'},
+    {description:'Rebuild Tweet - Flex',url:'/twitter-rebuild'},
     // {description:'Modal',url:'/modal'}
 ])
 </script>

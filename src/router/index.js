@@ -78,6 +78,11 @@ const routes = [
     component: () => import('@/views/CssGrid.vue'),
   },
   {
+    path: '/twitter-rebuild',
+    name: 'twitter.rebuild',
+    component: () => import('@/views/TwitterRebuild.vue'),
+  },
+  {
       path: '/components',
       name: 'components',
       component: () => import('@/views/Components.vue'),
