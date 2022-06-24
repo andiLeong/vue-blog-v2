@@ -79,6 +79,7 @@
 import {useUserStore} from '@/store/user'
 import {onMounted, ref} from "vue";
 import {useStickyNavStore} from "@/store/stickyNav";
+import {useMeta} from "vue-meta";
 
 const userStore = useUserStore();
 const useStickNavStore = useStickyNavStore();
@@ -127,5 +128,12 @@ onMounted( () => {
         }
     },{threshold:.25})
     observer.observe(stickyNav.value)
+})
+
+
+useMeta({
+    title: 'Andi liang is a laravel + vue full stack developer | vue js | javascript | laravel | php | single page application. I write my blog about my development journey',
+    description: 'A short introduction about me',
+    htmlAttrs: { lang: 'en'}
 })
 </script>

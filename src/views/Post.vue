@@ -119,13 +119,15 @@ const published_at = computed(() =>
 );
 
 const { meta } = useMeta({
-    title: 'My Title',
+    title: 'Blog Post Page',
+    description: 'Blog Post Page Description',
 })
 
 useFetchAPost(props.slug,post);
 
 watch( post, (newValue) => {
     meta.title = newValue.title
+    meta.description = newValue.shortDescription
 })
 
 onUpdated(() => {

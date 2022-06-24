@@ -11,6 +11,7 @@
 
 <script setup>
 import {ref} from "vue";
+import {useMeta} from "vue-meta";
 
 const components = ref([
     {description: 'Fix To Top', name: {name: 'fix.to.top'}, url: '/fix-to-top'},
@@ -25,4 +26,10 @@ const components = ref([
     {description:'Rebuild Tweet - Flex',url:'/twitter-rebuild'},
     // {description:'Modal',url:'/modal'}
 ])
+
+
+useMeta({
+    title: 'Here a list of vue component I had made ',
+    htmlAttrs: { lang: 'en'}
+})
 </script>

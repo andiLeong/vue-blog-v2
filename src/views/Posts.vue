@@ -55,7 +55,10 @@ const page = ref(1);
 const noPosts = ref(false);
 const fetching = ref(false);
 
-useMeta({title: `Andi Liang's Posts Page`})
+useMeta({
+    title: `Andi Liang's Posts Page`,
+    description: `Posts about mysql , php , laravel , veu js , javascript , css and anything about web development`,
+})
 
 function fetch() {
 
