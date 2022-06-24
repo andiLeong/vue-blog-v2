@@ -3,8 +3,9 @@
 <!--    class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12 "-->
     <div class="pt-10 pb-20 px-4 sm:px-6 lg:pb-28 lg:px-8">
         <div class="relative mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl">
-            <div v-if="posts.length" class="blogs-container">
-                <div v-for="post in posts" :key="post.id" class="mb-4">
+          <div v-if="posts.length" class="blogs-container ">
+
+                <div v-for="post in posts" :key="post.id" class="mb-4 ml-1 mr-2 md:mx-0">
                     <AppLink
                         class="block mt-4 mb-3"
                         :to="{ name: 'posts.show', params: { slug: post.slug } }"
