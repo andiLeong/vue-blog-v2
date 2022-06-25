@@ -28,7 +28,7 @@
 
 <script setup>
 import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
-import {useSearchModalStore} from '@/store/SearchModal'
+import {useSearchModalStore} from '@/store/searchModal'
 import {ref, watch} from "vue";
 import SearchModal from "@/model/SearchModal";
 
