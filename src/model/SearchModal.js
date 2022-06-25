@@ -1,4 +1,4 @@
-import {useSearchModalStore} from '@/store/SearchModal'
+import {useSearchModalStore} from '@/store/searchModal'
 
 class SearchModal{
 
