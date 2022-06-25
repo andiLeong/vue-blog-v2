@@ -10,6 +10,7 @@
       <router-view :key="$route.path"></router-view>
     </div>
   </div>
+    <AppPalettesModal />
 </template>
 
 <script setup>
@@ -18,7 +19,11 @@ import { ref } from 'vue';
 import { useMeta } from 'vue-meta'
 import {useThemeStore} from '@/store/theme'
 import {useUserStore} from "@/store/user";
+import AppPalettesModal from '@/components/AppPalettesModal.vue'
+import SearchModal from "@/model/SearchModal";
 
+
+const searchModal = new SearchModal()
 const myTheme = ref();
 useThemeStore().setLocalTheme(myTheme)
 useUserStore().setUserFromStorage()
@@ -28,5 +33,13 @@ useMeta({
     description: 'I\'m a laravel + vue full stack developer,I write my blog about web development',
     htmlAttrs: { lang: 'en', amp: true }
 })
+
+
+window.addEventListener("keydown", (e) => {
+    if(e.key === '/' && e.keyCode === 191){
+        searchModal.opens()
+    }
+});
+
 
 </script>

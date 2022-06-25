@@ -94,6 +94,10 @@
     grid-column: span 2;
   }
 
+  .palettes {
+    min-width: 500px;
+  }
+
 }
 
 @media (min-width: 1024px) {

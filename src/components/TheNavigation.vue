@@ -8,18 +8,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex">
-          <!-- <div class="flex-shrink-0 flex items-center">
-            <img
-              class="block lg:hidden h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
-            <img
-              class="hidden lg:block h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-              alt="Workflow"
-            />
-          </div> -->
           <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
             <AppLink
               v-for="route in routes"
@@ -44,6 +32,13 @@
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            <!-- Search Palettes -->
+            <button @click.prevent="openSearchModal" id="search-button" class="js-search-button rounded-full inline-flex items-center text-gray-400 p-2 bg-gray-200 hover:bg-gray-500 transition-all border border-transparent">
+                <svg  class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
             <!-- Profile dropdown -->
             <AppDropDown v-if="useUserStore().isLoggedIn">
                 <template #trigger>
@@ -103,7 +98,10 @@ import { useThemeStore } from '@/store/theme'
 import { useUserStore } from '@/store/user'
 import {useStickyNavStore} from "@/store/stickyNav";
 import AppDropDown from '@/components/AppDropDown.vue'
+import SearchModal from "@/model/SearchModal";
 
+
+const searchModal = new SearchModal()
 const themeStore = useThemeStore()
 const apply = ref(false);
 
@@ -124,6 +122,11 @@ const dropdowns = ref([
 
 function change() {
   emit('change', themeStore.setTheme());
+}
+
+function openSearchModal() {
+  console.log('opening from nav bar')
+    searchModal.opens()
 }
 
 watch( () => useStickyNavStore().shouldApply, (newValue) => {

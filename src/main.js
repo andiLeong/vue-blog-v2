@@ -6,13 +6,15 @@ import axios from 'axios';
 import { ObserveVisibility } from 'vue-observe-visibility';
 import './index.css';
 
-import store from './store';
+// import store from './store';
 import appUrl from '../appconfig.js';
 import SubmitButton from '@/components/forms/SubmitButton.vue';
 import ValidationErrors from '@/components/validation/ValidationErrors.vue'
 import Snack from '@/components/Snack.vue'
 import { createMetaManager } from 'vue-meta'
 import { createPinia } from 'pinia'
+import { vfmPlugin } from 'vue-final-modal'
+import VueClickAway from "vue3-click-away";
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
@@ -27,7 +29,8 @@ const app = createApp(App)
   .component('Snack', Snack)
   .use(createMetaManager())
   .use(router)
-  // .use(store)
+  .use(vfmPlugin)
+  .use(VueClickAway)
   .use(createPinia())
   .directive('observe-visibility', {
     beforeMount: (el, binding, vnode) => {
