@@ -238,7 +238,7 @@
 
   </div>
 
-  <editor-content :editor="editor" />
+  <editor-content id="tipTap" :editor="editor" />
 </template>
 
 <script>
@@ -298,7 +298,7 @@ export default {
       editorProps: {
         attributes: {
           class:
-            'h-96 overflow-scroll dark:bg-white focus:ring-1 focus:border-sky-500 focus:ring-sky-500 px-4 py-2 border border-gray-300 rounded border-2 shawdow prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none',
+            'js-editable h-96 overflow-scroll dark:bg-white focus:ring-1 focus:border-sky-500 focus:ring-sky-500 px-4 py-2 border border-gray-300 rounded border-2 shawdow prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none',
         },
       },
 

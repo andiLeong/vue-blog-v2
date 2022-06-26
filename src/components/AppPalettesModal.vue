@@ -80,10 +80,44 @@ onMounted( () => {
 
     keyDown
         .onEsc( () => close())
-        .onArrowDown( () => searchItemIndex.next())
-        .onArrowUp( () => searchItemIndex.previous())
-        .onForwardSlash( () => searchModal.opens())
-        .onEnter( () => {
+        .onArrowDown( (e) => {
+            if(e.target.classList.contains('js-editable')){
+                return;
+            }
+            if(e.target.matches('input','textarea')){
+                return ;
+            }
+            console.log('down is press')
+            searchItemIndex.next()
+        })
+        .onArrowUp( (e) => {
+            if(e.target.classList.contains('js-editable')){
+                return;
+            }
+            if(e.target.matches('input','textarea')){
+                return ;
+            }
+            console.log('up is press')
+            searchItemIndex.previous()
+        })
+        .onForwardSlash( (e) => {
+            if(e.target.classList.contains('js-editable')){
+                return;
+            }
+            if(e.target.matches('input','textarea')){
+                return ;
+            }
+            console.log('slash is press')
+            searchModal.opens()
+        })
+        .onEnter( (e) => {
+            if(e.target.classList.contains('js-editable')){
+                return;
+            }
+            if(e.target.matches('input','textarea','.js-editable')){
+                return ;
+            }
+            console.log('enter is press')
             let slug = showPosts.value[activeIndex.value]?.slug
             if(slug){
                 window.location.assign(`/posts/${slug}`)
