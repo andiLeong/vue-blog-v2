@@ -69,12 +69,10 @@ import SearchItemIndex from "@/model/SearchItemIndex";
 
 
 const postQuantity = 4;
-let searchItemIndex = new SearchItemIndex(postQuantity);
 
 const searchModal = new SearchModal()
 const show = ref(searchModal.open)
 const key = ref(null)
-const activeIndex = searchItemIndex.currentIndex
 // const activeIndex = ref(null)
 const loading = ref(false)
 const posts = ref([
@@ -89,6 +87,9 @@ const posts = ref([
 const showPosts = computed( () => {
     return posts.value.slice(0,postQuantity)
 })
+
+let searchItemIndex = new SearchItemIndex();
+const activeIndex = searchItemIndex.currentIndex
 
 function path(slug){
     return `/posts/${slug}`
@@ -105,36 +106,21 @@ function onClickAway(e) {
 }
 
 watch(() => useSearchModalStore().show, newValue => show.value = newValue)
+watch(() => showPosts.value, newValue => searchItemIndex.setItems(newValue))
 
 onMounted( () => {
 
-    // let searchItemIndex = new SearchItemIndex(activeIndex.value,lastIndex);
+    //todo check  and we have showposts to show
+    // if(show.value){
+
     (new KeyDown())
         .onEsc( () => close())
+        // .when()
         .onArrowDown( () => {
             searchItemIndex.next()
-          // if (activeIndex.value !== null) {
-          //   if (activeIndex.value === lastIndex) {
-          //     return activeIndex.value = 0
-          //   }
-          //
-          //   return activeIndex.value++;
-          // }
-          //
-          // activeIndex.value = 0
         })
         .onArrowUp( () => {
-            // if (activeIndex.value) {
             searchItemIndex.previous()
-
-            // if (activeIndex.value !== null) {
-            //     if (activeIndex.value === 0) {
-            //         return activeIndex.value = lastIndex
-            //     }
-            //     return activeIndex.value--;
-            // }
-            //
-            // activeIndex.value = lastIndex
         })
         .onEnter( () => {
             let slug = showPosts.value[activeIndex.value]?.slug
@@ -144,6 +130,7 @@ onMounted( () => {
         })
         .fire()
 
+    // }
     // document.addEventListener("keydown", (e) => {
 
 
@@ -191,7 +178,7 @@ function close() {
     searchModal.close()
     key.value = null
     posts.value = []
-    activeIndex.value = null
+    searchItemIndex.clear()
 }
 
 const search = _.debounce(e => {

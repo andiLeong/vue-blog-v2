@@ -5,19 +5,20 @@ class SearchItemIndex {
     currentIndex = null
     // totalItems = 4;
 
-    constructor(totalItems) {
+    constructor(items = []) {
 
         // console.log(currentIndex)
         // this.currentIndex = currentIndex
         this.currentIndex = ref(null)
-        this.lastIndex = totalItems - 1;
+        // this.lastIndex = items.length === 0 ? null : items.length - 1  ;
+        this.items = items
         // this.lastIndex = 3
     }
 
     next() {
         // console.log(this.hasCurrentIndex())
         if (this.hasCurrentIndex()) {
-            if (this.currentIndex.value === this.lastIndex) {
+            if (this.currentIndex.value === this.lastIndex()) {
                 return this.toFirst()
             }
 
@@ -44,13 +45,25 @@ class SearchItemIndex {
     }
 
     toFirst(){
-        // console.log('inside tofirst ' + this.currentIndex)
         return this.currentIndex.value = 0
     }
 
     toLast(){
-        this.currentIndex.value = this.lastIndex
+        this.currentIndex.value = this.lastIndex()
     }
+
+    clear(){
+        this.currentIndex.value = null
+    }
+
+    lastIndex(){
+        return this.items.length === 0 ? null : this.items.length - 1  ;
+    }
+
+    setItems(items){
+       this.items = items
+    }
+
 
 
 
