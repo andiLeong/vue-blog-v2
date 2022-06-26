@@ -49,6 +49,15 @@ class KeyDown {
         })
         return this;
     }
+
+    onForwardSlash(callback){
+        this.keys.push({
+            key: '/',
+            keyCode: 191,
+            fn: callback
+        })
+        return this;
+    }
 }
 
 

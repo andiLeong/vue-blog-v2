@@ -11,31 +11,38 @@ class SearchItemIndex {
     }
 
     next() {
-        if (this.hasCurrentIndex()) {
-            if (this.currentIndex.value === this.lastIndex()) {
-                return this.toFirst()
-            }
-
-            return this.currentIndex.value ++;
-        }
-
-        return this.toFirst()
+        return this.whenHasCurrentIndex( () => this.increase())
     }
 
     previous() {
-
-        if (this.hasCurrentIndex()) {
-            if (this.currentIndex.value === 0) {
-                return this.toLast()
-            }
-            return this.currentIndex.value--;
-        }
-
-        return this.toLast()
+        return this.whenHasCurrentIndex( () => this.decrease(),false)
     }
 
     hasCurrentIndex(){
         return this.currentIndex.value !== null;
+    }
+
+    whenHasCurrentIndex(fn,toFirst = true){
+        if (this.hasCurrentIndex()) {
+            return fn();
+        }
+
+        return toFirst ? this.toFirst() : this.toLast();
+    }
+
+    decrease(){
+        if (this.currentIndex.value === 0) {
+            return this.toLast()
+        }
+        return this.currentIndex.value--;
+    }
+
+    increase(){
+        if (this.currentIndex.value === this.lastIndex()) {
+            return this.toFirst()
+        }
+
+        return this.currentIndex.value ++;
     }
 
     toFirst(){
