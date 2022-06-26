@@ -3,20 +3,14 @@ import {ref} from "vue";
 class SearchItemIndex {
 
     currentIndex = null
-    // totalItems = 4;
 
     constructor(items = []) {
 
-        // console.log(currentIndex)
-        // this.currentIndex = currentIndex
         this.currentIndex = ref(null)
-        // this.lastIndex = items.length === 0 ? null : items.length - 1  ;
         this.items = items
-        // this.lastIndex = 3
     }
 
     next() {
-        // console.log(this.hasCurrentIndex())
         if (this.hasCurrentIndex()) {
             if (this.currentIndex.value === this.lastIndex()) {
                 return this.toFirst()

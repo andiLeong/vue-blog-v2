@@ -68,28 +68,21 @@ import SearchItemIndex from "@/model/SearchItemIndex";
 
 
 
-const postQuantity = 4;
-
 const searchModal = new SearchModal()
+const searchItemIndex = new SearchItemIndex();
+const keyDown = new KeyDown();
+
+const activeIndex = searchItemIndex.currentIndex
+const postQuantity = 4;
 const show = ref(searchModal.open)
 const key = ref(null)
-// const activeIndex = ref(null)
 const loading = ref(false)
-const posts = ref([
-    // {id:1,title:'title',slug:'slug1'},
-    // {id:2,title:'title',slug:'slug2'},
-    // {id:3,title:'title',slug:'slug3'},
-    // {id:4,title:'title',slug:'slug4'},
-])
-
-// const lastIndex = postQuantity - 1;
+const posts = ref([])
 
 const showPosts = computed( () => {
     return posts.value.slice(0,postQuantity)
 })
 
-let searchItemIndex = new SearchItemIndex();
-const activeIndex = searchItemIndex.currentIndex
 
 function path(slug){
     return `/posts/${slug}`
@@ -110,68 +103,26 @@ watch(() => showPosts.value, newValue => searchItemIndex.setItems(newValue))
 
 onMounted( () => {
 
-    //todo check  and we have showposts to show
-    // if(show.value){
+        keyDown
+            .onEsc( () => {
+                console.log('esc key pressed')
+                close()
+            })
+            .onArrowDown( () => {
+                console.log('down pressed')
+                searchItemIndex.next()
+            })
+            .onArrowUp( () => {
+                searchItemIndex.previous()
+            })
+            .onEnter( () => {
+                let slug = showPosts.value[activeIndex.value]?.slug
+                if(slug){
+                    window.location.assign(path(slug))
+                }
+            })
+            .fire()
 
-    (new KeyDown())
-        .onEsc( () => close())
-        // .when()
-        .onArrowDown( () => {
-            searchItemIndex.next()
-        })
-        .onArrowUp( () => {
-            searchItemIndex.previous()
-        })
-        .onEnter( () => {
-            let slug = showPosts.value[activeIndex.value]?.slug
-            if(slug){
-                window.location.assign(path(slug))
-            }
-        })
-        .fire()
-
-    // }
-    // document.addEventListener("keydown", (e) => {
-
-
-        // if (e.key === 'Escape' && e.keyCode === 27 && show.value) {
-        //     close()
-        // }
-
-
-        // if (e.key === 'ArrowDown' && e.keyCode === 40 && show.value) {
-        //     if (activeIndex.value !== null) {
-        //         if (activeIndex.value === lastIndex) {
-        //             return activeIndex.value = 0
-        //         }
-        //
-        //         return activeIndex.value++;
-        //     }
-        //
-        //     activeIndex.value = 0
-        // }
-        //
-        // if (e.key === 'ArrowUp' && e.keyCode === 38 && show.value) {
-        //
-        //     if (activeIndex.value) {
-        //         if (activeIndex.value === 0) {
-        //             return activeIndex.value = lastIndex
-        //         }
-        //         return activeIndex.value--;
-        //     }
-        //
-        //     activeIndex.value = lastIndex
-        // }
-
-
-        // if (e.key === 'Enter' && e.keyCode === 13 && show.value) {
-        //     let slug = showPosts.value[activeIndex.value]?.slug
-        //     if(slug){
-        //         window.location.assign(path(slug))
-        //     }
-        // }
-
-    // })
 })
 
 function close() {
@@ -182,8 +133,6 @@ function close() {
 }
 
 const search = _.debounce(e => {
-
-    // console.log('call ' + e.target.value)
     let query = key.value;
     loading.value = true;
     posts.value = [];
