@@ -96,6 +96,7 @@
 
   .palettes {
     min-width: 500px;
+    min-height: 20rem;
   }
 
 }
