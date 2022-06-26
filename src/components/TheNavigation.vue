@@ -31,7 +31,7 @@
             </a>
           </div>
         </div>
-        <div class="hidden sm:ml-6 sm:flex sm:items-center">
+        <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-6">
             <!-- Search Palettes -->
             <SearchModalButton />
 
