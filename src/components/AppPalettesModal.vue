@@ -45,10 +45,12 @@ import KeyDown from "@/model/KeyDown";
 import SearchItemIndex from "@/model/SearchItemIndex";
 import AppPalettesModalFooter from "@/components/AppPalettesModalFooter.vue";
 import AppPalettesModalItems from "@/components/AppPalettesModalItems.vue";
+import KeyDownForSearchModal from "@/model/KeyDownForSearchModal";
 
 const searchModal = new SearchModal()
 const searchItemIndex = new SearchItemIndex();
 const keyDown = new KeyDown();
+const keyDownForSearchModal = new KeyDownForSearchModal();
 
 const activeIndex = searchItemIndex.currentIndex
 const postQuantity = 4;
@@ -79,38 +81,24 @@ watch(() => showPosts.value, newValue => searchItemIndex.setItems(newValue))
 onMounted( () => {
 
     keyDown
-        .onEsc( () => close())
-        .onArrowDown( (e) => {
-            if(!e.target.classList.contains('js-search-input')){
-                return;
-            }
-            console.log('down is press')
-            searchItemIndex.next()
-        })
-        .onArrowUp( (e) => {
-            if(!e.target.classList.contains('js-search-input')){
-                return;
-            }
-            console.log('up is press')
-            searchItemIndex.previous()
-        })
-        .onForwardSlash( (e) => {
-            if( e.target.matches('input','textarea') || e.target.classList.contains('js-editable')){
-                return;
-            }
-            console.log('slash is press')
-            searchModal.opens()
-        })
-        .onEnter( (e) => {
-            if(!e.target.classList.contains('js-search-input')){
-                return;
-            }
-            console.log('enter is press')
-            let slug = showPosts.value[activeIndex.value]?.slug
-            if(slug){
-                window.location.assign(`/posts/${slug}`)
-            }
-        })
+        .onEsc( () =>
+           keyDownForSearchModal.escPressed(show.value, () => close() )
+        )
+        .onArrowDown( e =>
+            keyDownForSearchModal.arrowDownPressed(e,searchItemIndex)
+        )
+        .onArrowUp( e =>
+            keyDownForSearchModal.arrowUpPressed(e,searchItemIndex)
+        )
+        .onForwardSlash( e =>
+           keyDownForSearchModal.forwardSlashPressed(e,searchModal)
+        )
+        .onEnter( e =>
+            keyDownForSearchModal.enterPressed(
+                e,
+                showPosts.value[activeIndex.value]?.slug
+            )
+        )
         .fire()
 
 })
