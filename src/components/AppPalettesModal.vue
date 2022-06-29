@@ -47,6 +47,7 @@ import AppPalettesModalFooter from "@/components/AppPalettesModalFooter.vue";
 import AppPalettesModalItems from "@/components/AppPalettesModalItems.vue";
 import KeyDownForSearchModal from "@/model/KeyDownForSearchModal";
 import {useRouter} from 'vue-router'
+import usePosts from "@/composable/usePosts";
 
 const searchModal = new SearchModal()
 const searchItemIndex = new SearchItemIndex();
@@ -58,8 +59,7 @@ const postQuantity = 4;
 const show = ref(searchModal.open)
 const key = ref(null)
 const searchInput = ref(null)
-const loading = ref(false)
-const posts = ref([])
+const {loading, posts, searchPosts} = usePosts()
 const router = useRouter();
 
 const showPosts = computed( () => {
@@ -116,16 +116,8 @@ const search = _.debounce(e => {
     let query = key.value;
     posts.value = [];
     if (query) {
-        loading.value = true;
-        axios
-            .get(`/api/posts/search?key=${query}`)
-            .then(({data}) => {
-                posts.value = data;
-                loading.value = false;
-            })
-            .catch(error => console.log(error));
+        searchPosts(query)
     }
-
 }, 500)
 
 function goToSearch(){
