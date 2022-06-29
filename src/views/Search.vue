@@ -16,17 +16,24 @@
                 <a class="block" v-html="result.title" :href="`/post/${result.slug}`"></a>
             </li>
         </ul>
+        <div v-if="loading" class="flex justify-center">
+            <Spinner class="animate-spin h-6 w-6 text-sky-600"/>
+        </div>
     </div>
 </template>
 
 <script setup>
 import {ref} from "vue";
 import _ from "lodash";
+import {useRoute} from "vue-router";
+import Spinner from '@/components/Spinner.vue';
 
-const query = ref(null);
+const route = useRoute()
+const query = ref(route.query.q);
 const results = ref([]);
+const loading = ref(false);
 
-
+console.log(route.query.q)
 const search = _.debounce(e => {
 
     results.value = [];
@@ -34,9 +41,11 @@ const search = _.debounce(e => {
     if(!key){
         return;
     }
+    loading.value = true;
     axios
         .get(`/api/posts/search?key=${key}`)
         .then(({data}) => {
+            loading.value = false;
             results.value = data.map( (post) => {
 
                 if(post.title.includes(key)){

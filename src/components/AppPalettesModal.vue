@@ -46,6 +46,7 @@ import SearchItemIndex from "@/model/SearchItemIndex";
 import AppPalettesModalFooter from "@/components/AppPalettesModalFooter.vue";
 import AppPalettesModalItems from "@/components/AppPalettesModalItems.vue";
 import KeyDownForSearchModal from "@/model/KeyDownForSearchModal";
+import {useRouter} from 'vue-router'
 
 const searchModal = new SearchModal()
 const searchItemIndex = new SearchItemIndex();
@@ -59,6 +60,7 @@ const key = ref(null)
 const searchInput = ref(null)
 const loading = ref(false)
 const posts = ref([])
+const router = useRouter();
 
 const showPosts = computed( () => {
     return posts.value.slice(0,postQuantity)
@@ -128,7 +130,13 @@ const search = _.debounce(e => {
 
 function goToSearch(){
 
-    console.log('goging to search page')
+    router.push({
+        name: 'search',
+        query: {
+            q:key.value
+        },
+    })
+    close();
 }
 
 function opened(){
@@ -136,7 +144,3 @@ function opened(){
 }
 
 </script>
-
-<style scoped>
-
-</style>
