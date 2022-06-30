@@ -129,6 +129,11 @@ const routes = [
       component: () => import('@/views/Search.vue'),
   },
   {
+    path: '/resume',
+    name: 'resume',
+    component: () => import('@/views/Resume.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
