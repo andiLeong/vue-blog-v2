@@ -134,6 +134,11 @@ const routes = [
     component: () => import('@/views/Resume.vue'),
   },
   {
+    path: '/resume-generator',
+    name: 'resume.generator',
+    component: () => import('@/views/ResumeGenerator.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
