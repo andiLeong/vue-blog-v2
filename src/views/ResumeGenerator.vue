@@ -1,39 +1,40 @@
 <template>
 
     <div class="mx-6  lg:mx-auto px-0 md:px-5 max-w-7xl my-20">
-        <form class="space-y-8" action="">
+        <form class="space-y-8" @submit.prevent="store">
 
+            <!-- personal information -->
             <div class="space-y-2">
                 <h2 class="font-semibold text-xl text-gray-700">Information</h2>
                 <div class="space-y-4 md:space-y-0 md:grid gap-4 grid-cols-12">
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">Name</label>
-                        <input type="text" class="form-input"/>
+                        <input v-model="resume.name" placeholder="Applicant's name" type="text" class="form-input" required/>
                     </div>
 
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">Position</label>
-                        <input type="text" class="form-input"/>
+                        <input v-model="resume.position" placeholder="Apply Position" type="text" class="form-input" required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Email</label>
-                        <input type="text" class="form-input"/>
+                        <input v-model="resume.email" placeholder="Your Contact Email" type="email" class="form-input" required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Phone</label>
-                        <input type="text" class="form-input"/>
+                        <input v-model="resume.phone" placeholder="Your Contact Number" type="text" class="form-input" required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Location</label>
-                        <input type="text" class="form-input"/>
+                        <input v-model="resume.location" placeholder="your Location" type="text" class="form-input" required/>
                     </div>
 
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">About</label>
-                        <textarea class="form-textarea w-full" name="" id="" rows="3"></textarea>
+                        <textarea v-model="resume.about" placeholder="Describe Your Self" class="form-textarea w-full" id="about" rows="3" required></textarea>
                     </div>
 
 
@@ -41,110 +42,25 @@
 
             </div>
 
-            <div class="space-y-2">
+            <!-- experience -->
+            <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Experiences</h2>
-                <div class="space-y-4 md:space-y-0 md:grid gap-4 grid-cols-4">
-                    <div class="space-y-2">
-                        <label class="form-label" for="">Position</label>
-                        <input type="text" class="form-input"/>
-                    </div>
 
-                    <div class="space-y-2">
-                        <label class="form-label" for="">From</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="form-label" for="">To</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="form-label" for="">Company</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2 col-span-3">
-                        <label class="form-label" for="">About</label>
-                        <textarea class="form-textarea w-full" name="" id="" rows="3"></textarea>
-                    </div>
-
-                    <div class="space-y-2 justify-self-end self-center ">
-                        <button type="button" class="rounded-full text-white p-2 rounded-full text-xl bg-sky-400">
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                 fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+                <ExperienceCollection  :experiences="resume.experiences" @remove="remove" @add="add" />
 
             </div>
 
-
-            <div class="space-y-2">
+            <!-- skills -->
+            <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Skills</h2>
-                <div class="flex flex-col md:flex-row md:items-center justify-between">
-                    <div class="space-y-2 w-full md:w-2/4">
-                        <label class="form-label" for="">Skill</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2 mt-3 md:mt-0">
-                        <button type="button" class="rounded-full text-white p-2 rounded-full text-xl bg-sky-400">
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                 fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
+                <SkillCollection :skills="resume.skills" @remove="remove" @add="add"/>
             </div>
 
-            <div class="space-y-2">
+            <!-- education -->
+            <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Educations</h2>
-                <div class="space-y-4 md:space-y-0 md:grid gap-4 grid-cols-4">
-                    <div class="space-y-2">
-                        <label class="form-label" for="">Degree</label>
-                        <input type="text" class="form-input"/>
-                    </div>
 
-                    <div class="space-y-2">
-                        <label class="form-label" for="">From</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="form-label" for="">To</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="form-label" for="">School</label>
-                        <input type="text" class="form-input"/>
-                    </div>
-
-                    <div class="space-y-2 col-span-3">
-                        <label class="form-label" for="">About</label>
-                        <textarea class="form-textarea w-full" name="" id="" rows="3"></textarea>
-                    </div>
-
-                    <div class="space-y-2 justify-self-end self-center ">
-                        <button type="button" class="rounded-full text-white p-2 rounded-full text-xl bg-sky-400">
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                 fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+                <EducationCollection :educations="resume.educations" @remove="remove" @add="add"/>
 
             </div>
 
@@ -162,9 +78,14 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import SubmitButton from '@/components/forms/SubmitButton.vue'
+import SkillCollection from "@/components/resume/SkillCollection.vue";
+import EducationCollection from "@/components/resume/EducationCollection.vue";
+import ExperienceCollection from "@/components/resume/ExperienceCollection.vue";
+import {useRouter} from 'vue-router'
 
+const router = useRouter();
 const resume = ref({
     name: null,
     position: '',
@@ -172,12 +93,67 @@ const resume = ref({
     location: '',
     phone: '',
     about: '',
-    experiences: [],
-    education: [],
-    skills: []
+    experiences: [
+    ],
+    educations: [
+
+    ],
+    skills: [
+    ]
 });
 
+resume.value.educations[0] = getDefault('educations')
+resume.value.skills[0] = getDefault('skills')
+resume.value.experiences[0] = getDefault('experiences')
 
+function add(section){
+    resume.value[section].push(
+        getDefault(section)
+    );
+}
+
+function remove(section,index){
+    resume.value[section].splice(index,1);
+}
+
+function getDefault(section){
+
+    if(section === 'skills'){
+        return {name:''}
+    }
+    if (section === 'educations') {
+        return {
+            from:'',
+            to:'',
+            school:'',
+            degree:'',
+            about:'',
+        }
+    }
+    if (section === 'experiences') {
+        return {
+            position: '',
+            from: '',
+            to: '',
+            company: '',
+            experience: '',
+        }
+    }
+
+}
+
+onMounted( () => {
+
+    let storeResume = JSON.parse( localStorage.getItem('resume') )
+    if(storeResume){
+       resume.value = storeResume
+    }
+})
+
+function store(){
+    localStorage.setItem('resume',JSON.stringify(resume.value))
+    router.push('resume')
+}
 </script>
 
 <style scoped>

@@ -24,7 +24,8 @@ const components = ref([
     {description:'Flex Box Grid',url:'/flex-grid'},
     {description:'Css Grid Layout',url:'/css-grid'},
     {description:'Rebuild Tweet - Flex',url:'/twitter-rebuild'},
-    // {description:'Modal',url:'/modal'}
+    {description:'Generate Resume',url:'/resume-generator'},
+    {description:'Resume Template',url:'/resume'}
 ])
 
 

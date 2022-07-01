@@ -66,7 +66,7 @@
                         <ul class="flex flex-col items-end space-y-3">
                             <li class="space-x-2 flex items-center" v-for="(skill,index) in skillOne" :key="index">
                                 <div class="text-gray-400 font-semibold">
-                                    {{ skill }}
+                                    {{ skill.name }}
                                 </div>
                                 <span class="skill-icon p-1 bg-green-400 text-white rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none"
@@ -92,7 +92,7 @@
                                     </svg>
                                 </span>
                                 <div class="text-gray-400 font-semibold">
-                                    {{ skill }}
+                                    {{ skill.name }}
                                 </div>
                             </li>
                         </ul>
@@ -139,7 +139,7 @@
 
             <div class="space-y-8">
 
-                <div class="resume-content" v-for="(education,index) in resume.education" :key="index">
+                <div class="resume-content" v-for="(education,index) in resume.educations" :key="index">
                     <div class="text-right">
                         <p class="text-gray-600 font-semibold">{{ education.degree }}</p>
                         <p class="text-gray-400">{{ education.from }} to {{ education.to }}</p>
@@ -209,15 +209,15 @@ const resume = ref({
         }
     ],
     skills: [
-        'database: mysql , redis',
-        'framework: laravel, vue-js, codeigniter',
-        'language: php , javascript , css',
-        'version controller : git',
-        'server: nginx , apache',
-        'deployment: ci,cd , ubuntu , digitalocean',
-        'laravel: ioc container, macro, collection, eloquent',
-        'oop php: oop fundamental , abstraction , interface, encapsulate',
-        'TDD and DDD development',
+        {name:'database: mysql , redis'},
+        {name:'framework: laravel, vue-js, codeigniter'},
+        {name:'language: php , javascript , css'},
+        {name:'version controller : git'},
+        {name:'server: nginx , apache'},
+        {name:'deployment: ci,cd , ubuntu , digitalocean'},
+        {name:'laravel: ioc container, macro, collection, eloquent'},
+        {name: 'oop php: oop fundamental , abstraction , interface, encapsulate'},
+        {name:'TDD and DDD development'},
     ]
 });
 
