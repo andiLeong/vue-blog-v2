@@ -192,7 +192,7 @@ const resume = ref({
             experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
         },
     ],
-    education: [
+    educations: [
         {
             degree: 'bachelor\'s',
             from: '2000-10',
