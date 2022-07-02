@@ -4,7 +4,7 @@
     </metainfo>
 
   <div :class="myTheme" class="flex flex-col items-stretch min-h-screen">
-    <TheNavigation @change="myTheme = $event"></TheNavigation>
+    <AppNavigation @change="myTheme = $event"></AppNavigation>
 
     <div class="flex-1 dark:bg-gray-800">
       <router-view :key="$route.path"></router-view>
@@ -14,14 +14,13 @@
 </template>
 
 <script setup>
-import TheNavigation from '@/components/TheNavigation.vue';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta'
 import {useThemeStore} from '@/store/theme'
 import {useUserStore} from "@/store/user";
 import AppPalettesModal from '@/components/AppPalettesModal.vue'
 import SearchModal from "@/model/SearchModal";
-
+import AppNavigation from "@/components/AppNavigation.vue";
 
 const myTheme = ref();
 useThemeStore().setLocalTheme(myTheme)
