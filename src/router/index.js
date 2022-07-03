@@ -144,6 +144,11 @@ const routes = [
     component: () => import('@/views/Navigation.vue'),
   },
   {
+    path: '/media-object',
+    name: 'media.object',
+    component: () => import('@/views/MediaObject.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),

@@ -11,7 +11,7 @@
                     v-for="(route , index) in routes"
                     :to="route"
                     :key="index"
-                    class="inline-flex items-center text-gray-500 hover:text-gray-700"
+                    class="inline-flex items-center text-gray-500 hover:text-gray-700 dark:text-white"
                 >
                     {{ useCapitalise(route.name) }}
                 </AppLink>
@@ -69,7 +69,7 @@
         </div>
     </nav>
 
-    <div v-if="open" class="bg-white dark:bg-gray-700 sm:hidden space-y-3 mb-6">
+    <div v-if="open" class="bg-white dark:bg-gray-700 sm:hidden space-y-3 pb-6">
         <AppMobileNavigation :routes="routes" :dropdowns="dropdowns" />
     </div>
 
