@@ -28,6 +28,9 @@
         </div>
 
         </form>
+        <div v-if="away">
+            how many {{away}} km from ({{latitude}} , {{longitude}} ) to ( {{target_latitude}} , {{target_longitude}} )
+        </div>
     </ComponentLayout>
 </template>
 
@@ -41,6 +44,7 @@ const latitude = ref(null)
 const target_latitude = ref(null)
 const target_longitude = ref(null)
 const loading = ref(false)
+const away = ref(null)
 
 onMounted( () => {
 
@@ -56,6 +60,7 @@ onMounted( () => {
 
 async function check (){
 
+    loading.value = true
     await axios.get('/sanctum/csrf-cookie');
     await axios
         .post(`/api/location-distance`,{
@@ -65,6 +70,8 @@ async function check (){
             user_latitude:latitude.value,
         })
         .then(({data}) => {
+            away.value = data
+            loading.value = false
             console.log(data)
         })
         .catch(error => {
