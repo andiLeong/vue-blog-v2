@@ -134,6 +134,11 @@ const routes = [
     component: () => import('@/views/Resume.vue'),
   },
   {
+    path: '/location-distance',
+    name: 'location.distance',
+    component: () => import('@/views/LocationDistance.vue'),
+  },
+  {
     path: '/resume-generator',
     name: 'resume.generator',
     component: () => import('@/views/ResumeGenerator.vue'),
