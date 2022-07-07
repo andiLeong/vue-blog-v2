@@ -4,7 +4,7 @@
          :class="{ 'fixed top-0 w-full z-20' : apply}"
     >
         <!-- desktop nav -->
-        <div class="hidden  max-w-6xl mx-auto sm:flex justify-between px-4 h-16">
+        <div class="hidden  max-w-6xl mx-auto sm:flex justify-between px-8 lg:px-6 h-16">
 
             <div class="flex space-x-8">
                 <AppLink
