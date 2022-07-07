@@ -234,7 +234,6 @@
 
             </section>
         </div>
-    </ComponentLayout>
 
     <div class="dashboard">
         <section class="left">
@@ -280,6 +279,8 @@
             </div>
         </section>
     </div>
+
+    </ComponentLayout>
 
 </template>
 
@@ -392,10 +393,12 @@ onMounted( () => {
     grid-area: submit-button;
 }
 .dashboard{
-    max-width: 96rem;
-    margin:1rem auto;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 10em 1fr;
+    grid-column-gap: 1rem;
+}
+.dashboard .left{
+    align-self: center;
 }
 
 .block {
