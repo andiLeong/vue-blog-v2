@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+/*custom css files*/
+@import './posts.css';
+@import './resume.css';
+
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer components {
   .validation-error {
@@ -81,92 +86,9 @@
   }
 }
 
-.blogs-container {
-  display: grid;
-  gap:2rem;
-  grid-template-columns: repeat(auto-fit,minmax(19rem,1fr));
-}
-
-
-
-.blog-button-group {
-  display: grid;
-  grid-template-columns: 1fr auto;
-}
-
-.blog-buttons{
-  display:grid;
-  grid-template-columns: repeat(2,auto);
-  grid-column-gap: 0.7rem;
-}
-
 @media (min-width: 768px) {
-
-  .blogs-container > :first-child {
-    grid-column: span 2;
-  }
-
   .palettes {
     min-width: 500px;
     min-height: 20rem;
   }
-
-}
-
-@media (min-width: 1024px) {
-
-}
-
-.resume-header{
-
-  display:grid;
-  grid-template-columns: 1fr 10px 1fr;
-  grid-column-gap: 1.5rem;
-
-}
-
-.resume-header-divider {
-  width: 0.16rem;
-}
-
-.resume-content-header{
-  display:grid;
-  grid-template-columns: auto 1fr;
-  grid-column-gap: 1rem;
-  align-items: center;
-}
-
-.resume-content{
-  display:grid;
-  grid-template-columns: 1fr 10px 1fr;
-  grid-column-gap: 1.5rem;
-}
-
-.resume-content-divider{
-  height: 0.16rem;
-}
-
-.resume-skill{
-  display:grid;
-  gap:2rem;
-  grid-template-columns: repeat(auto-fit,minmax(12rem,1fr));
-}
-
-
-@media print {
-  .resume-header .resume-header-divider {
-    background-color: #9ca3af !important;
-    -webkit-print-color-adjust: exact;
-  }
-  .resume-content-header .resume-content-divider{
-    background-color: #d1d5db !important;
-    -webkit-print-color-adjust: exact;
-  }
-  .skill-icon{
-    background-color: #4ade80 !important;
-    -webkit-print-color-adjust: exact;
-  }
-
-  /*div {page-break-inside: avoid;}*/
-
 }

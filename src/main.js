@@ -4,7 +4,7 @@ import router from '@/router';
 import AppLink from '@/components/AppLink.vue';
 import axios from 'axios';
 import { ObserveVisibility } from 'vue-observe-visibility';
-import './index.css';
+import '@/css/index.css';
 
 // import store from './store';
 import appUrl from '../appconfig.js';

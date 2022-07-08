@@ -1,0 +1,22 @@
+.blogs-container {
+    display: grid;
+    gap:2rem;
+    grid-template-columns: repeat(auto-fit,minmax(19rem,1fr));
+}
+
+.blog-button-group {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.blog-buttons{
+    display:grid;
+    grid-template-columns: repeat(2,auto);
+    grid-column-gap: 0.7rem;
+}
+
+@media (min-width: 768px) {
+    .blogs-container > :first-child {
+        grid-column: span 2;
+    }
+}
