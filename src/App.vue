@@ -10,7 +10,7 @@
       <router-view :key="$route.path"></router-view>
     </div>
   </div>
-    <AppPalettesModal />
+  <AppPalettesModal />
 </template>
 
 <script setup>

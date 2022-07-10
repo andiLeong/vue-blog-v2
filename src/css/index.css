@@ -84,6 +84,10 @@
   .blogs-container > :first-child > a  > p{
     @apply text-white;
   }
+
+  .post-tags{
+    @apply rounded-full px-3 py-0.5 text-sm font-medium inline-flex items-center;
+  }
 }
 
 @media (min-width: 768px) {

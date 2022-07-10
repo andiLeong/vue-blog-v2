@@ -3,9 +3,10 @@
 <!--    class="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12 "-->
     <div class="pt-10 pb-20 px-4 sm:px-6 lg:pb-28 lg:px-8">
         <div class="relative mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl">
-          <div v-if="posts.length" class="blogs-container ">
+            <div v-if="posts.length" class="blogs-container">
 
-                <div v-for="post in posts" :key="post.id" class="mb-4 ml-1 mr-2 md:mx-0">
+                <div v-for="(post,index) in posts" :key="post.id"  style="min-height: 8em" class="space-y-4 py-3 mb-4 ml-1 mr-2 md:mx-0">
+                    <PostTags :post="post" :index="index"/>
                     <AppLink
                         class="block mt-4 mb-3"
                         :to="{ name: 'posts.show', params: { slug: post.slug } }"
@@ -48,6 +49,7 @@ import AppLink from '@/components/AppLink.vue';
 import Spinner from '@/components/Spinner.vue';
 import { useMeta } from 'vue-meta'
 import LoadMore from '@/components/LoadMore.vue'
+import PostTags from '@/components/PostTags.vue'
 
 const posts = ref([]);
 const lastPage = ref(null);
@@ -65,7 +67,7 @@ function fetch() {
     fetching.value = true
     axios
         .get(`/api/posts?page=${page.value}`)
-        .then(function (response) {
+        .then((response) => {
             fetching.value = false
             lastPage.value = response.data.last_page
             posts.value.push(...response.data.data);
@@ -73,13 +75,10 @@ function fetch() {
                 noPosts.value = true
             }
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+        .catch(error => console.log(error));
 }
 
 function loadMore() {
-    // console.log('loading more')
     if (lastPage.value === null || page.value < lastPage.value) {
         page.value++;
     }
