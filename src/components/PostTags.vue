@@ -7,7 +7,6 @@
             v-for="(tag) in post.tags"
         >
             <span
-                v-for="(tag) in post.tags"
                 v-html="tag.name"
                 class="dark:text-white dark:bg-transparent bg-transparent text-white post-tags"
             >
