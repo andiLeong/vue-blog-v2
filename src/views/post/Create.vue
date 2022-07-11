@@ -10,30 +10,20 @@
             <div>
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <BaseInput
-                            labelClass="block text-sm font-medium text-gray-700 dark:text-white"
-                            placeHolder="Wite a nice title"
-                            class="mt-1 shadow-sm focus:ring-sky-500 focus:border-sky-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                            label="Title"
-                            type="text"
-                            v-model="form.title"
-                            :error="form.errors.get('title')"
-                        />
+                        <InputGroupLayout label="Title" >
+                            <input v-model="form.title" id="Title" class="form-input" type="text" placeholder="Write a nice title">
+                        </InputGroupLayout>
+                    </div>
+
+                    <div class="sm:col-span-4">
+                        <CreatePostTags @addTag="setTag" />
                     </div>
 
                     <div class="sm:col-span-4">
                         {{ form.body }}
-                        <label
-                            for="about"
-                            class="block text-sm font-medium text-gray-700 dark:text-white"
-                        >
-                            About
-                        </label>
-
-                        <p class="mt-2 text-sm text-gray-500 dark:text-white">
-                            Describe the post
-                        </p>
-                        <tiptap v-model="form.body" @typing="updateBody"/>
+                        <InputGroupLayout label="About" description="Describe the post">
+                            <tiptap v-model="form.body" @typing="updateBody"/>
+                        </InputGroupLayout>
                     </div>
                 </div>
             </div>
@@ -56,17 +46,22 @@ import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
 import Tiptap from '@/components/Tiptap.vue';
 import {ref} from "vue";
-
+import CreatePostTags from '@/components/CreatePostTags.vue';
+import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError"
 
 const form = ref(new Form({
     title: '',
+    tags: [],
     body: getBody()
 }))
 const errors = ref({})
 const isLoading = ref(false)
 const submitted = ref(false)
 
+function setTag(value){
+    form.value.tags = value
+}
 
 function store() {
     isLoading.value = true;

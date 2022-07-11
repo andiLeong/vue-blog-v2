@@ -1,17 +1,5 @@
 class KeyDownForSearchModal
 {
-
-    keys = [];
-
-    onEnter(callback) {
-        this.keys.push({
-            key: 'Enter',
-            keyCode: 13,
-            fn: callback
-        })
-        return this;
-    }
-
     enterPressed(e,slug) {
         if(!e.target.classList.contains('js-search-input')){
             return;
