@@ -1,31 +1,26 @@
 <template>
-    <Snack v-if="submitted" type="primary" text="Hey, post was created!"/>
 
     <form
         @submit.prevent="store"
         @keydown="form.errors.clear($event.target.name)"
         class="space-y-8 divide-y divide-gray-200 my-10 mb-10 max-w-7xl mx-auto px-6"
     >
-        <div class="space-y-8 divide-y divide-gray-200">
-            <div>
-                <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                    <div class="sm:col-span-4">
-                        <InputGroupLayout label="Title" >
-                            <input v-model="form.title" id="Title" class="form-input" type="text" placeholder="Write a nice title">
-                        </InputGroupLayout>
-                    </div>
+        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-4">
+                <InputGroupLayout label="Title" >
+                    <input v-model="form.title" id="Title" class="form-input" type="text" placeholder="Write a nice title">
+                </InputGroupLayout>
+            </div>
 
-                    <div class="sm:col-span-4">
-                        <CreatePostTags @addTag="setTag" />
-                    </div>
+            <div class="sm:col-span-4">
+                <CreatePostTags @addTag="setTag" />
+            </div>
 
-                    <div class="sm:col-span-4">
-                        {{ form.body }}
-                        <InputGroupLayout label="About" description="Describe the post">
-                            <tiptap v-model="form.body" @typing="updateBody"/>
-                        </InputGroupLayout>
-                    </div>
-                </div>
+            <div class="sm:col-span-4">
+                {{ form.body }}
+                <InputGroupLayout label="About" description="Describe the post">
+                    <tiptap v-model="form.body" @typing="updateBody"/>
+                </InputGroupLayout>
             </div>
         </div>
 
@@ -49,6 +44,7 @@ import {ref} from "vue";
 import CreatePostTags from '@/components/CreatePostTags.vue';
 import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError"
+import {useRouter} from "vue-router";
 
 const form = ref(new Form({
     title: '',
@@ -57,7 +53,7 @@ const form = ref(new Form({
 }))
 const errors = ref({})
 const isLoading = ref(false)
-const submitted = ref(false)
+const router = useRouter()
 
 function setTag(value){
     form.value.tags = value
@@ -71,15 +67,12 @@ function store() {
         .then(() => {
             form.value.reset()
             localStorage.removeItem('content')
-            isLoading.value = false;
-            submitted.value = true;
+            router.push({name:'posts'})
         })
         .catch((error) => {
             isLoading.value = false;
             errors.value = useHandleAjaxError(error)
         });
-
-    submitted.value = false;
 }
 
 function getBody(){

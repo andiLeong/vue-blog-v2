@@ -1,7 +1,7 @@
 <template>
     <InputGroupLayout space="space-y-1" label="Tags" description="Press @ to auto complete a tag">
         <div>
-            <input id="Tags" type="text" class="form-input" v-model="tag" @input="tagging" placeholder="typing your tags"/>
+            <input id="Tags" type="text" class="form-input" v-model="tag" @input="tagging" placeholder="Typing your tags"/>
             <div class="flex items-center mt-3">
                 <div
                     class="flex items-center mr-2 px-2 py-1 border border-gray-300 bg-white text-gray-700 rounded-md shadow"
