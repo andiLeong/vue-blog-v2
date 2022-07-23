@@ -7,7 +7,8 @@
                         <p class="dark:text-white" v-if="userStore.isLoggedIn">welcome {{ userStore.user.name }}</p>
                         <p class="dark:text-white" v-if="userStore.isAdmin">welcome admin</p>
 
-                        <span id="me" class="bg-gradient-to-r from-sky-400 to-purple-600 text-transparent bg-clip-text mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+                        <span id="me"
+                              class="bg-gradient-to-r from-sky-400 to-purple-600 text-transparent bg-clip-text mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
                             Hi, I am andi liang,
                         </span>
                     </div>
@@ -24,7 +25,8 @@
                             <div class="lg:grid lg:grid-cols-2 lg:gap-6">
                                 <div class="prose prose-indigo prose-lg text-gray-500 dark:text-white lg:max-w-none">
                                     <p>
-                                        A 2 years full stack php <span class="text-red-500 font-semibold dark:text-red-400">laravel</span> +
+                                        A 2 years full stack php <span
+                                        class="text-red-500 font-semibold dark:text-red-400">laravel</span> +
                                         <span class="text-green-500 font-semibold">vue</span> web developer.
                                         Actually this blog was built on top of laravel + vue. Make use of laravel act as
                                         backend,
@@ -37,7 +39,8 @@
                                         <div v-for="skill in skills" :key="skill" class="flex items-center">
                                             <div class="mr-2">
                                                 <svg class="h-6 w-6 text-sky-400" xmlns="http://www.w3.org/2000/svg"
-                                                     fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                                     stroke="currentColor"
                                                      aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -51,18 +54,19 @@
                                     <h3 class="dark:text-white">Advantage</h3>
 
                                     <div class="space-y-2">
-                                        <div v-for="advantage in advantages" :key="advantage"> {{advantage}}</div>
+                                        <div v-for="advantage in advantages" :key="advantage"> {{ advantage }}</div>
                                     </div>
 
-                                    <h3  class="dark:text-white">Experience</h3>
+                                    <h3 class="dark:text-white">Experience</h3>
                                     <p>
-                                        Maintain and develop several projects from previous company, that includes a small
+                                        Maintain and develop several projects from previous company, that includes a
+                                        small
                                         ecommerce site,
                                         a job posting site, A social insurance buying platform, a construction monitor
                                         platform
                                     </p>
 
-                                    <h3  class="dark:text-white">Code Review</h3>
+                                    <h3 class="dark:text-white">Code Review</h3>
                                     <p class="sticky-nav">
                                         had done some side code project where you can check and view my code style
                                         including:
@@ -70,7 +74,8 @@
                                     <div ref="stickyNav"></div>
                                     <div class="space-y-0">
                                         <div v-for="review in codeReviews" :key="review.name">
-                                            <a class="text-sky-400 dark:text-blue-400" :href="review.url">{{review.name}}</a>
+                                            <a class="text-sky-400 dark:text-blue-400"
+                                               :href="review.url">{{ review.name }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -112,11 +117,11 @@ const skills = ref([
 ])
 
 const codeReviews = ref([
-    {name:'collection',url:'https://github.com/andiLeong/collection'},
-    {name:'a simple mvc php',url:'https://github.com/andiLeong/php-journey'},
-    {name:'aliyun sms',url:'https://github.com/andiLeong/aliyunSms'},
-    {name:'a simple e-commerce',url:'https://github.com/andiLeong/my-e-commence'},
-    {name:'vue component collection',url:'/components'},
+    {name: 'collection', url: 'https://github.com/andiLeong/collection'},
+    {name: 'a simple mvc php', url: 'https://github.com/andiLeong/php-journey'},
+    {name: 'aliyun sms', url: 'https://github.com/andiLeong/aliyunSms'},
+    {name: 'a simple e-commerce', url: 'https://github.com/andiLeong/my-e-commence'},
+    {name: 'vue component collection', url: '/components'},
 ])
 
 const advantages = ref([
@@ -128,15 +133,15 @@ const advantages = ref([
     'Always write raw sql to see whats happening without reply on Eloquent too much.'
 ])
 
-onMounted( () => {
+onMounted(() => {
 
     let observer = new IntersectionObserver(entries => {
-        if(entries[0].isIntersecting){
+        if (entries[0].isIntersecting) {
             useStickNavStore.apply(true)
-        }else{
+        } else {
             useStickNavStore.apply(false)
         }
-    },{threshold:.25})
+    }, {threshold: .25})
     observer.observe(stickyNav.value)
 
 
@@ -152,6 +157,6 @@ onMounted( () => {
 useMeta({
     title: 'Andi liang is a laravel + vue full stack developer | vue js | javascript | laravel | php | single page application. I write my blog about my development journey',
     description: 'A short introduction about me',
-    htmlAttrs: { lang: 'en'}
+    htmlAttrs: {lang: 'en'}
 })
 </script>
