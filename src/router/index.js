@@ -109,6 +109,11 @@ const routes = [
     component: () => import('@/views/FixToTopPage.vue'),
   },
   {
+    path: '/graph',
+    name: 'graph',
+    component: () => import('@/views/Graph.vue'),
+  },
+  {
     path: '/pagination',
     name: 'pagination',
     component: () => import('@/views/Pagination.vue'),
