@@ -49,6 +49,11 @@ const stats = ref([
         height: 31,
         tweenedNumber:0,
     },
+    {
+        bgClass:'bg-indigo-400',
+        height: 31,
+        tweenedNumber:0,
+    },
 ])
 
 setInterval( () => {
