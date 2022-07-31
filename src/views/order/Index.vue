@@ -9,7 +9,7 @@
                 <div class="my-2">
                     <button
                         class="go-back-btn"
-                        @click.prevent="this.showPannel = !this.showPannel"
+                        @click.prevent="showPannel = !showPannel"
                     >
                         {{ showPannel ? 'hide pennel' : 'open pennel' }}
                     </button>
