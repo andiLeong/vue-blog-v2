@@ -1,6 +1,6 @@
 <template>
     <section class="max-w-7xl mx-auto mt-10">
-         {{ queryString }}
+<!--         {{ queryString }}-->
         <!-- {{ selected }} -->
         <AppTableLayout>
             <template v-slot:title>
