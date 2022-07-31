@@ -1,6 +1,6 @@
 <template>
     <section class="max-w-7xl mx-auto mt-10">
-        <!-- {{ queryString }} -->
+         {{ queryString }}
         <!-- {{ selected }} -->
         <AppTableLayout>
             <template v-slot:title>
@@ -46,7 +46,7 @@
                         <OrderSorting
                             :column="column"
                             :sortedColumn="defaultSortColumn"
-                            @sort="getherQuery"
+                            @sort="orderQuery"
                             @sortedColumn="setDefaultSortColumn"
                         />
                     </th>
@@ -155,6 +155,7 @@ const pagination = ref({})
 const page = ref(route.query.page || 1)
 const selected = ref([])
 const queryString = ref({})
+const sortQuery = ref('')
 const showPannel = ref(false)
 
 function fetch(page, query = '') {
@@ -167,17 +168,26 @@ function fetch(page, query = '') {
         });
 }
 
+function orderQuery(query){
+    sortQuery.value = query
+    fetch(page.value, toQueryString(queryString.value));
+}
+
 function getherQuery(query) {
     Object.assign(queryString.value, query);
     fetch(page.value, toQueryString(queryString.value));
 }
 
 function toQueryString(query) {
-    return new URLSearchParams(query).toString();
+    if(sortQuery.value === ''){
+        return new URLSearchParams(query).toString();
+    }
+    return new URLSearchParams(query).toString() + '&' + sortQuery.value;
 }
 
 function resetQuery() {
     queryString.value = {};
+    sortQuery.value = '';
     fetch(page.value);
 }
 

@@ -61,7 +61,8 @@ export default {
       this.sort.order_by = key;
       this.sort.direction = this.sort.direction === 'asc' ? 'desc' : 'asc';
 
-      this.$emit('sort', this.sort);
+      let query = `order_by[]=${key}&direction[]=${this.sort.direction}`;
+      this.$emit('sort', query);
       this.$emit('sortedColumn', key);
     },
   },
