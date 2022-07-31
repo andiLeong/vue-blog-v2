@@ -155,7 +155,7 @@ const pagination = ref({})
 const page = ref(route.query.page || 1)
 const selected = ref([])
 const queryString = ref({})
-const sortQuery = ref('')
+const sortQuery = ref('order_by[]=id&direction[]=desc')
 const showPannel = ref(false)
 
 function fetch(page, query = '') {
@@ -225,6 +225,6 @@ watch(
     page => fetch(page, toQueryString(queryString.value))
 )
 
-fetch(page.value);
+fetch(page.value,toQueryString(queryString.value));
 
 </script>
