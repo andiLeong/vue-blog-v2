@@ -1,5 +1,5 @@
 <template>
-<!--    <snack type="primary" v-if="submitted" text="Hey, your post had been updated !"/>-->
+    <!--    <snack type="primary" v-if="submitted" text="Hey, your post had been updated !"/>-->
 
     <form
         @submit.prevent="update"
@@ -26,7 +26,7 @@
                         >
                             About
                         </label>
-                        {{post.body}}
+                        {{ post.body }}
                         <div class="mt-1">
                             <tiptap v-model="post.body" @typing="post.body = $event"/>
                         </div>
@@ -64,15 +64,22 @@ const isLoading = ref(false)
 const submitted = ref(false)
 const router = useRouter()
 
+function reassignTags() {
+    let tags = post.value.tags;
+    tags = tags.map((tag) => tag.name)
+    post.value.tags = tags;
+}
+
 function update() {
     isLoading.value = true;
+    reassignTags()
 
     axios
         .patch(`/api/posts/${props.slug}`, post.value)
         .then(({data}) => {
             isLoading.value = false;
             submitted.value = true;
-            router.push({ name: 'posts.show', params: { slug: data.slug } })
+            router.push({name: 'posts.show', params: {slug: data.slug}})
             console.log(data);
         })
         .catch((error) => {
