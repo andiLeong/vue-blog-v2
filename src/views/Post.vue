@@ -1,6 +1,6 @@
 <template>
 
-    <div class="relative py-14 px-4 sm:px-6 lg:px-8 max-w-prose mx-auto">
+    <div class="relative py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
 
         <div class="h-8 bg-gradient-to-b dark:from-gray-800 from-gray-50 sticky top-0 "></div>
         <div v-if="post" class="text-lg  ">
@@ -15,7 +15,8 @@
             </div>
 
             <h1>
-                <span class="dark:text-white mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                <span
+                    class="dark:text-white mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                     {{ post.title }}
                 </span>
             </h1>
@@ -35,12 +36,11 @@
 </template>
 
 <script setup>
-import {ref, defineProps, onUpdated, computed, watch, onMounted} from 'vue';
-import SvgPattern from '@/components/SvgPattern.vue';
+import {ref, defineProps, onUpdated, computed, watch} from 'vue';
 import GoBack from '@/components/GoBack.vue';
 import PostSkeleton from '@/components/PostSkeleton.vue';
 import PostUpdateButton from '@/views/post/PostUpdateButton.vue';
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';

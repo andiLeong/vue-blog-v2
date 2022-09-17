@@ -35,11 +35,12 @@ function tagging(e) {
         tags.value.push(savedTag)
     }
     tag.value = null
-    emits('addTag', tags.value)
+    emits('updateTag', tags.value)
 }
 
 function remove(index) {
     tags.value = tags.value.filter((tag, tagIndex) => tagIndex !== index);
+    emits('updateTag', tags.value)
 }
 
 </script>

@@ -13,7 +13,7 @@
             </div>
 
             <div class="sm:col-span-4">
-                <CreatePostTags @addTag="setTag" />
+                <CreatePostTags @updateTag="setTag" />
             </div>
 
             <div class="sm:col-span-4">
