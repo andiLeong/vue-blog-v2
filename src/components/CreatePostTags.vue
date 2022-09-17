@@ -1,7 +1,7 @@
 <template>
     <InputGroupLayout space="space-y-1" label="Tags" description="Press @ to auto complete a tag">
         <div>
-            <input id="Tags" type="text" class="form-input" v-model="tag" @input="tagging" placeholder="Typing your tags"/>
+            <input id="Tags" type="text" class="form-input" v-model="tag" @input="onInput" @blur="push" placeholder="Typing your tags"/>
             <div class="flex items-center mt-3">
                 <div
                     class="flex items-center mr-2 px-2 py-1 border border-gray-300 bg-white text-gray-700 rounded-md shadow"
@@ -20,13 +20,23 @@
 import {ref} from "vue";
 import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 
-const emits = defineEmits(['addTag'])
-const tags = ref([]);
+const props = defineProps(['tags'])
+const emits = defineEmits(['updateTag'])
+const tags = ref(props.tags || []);
 const tag = ref(null);
 
 
-function tagging(e) {
+function onInput(e) {
     if (e.data !== '@') {
+        return;
+    }
+
+    push();
+}
+
+function push(){
+
+    if(tag.value === null){
         return;
     }
 
@@ -34,6 +44,7 @@ function tagging(e) {
     if (!tags.value.includes(savedTag) && savedTag !== '') {
         tags.value.push(savedTag)
     }
+
     tag.value = null
     emits('updateTag', tags.value)
 }

@@ -2,7 +2,6 @@
 
     <form
         @submit.prevent="store"
-        @keydown="form.errors.clear($event.target.name)"
         class="space-y-8 divide-y divide-gray-200 my-10 mb-10 max-w-7xl mx-auto px-6"
     >
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -13,7 +12,7 @@
             </div>
 
             <div class="sm:col-span-4">
-                <CreatePostTags @updateTag="setTag" />
+                <CreatePostTags @updateTag="form.tags = $event" />
             </div>
 
             <div class="sm:col-span-4">
@@ -37,7 +36,6 @@
 </template>
 
 <script setup>
-import BaseInput from '@/components/forms/BaseInput.vue';
 import Form from '@/form/form.js';
 import Tiptap from '@/components/Tiptap.vue';
 import {ref} from "vue";
@@ -46,18 +44,14 @@ import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError"
 import {useRouter} from "vue-router";
 
-const form = ref(new Form({
+const form = ref({
     title: '',
     tags: [],
     body: getBody()
-}))
+})
 const errors = ref({})
 const isLoading = ref(false)
 const router = useRouter()
-
-function setTag(value){
-    form.value.tags = value
-}
 
 function store() {
     isLoading.value = true;
@@ -65,7 +59,6 @@ function store() {
     axios
         .post(`/api/posts`, form.value)
         .then(() => {
-            form.value.reset()
             localStorage.removeItem('content')
             router.push({name:'posts'})
         })
