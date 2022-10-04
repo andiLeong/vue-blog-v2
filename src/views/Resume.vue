@@ -122,7 +122,7 @@
                     <div class="resume-header-divider"></div>
                     <div>
                         <p class="text-gray-500 font-semibold">{{ experience.company }}</p>
-                        <p class="text-gray-400">{{ experience.experience }}</p>
+                        <p class="text-gray-400">{{ experience.about }}</p>
                     </div>
                 </div>
 
@@ -147,7 +147,7 @@
                     <div class="resume-header-divider"></div>
                     <div>
                         <p class="text-gray-500 font-semibold">{{ education.school }}</p>
-                        <p class="text-gray-400">{{ education.experience }}</p>
+                        <p class="text-gray-400">{{ education.about }}</p>
                     </div>
                 </div>
 
@@ -175,21 +175,21 @@ const resume = ref({
             from: '2000-10',
             to: '2005-10',
             company: 'Gooogle Inc',
-            experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
+            about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
         },
         {
             position: 'Web Developer',
             from: '2005-10',
             to: '2006-10',
             company: 'Twitter Inc',
-            experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
+            about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
         },
         {
             position: 'Web Developer',
             from: '2007-10',
             to: '2022-10',
             company: 'Chatime Inc',
-            experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
+            about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ea ex id illo nobis non obcaecati placeat quae quas quis saepe sequi soluta suscipit, ullam unde ut vitae voluptatum.',
         },
     ],
     educations: [
@@ -198,14 +198,14 @@ const resume = ref({
             from: '2000-10',
             to: '2005-10',
             school: 'University of Malaysia',
-            experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ',
+            about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio doloremque ',
         },
         {
             degree: 'master',
             from: '2005-10',
             to: '2006-10',
             school: 'University of India',
-            experience: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
+            about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
         }
     ],
     skills: [
