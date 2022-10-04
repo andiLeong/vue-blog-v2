@@ -122,7 +122,7 @@
                     <div class="resume-header-divider"></div>
                     <div>
                         <p class="text-gray-500 font-semibold">{{ experience.company }}</p>
-                        <p class="text-gray-400">{{ experience.about }}</p>
+                        <p class="text-gray-400 whitespace-pre-wrap">{{ experience.about }}</p>
                     </div>
                 </div>
 
@@ -147,7 +147,7 @@
                     <div class="resume-header-divider"></div>
                     <div>
                         <p class="text-gray-500 font-semibold">{{ education.school }}</p>
-                        <p class="text-gray-400">{{ education.about }}</p>
+                        <p class="text-gray-400 whitespace-pre-wrap">{{ education.about }}</p>
                     </div>
                 </div>
 

@@ -27,7 +27,7 @@ class KeyDownForSearchModal
     }
 
     forwardSlashPressed(e,modal){
-        if( e.target.matches('input','textarea') || e.target.classList.contains('js-editable')){
+        if( e.target.matches('input,textarea') || e.target.classList.contains('js-editable')){
             return;
         }
         console.log('slash is press')
