@@ -51,13 +51,15 @@ import {useMeta} from 'vue-meta'
 
 const isAdmin = ref(useUserStore().isAdmin);
 const router = useRouter();
-const post = ref('');
 const props = defineProps({
     slug: {
         type: String,
         required: true,
     },
 });
+
+let {post} = useFetchAPost(props.slug);
+
 const published_at = computed(() =>
     moment(post.value.created_at).format('YYYY-MM-DD HH:mm:ss')
 );
@@ -67,7 +69,6 @@ const {meta} = useMeta({
     description: 'Blog Post Page Description',
 })
 
-useFetchAPost(props.slug, post);
 
 watch(post, (newValue) => {
     meta.title = newValue.title

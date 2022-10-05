@@ -1,15 +1,15 @@
+import Http from "@/model/Http";
+import {ref} from 'vue';
 
-export function useFetchAPost(slug,post){
+export function useFetchAPost(slug) {
 
-    axios
-        .get(`/api/posts/${slug}`)
-        .then((response) => {
-            post.value = response.data;
-        })
-        .catch((error) => {
-            alert(error);
-            console.log(error);
-        });
+    const post = ref('');
+    let http = new Http()
+    http
+        .to(`/api/posts/${slug}`)
+        .onSuccess(data => post.value = data)
+        .onFailure(error => console.log(error))
+        .fire()
 
     return {post};
 }
