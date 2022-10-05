@@ -1,7 +1,7 @@
 <template>
 
 
-    <div class="mx-auto max-w-7xl my-10 space-y-10" style="width: 795px">
+    <div class="mx-auto max-w-7xl my-10 space-y-12" style="width: 795px">
 
         <div class="resume-header">
             <div class="text-right ">
@@ -154,6 +154,10 @@
             </div>
         </div>
 
+        <div class="text-center">
+            <SubmitButton @click.prevent="print" type="button" :loading="false" not-saving="Print" class="w-full" />
+        </div>
+
     </div>
 
 </template>
@@ -161,9 +165,11 @@
 <script setup>
 
 import {computed, ref} from "vue";
+import SubmitButton from "@/components/forms/SubmitButton.vue"
 
 const resume = ref({
     name: 'Jonie Milans',
+    fileName: 'Jonie Milans',
     position: 'Web Developer',
     email: 'xxx@exampple.com',
     location: 'Bangsar South, Kuala Lumpur',
@@ -250,5 +256,19 @@ function getSubsetSkills(){
 let storedResume = JSON.parse(localStorage.getItem('resume'))
 if(storedResume){
     resume.value = storedResume
+}
+
+function print(e){
+    let tempTitle = document.title;
+    document.title = resume.value.fileName;
+    e.target.classList.add("hidden");
+    const nav = document.getElementById("js-nav");
+    nav.classList.add("hidden");
+
+    window.print();
+
+    document.title = tempTitle;
+    e.target.classList.remove("hidden");
+    nav.classList.add("hidden");
 }
 </script>

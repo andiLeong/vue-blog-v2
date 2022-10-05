@@ -1,6 +1,7 @@
 <template>
 
     <nav class=" shadow bg-white dark:bg-gray-700"
+         id="js-nav"
          :class="{ 'fixed top-0 w-full z-20' : apply}"
     >
         <!-- desktop nav -->

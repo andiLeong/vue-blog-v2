@@ -58,9 +58,7 @@
             <!-- experience -->
             <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Experiences</h2>
-
                 <ExperienceCollection :experiences="resume.experiences" @remove="remove" @add="add"/>
-
             </div>
 
             <!-- skills -->
@@ -72,17 +70,25 @@
             <!-- education -->
             <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Educations</h2>
-
                 <EducationCollection :educations="resume.educations" @remove="remove" @add="add"/>
+            </div>
 
+            <!-- file name -->
+            <div class="space-y-4">
+                <h2 class="font-semibold text-xl text-gray-700">File Name</h2>
+                <div class="space-y-4 md:space-y-0 md:grid gap-4 grid-cols-12">
+                    <div class="space-y-2 col-span-4">
+                        <input v-model="resume.fileName" placeholder="Resume File Name Without Extension" type="text"
+                               class="form-input"
+                               required/>
+                    </div>
+                </div>
             </div>
 
             <div class="bg-gray-300 h-1 rounded my-5"></div>
 
             <div class="flex justify-end">
-                <SubmitButton :loading="false">
-
-                </SubmitButton>
+                <SubmitButton :loading="false"/>
             </div>
         </form>
 
@@ -102,6 +108,7 @@ import {useRouter} from 'vue-router'
 const router = useRouter();
 const resume = ref({
     name: null,
+    fileName: null,
     position: '',
     email: '',
     location: '',
@@ -111,6 +118,32 @@ const resume = ref({
     educations: [],
     skills: []
 });
+const defaultSection = ref([
+    {
+        section: 'skills',
+        value: {name: ''}
+    },
+    {
+        section: 'educations',
+        value: {
+            from: '',
+            to: '',
+            school: '',
+            degree: '',
+            about: '',
+        }
+    },
+    {
+        section: 'experiences',
+        value: {
+            position: '',
+            from: '',
+            to: '',
+            company: '',
+            experience: '',
+        }
+    },
+])
 
 resume.value.educations[0] = getDefault('educations')
 resume.value.skills[0] = getDefault('skills')
@@ -127,37 +160,9 @@ function remove(section, index) {
 }
 
 function getDefault(section) {
-    let lookup = [
-        {
-            section: 'skills',
-            value: {name: ''}
-        },
-        {
-            section: 'educations',
-            value: {
-                from: '',
-                to: '',
-                school: '',
-                degree: '',
-                about: '',
-            }
-        },
-        {
-            section: 'experiences',
-            value: {
-                position: '',
-                from: '',
-                to: '',
-                company: '',
-                experience: '',
-            }
-        },
-    ]
-
-    return lookup.filter(sectionLookup => {
+    return defaultSection.value.filter(sectionLookup => {
         return sectionLookup.section === section
     })[0].value;
-
 }
 
 onMounted(() => {
