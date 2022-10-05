@@ -9,32 +9,45 @@
                 <div class="space-y-4 md:space-y-0 md:grid gap-4 grid-cols-12">
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">Name</label>
-                        <input v-model="resume.name" placeholder="Applicant's name" type="text" class="form-input" required/>
+                        <input v-model="resume.name" placeholder="Applicant's name" type="text" class="form-input"
+                               required/>
                     </div>
 
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">Position</label>
-                        <input v-model="resume.position" placeholder="Apply Position" type="text" class="form-input" required/>
+                        <input v-model="resume.position" placeholder="Apply Position" type="text" class="form-input"
+                               required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Email</label>
-                        <input v-model="resume.email" placeholder="Your Contact Email" type="email" class="form-input" required/>
+                        <input v-model="resume.email" placeholder="Your Contact Email" type="email" class="form-input"
+                               required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Phone</label>
-                        <input v-model="resume.phone" placeholder="Your Contact Number" type="text" class="form-input" required/>
+                        <input v-model="resume.phone" placeholder="Your Contact Number" type="text" class="form-input"
+                               required/>
                     </div>
 
                     <div class="space-y-2 col-span-4">
                         <label class="form-label" for="">Location</label>
-                        <input v-model="resume.location" placeholder="your Location" type="text" class="form-input" required/>
+                        <input v-model="resume.location" placeholder="your Location" type="text" class="form-input"
+                               required/>
                     </div>
 
                     <div class="space-y-2 col-span-6">
                         <label class="form-label" for="">About</label>
-                        <textarea v-model="resume.about" placeholder="Describe Your Self" class="form-textarea w-full" id="about" rows="3" required></textarea>
+                        <AppTextarea
+                            :body="resume.about"
+                            @update:body="newValue => resume.about = newValue"
+                            class="js-textarea form-textarea w-full overflow-hidden"
+                            placeholder="Describe Your Self"
+                            required
+                            rows="3"
+                            id="about"
+                        />
                     </div>
 
 
@@ -46,7 +59,7 @@
             <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Experiences</h2>
 
-                <ExperienceCollection  :experiences="resume.experiences" @remove="remove" @add="add" />
+                <ExperienceCollection :experiences="resume.experiences" @remove="remove" @add="add"/>
 
             </div>
 
@@ -83,6 +96,7 @@ import SubmitButton from '@/components/forms/SubmitButton.vue'
 import SkillCollection from "@/components/resume/SkillCollection.vue";
 import EducationCollection from "@/components/resume/EducationCollection.vue";
 import ExperienceCollection from "@/components/resume/ExperienceCollection.vue";
+import AppTextarea from "@/components/AppTextarea.vue";
 import {useRouter} from 'vue-router'
 
 const router = useRouter();
@@ -93,65 +107,69 @@ const resume = ref({
     location: '',
     phone: '',
     about: '',
-    experiences: [
-    ],
-    educations: [
-
-    ],
-    skills: [
-    ]
+    experiences: [],
+    educations: [],
+    skills: []
 });
 
 resume.value.educations[0] = getDefault('educations')
 resume.value.skills[0] = getDefault('skills')
 resume.value.experiences[0] = getDefault('experiences')
 
-function add(section){
+function add(section) {
     resume.value[section].push(
         getDefault(section)
     );
 }
 
-function remove(section,index){
-    resume.value[section].splice(index,1);
+function remove(section, index) {
+    resume.value[section].splice(index, 1);
 }
 
-function getDefault(section){
+function getDefault(section) {
+    let lookup = [
+        {
+            section: 'skills',
+            value: {name: ''}
+        },
+        {
+            section: 'educations',
+            value: {
+                from: '',
+                to: '',
+                school: '',
+                degree: '',
+                about: '',
+            }
+        },
+        {
+            section: 'experiences',
+            value: {
+                position: '',
+                from: '',
+                to: '',
+                company: '',
+                experience: '',
+            }
+        },
+    ]
 
-    if(section === 'skills'){
-        return {name:''}
-    }
-    if (section === 'educations') {
-        return {
-            from:'',
-            to:'',
-            school:'',
-            degree:'',
-            about:'',
-        }
-    }
-    if (section === 'experiences') {
-        return {
-            position: '',
-            from: '',
-            to: '',
-            company: '',
-            experience: '',
-        }
-    }
+    return lookup.filter(sectionLookup => {
+        return sectionLookup.section === section
+    })[0].value;
 
 }
 
-onMounted( () => {
+onMounted(() => {
 
-    let storeResume = JSON.parse( localStorage.getItem('resume') )
-    if(storeResume){
-       resume.value = storeResume
+    let storeResume = JSON.parse(localStorage.getItem('resume'))
+    if (storeResume) {
+        resume.value = storeResume
     }
 })
 
-function store(){
-    localStorage.setItem('resume',JSON.stringify(resume.value))
+function store() {
+    localStorage.setItem('resume', JSON.stringify(resume.value))
     router.push('resume')
 }
 </script>
