@@ -269,6 +269,6 @@ function print(e){
 
     document.title = tempTitle;
     e.target.classList.remove("hidden");
-    nav.classList.add("hidden");
+    nav.classList.remove("hidden");
 }
 </script>
