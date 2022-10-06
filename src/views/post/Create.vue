@@ -44,6 +44,7 @@ import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError"
 import {useRouter} from "vue-router";
 import AxiosHttp from "@/model/AxiosHttp";
+import _ from 'lodash';
 
 const form = ref({
     title: '',
@@ -66,7 +67,7 @@ function store() {
             isLoading.value = false;
             errors.value = useHandleAjaxError(error)
         })
-        .onSuccess(({data}) => {
+        .onSuccess(() => {
             localStorage.removeItem('content')
             router.push({name:'posts'})
         })
@@ -77,9 +78,9 @@ function getBody(){
     return localStorage.getItem('content');
 }
 
-function updateBody(value){
+const updateBody = _.throttle(function(value){
     form.value.body = value
     localStorage.setItem('content',value)
-}
+},300)
 
 </script>

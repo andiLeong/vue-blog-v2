@@ -11,6 +11,7 @@
 
 <script setup>
 import {useUserStore} from "@/store/user"
+import useHandleAjaxError from "@/composable/useHandleAjaxError";
 
 defineProps(['active'])
 
@@ -22,6 +23,7 @@ function logout() {
             useUserStore().logout()
         })
         .catch((error) => {
+            useHandleAjaxError(error)
             console.log(error);
         });
 }
