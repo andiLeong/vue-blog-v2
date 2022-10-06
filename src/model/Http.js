@@ -1,9 +1,9 @@
-import appUrl from '../../appconfig';
-
 class Http {
 
-    constructor(http) {
-        this.http = http
+    constructor() {
+        if (this.constructor === Http) {
+            throw new Error("Abstract classes can't be instantiated.");
+        }
     }
 
     setContentType(type) {
@@ -44,53 +44,6 @@ class Http {
     onFailure(failure) {
         this.failure = failure
         return this;
-    }
-
-    getOption() {
-
-        let method = this.method || 'GET'
-        if (method === 'GET' || method === 'GET') {
-            return {
-                method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            }
-        }
-
-        return {
-            method,
-            body: JSON.stringify(this.payload),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }
-    }
-
-    fire() {
-
-        this.call(this.beforeCallBack);
-
-        let url = appUrl + this.url
-        fetch(url, this.getOption())
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-
-                this.call(this.failure, response)
-                this.call(this.afterCallBack)
-                throw Error(response.statusText);
-            })
-            .then(response => {
-                this.call(this.success, response)
-                this.call(this.afterCallBack)
-            })
-            .catch(error => {
-                this.call(this.failure, error)
-                this.call(this.afterCallBack)
-            });
-
     }
 
     call(closure, ...args) {

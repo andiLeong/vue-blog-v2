@@ -43,6 +43,7 @@ import CreatePostTags from '@/components/CreatePostTags.vue';
 import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
 import useHandleAjaxError from "@/composable/useHandleAjaxError"
 import {useRouter} from "vue-router";
+import AxiosHttp from "@/model/AxiosHttp";
 
 const form = ref({
     title: '',
@@ -54,18 +55,22 @@ const isLoading = ref(false)
 const router = useRouter()
 
 function store() {
-    isLoading.value = true;
 
-    axios
-        .post(`/api/posts`, form.value)
-        .then(() => {
+    let http = new AxiosHttp();
+    http
+        .via('post')
+        .to(`/api/posts`)
+        .payload(form.value)
+        .before(() => isLoading.value = true)
+        .onFailure(error => {
+            isLoading.value = false;
+            errors.value = useHandleAjaxError(error)
+        })
+        .onSuccess(({data}) => {
             localStorage.removeItem('content')
             router.push({name:'posts'})
         })
-        .catch((error) => {
-            isLoading.value = false;
-            errors.value = useHandleAjaxError(error)
-        });
+        .fire()
 }
 
 function getBody(){

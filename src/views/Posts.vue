@@ -50,6 +50,7 @@ import Spinner from '@/components/Spinner.vue';
 import { useMeta } from 'vue-meta'
 import LoadMore from '@/components/LoadMore.vue'
 import PostTags from '@/components/PostTags.vue'
+import AxiosHttp from "@/model/AxiosHttp";
 
 const posts = ref([]);
 const lastPage = ref(null);
@@ -64,18 +65,21 @@ useMeta({
 
 function fetch() {
 
-    fetching.value = true
-    axios
-        .get(`/api/posts?page=${page.value}`)
-        .then((response) => {
+    let http = new AxiosHttp();
+    http
+        .via('get')
+        .to(`/api/posts?page=${page.value}`)
+        .before(() => fetching.value = true)
+        .onFailure(error => console.log(error))
+        .onSuccess(({data}) => {
             fetching.value = false
-            lastPage.value = response.data.last_page
-            posts.value.push(...response.data.data);
-            if(response.data.data.length < 1){
+            lastPage.value = data.last_page
+            posts.value.push(...data.data);
+            if(data.data.length < 1){
                 noPosts.value = true
             }
         })
-        .catch(error => console.log(error));
+        .fire()
 }
 
 function loadMore() {

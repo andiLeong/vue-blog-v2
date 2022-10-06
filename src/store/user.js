@@ -10,11 +10,6 @@ export const useUserStore = defineStore({
             return state.user !== null || localStorage.getItem('user') !== null
         },
 
-        /**
-         * Returns the counter value times two plus one.
-         *
-         * @returns {boolean}
-         */
         isAdmin(state) {
             if (!this.isLoggedIn) {
                 return false;
