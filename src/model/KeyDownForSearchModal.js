@@ -1,3 +1,5 @@
+import Router from '@/router'
+
 class KeyDownForSearchModal
 {
     enterPressed(e,slug,after) {
@@ -7,7 +9,7 @@ class KeyDownForSearchModal
         console.log('enter is press')
         if(slug){
             after()
-            window.location.assign(`/posts/${slug}`)
+            Router.push({ path: `/posts/${slug}` });
         }
     }
 
