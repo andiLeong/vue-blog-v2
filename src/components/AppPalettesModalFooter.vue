@@ -5,6 +5,8 @@
         <span class="sm:hidden">close,</span>
         <span class="hidden sm:inline">to close, hit</span>
         <kbd class="font-semibold text-gray-900 mx-2">enter</kbd>
+        to search, press
+        <kbd class="font-semibold text-gray-900 mx-2">ctrl + z</kbd>
         to post page, navigate with
         <kbd class="font-semibold text-gray-900 mx-2">arrow key</kbd>
     </div>

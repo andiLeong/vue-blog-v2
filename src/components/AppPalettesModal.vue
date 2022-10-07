@@ -95,14 +95,13 @@ onMounted( () => {
         .onForwardSlash( e =>
            keyDownForSearchModal.forwardSlashPressed(e,searchModal)
         )
-        .onEnter( e =>
+        .onControlZ(e =>
             keyDownForSearchModal.enterPressed(
                 e,
                 showPosts.value[activeIndex.value]?.slug
             )
         )
         .fire()
-
 })
 
 function close() {
