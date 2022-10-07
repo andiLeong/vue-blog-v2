@@ -98,13 +98,15 @@ onMounted( () => {
         .onControlZ(e =>
             keyDownForSearchModal.enterPressed(
                 e,
-                showPosts.value[activeIndex.value]?.slug
+                showPosts.value[activeIndex.value]?.slug,
+                () => close()
             )
         )
         .fire()
 })
 
 function close() {
+    console.log('closing the modal now')
     searchModal.close()
     key.value = null
     posts.value = []

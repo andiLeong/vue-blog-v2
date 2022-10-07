@@ -77,7 +77,7 @@ class KeyDown {
             keysPressed[event.key] = true;
 
             if (keysPressed[key.key[0]] && keysPressed[key.key[1]]) {
-                console.log(event.key);
+                // console.log(event.key);
                 key.fn(event)
             }
         });

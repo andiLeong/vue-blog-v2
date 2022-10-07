@@ -1,11 +1,12 @@
 class KeyDownForSearchModal
 {
-    enterPressed(e,slug) {
+    enterPressed(e,slug,after) {
         if(!e.target.classList.contains('js-search-input')){
             return;
         }
         console.log('enter is press')
         if(slug){
+            after()
             window.location.assign(`/posts/${slug}`)
         }
     }
