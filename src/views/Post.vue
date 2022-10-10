@@ -46,8 +46,8 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/base16/materia.css';
 import moment from 'moment';
 import PostDeleteButton from "@/views/post/PostDeleteButton.vue";
-import {useFetchAPost} from "@/composable/useFetchAPost";
-import {useUserStore} from '@/store/user'
+import {useFetchAPost} from "@/composable/useFetchAPost.js";
+import {useUserStore} from '@/store/user.js'
 import {useMeta} from 'vue-meta'
 
 const isAdmin : Ref<Boolean> = ref(useUserStore().isAdmin);
