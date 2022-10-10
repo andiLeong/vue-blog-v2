@@ -35,8 +35,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref, defineProps, onUpdated, computed, watch} from 'vue';
+import type { Ref } from 'vue'
 import GoBack from '@/components/GoBack.vue';
 import PostSkeleton from '@/components/PostSkeleton.vue';
 import PostUpdateButton from '@/views/post/PostUpdateButton.vue';
@@ -49,7 +50,7 @@ import {useFetchAPost} from "@/composable/useFetchAPost";
 import {useUserStore} from '@/store/user'
 import {useMeta} from 'vue-meta'
 
-const isAdmin = ref(useUserStore().isAdmin);
+const isAdmin : Ref<Boolean> = ref(useUserStore().isAdmin);
 const router = useRouter();
 const props = defineProps({
     slug: {
