@@ -1,98 +1,98 @@
-@import "tailwindcss/base";
+@import 'tailwindcss/base';
 
 /*custom css files*/
 @import './posts.css';
 @import './resume.css';
 
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer components {
-  .validation-error {
-    @apply text-red-500 text-xs italic mt-1;
-  }
+    .validation-error {
+        @apply text-red-500 text-xs italic mt-1;
+    }
 
-  .go-back-btn {
-    @apply uppercase inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none;
-  }
+    .go-back-btn {
+        @apply uppercase inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none;
+    }
 
-  .primary-btn {
-    @apply bg-gradient-to-r 
+    .primary-btn {
+        @apply bg-gradient-to-r 
 
     from-sky-500 
     to-sky-300
      flex justify-center  duration-150 ease-in-out font-semibold hover:bg-sky-900 inline-flex items-center leading-6 px-4 py-2 rounded-md shadow text-sm text-white transition;
-  }
+    }
 
-  .table-heading {
-    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
-  }
+    .table-heading {
+        @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+    }
 
-  .table-data {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-500;
-  }
+    .table-data {
+        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-500;
+    }
 
-  .form-input {
-    @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm;
-  }
+    .form-input {
+        @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm;
+    }
 
-  .form-select {
-    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
-  }
+    .form-select {
+        @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+    }
 
-  .form-label {
-    @apply block text-sm font-medium text-gray-700 dark:text-white;
-  }
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 dark:text-white;
+    }
 
-  .form-textarea{
-    @apply max-w-lg shadow-sm block w-full focus:ring-sky-500 focus:border-sky-500 sm:text-sm border border-gray-300 rounded-md;
-  }
+    .form-textarea {
+        @apply max-w-lg shadow-sm block w-full focus:ring-sky-500 focus:border-sky-500 sm:text-sm border border-gray-300 rounded-md;
+    }
 
-  .menu-button{
-      @apply inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500;
-  }
+    .menu-button {
+        @apply inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500;
+    }
 
-  .theme-switcher{
-      @apply cursor-pointer dark:text-white text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium ;
-  }
+    .theme-switcher {
+        @apply cursor-pointer dark:text-white text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium;
+    }
 
-  .snack-enter-active,
-  .snack-leave-active {
-    @apply transition duration-500 ease-in-out;
-  }
+    .snack-enter-active,
+    .snack-leave-active {
+        @apply transition duration-500 ease-in-out;
+    }
 
-  .snack-enter-from {
-    @apply transform -translate-y-24;
-  }
+    .snack-enter-from {
+        @apply transform -translate-y-24;
+    }
 
-  .snack-leave-to {
-    @apply transform -translate-y-24;
-  }
+    .snack-leave-to {
+        @apply transform -translate-y-24;
+    }
 
-  .drop-down-item {
-    @apply text-gray-700 block px-4 py-2 text-sm;
-  }
+    .drop-down-item {
+        @apply text-gray-700 block px-4 py-2 text-sm;
+    }
 
-  .count-up {
-    @apply px-4 py-2 shadow-lg bg-blue-400 rounded text-white;
-  }
+    .count-up {
+        @apply px-4 py-2 shadow-lg bg-blue-400 rounded text-white;
+    }
 
-  .blogs-container > :first-child {
-      @apply  rounded-lg shadow-lg px-4 text-white bg-gradient-to-r to-purple-200 from-sky-500;
-  }
+    .blogs-container > :first-child {
+        @apply rounded-lg shadow-lg px-4 text-white bg-gradient-to-r to-purple-200 from-sky-500;
+    }
 
-  .blogs-container > :first-child > a  > p{
-    @apply text-white;
-  }
+    .blogs-container > :first-child > a > p {
+        @apply text-white;
+    }
 
-  .post-tags{
-    @apply rounded-full px-3 py-0.5 text-sm font-medium inline-flex items-center;
-  }
+    .post-tags {
+        @apply rounded-full px-3 py-0.5 text-sm font-medium inline-flex items-center;
+    }
 }
 
 @media (min-width: 768px) {
-  .palettes {
-    min-width: 500px;
-    min-height: 20rem;
-  }
+    .palettes {
+        min-width: 500px;
+        min-height: 20rem;
+    }
 }

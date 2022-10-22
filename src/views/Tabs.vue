@@ -1,6 +1,5 @@
 <template>
-
-    <ComponentLayout  class=" my-10 " title="Tabs">
+    <ComponentLayout class="my-10" title="Tabs">
         <div class="space-y-10">
             <div>
                 <p>tab id is my-tab</p>
@@ -36,11 +35,10 @@
             </div>
         </div>
     </ComponentLayout>
-
 </template>
 
 <script setup>
-import ComponentLayout from '@/components/ComponentLayout.vue'
+import ComponentLayout from '@/components/ComponentLayout.vue';
 import AppTabs from '@/components/AppTabs.vue';
 import AppTab from '@/components/AppTab.vue';
 </script>

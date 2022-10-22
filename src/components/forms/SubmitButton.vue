@@ -14,18 +14,18 @@
 </template>
 
 <script setup>
-import LoadingIndicator from "@/components/LoadingIndicator.vue"
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
 const props = defineProps({
     loading: Boolean,
     saving: {
-        default: 'Saving'
+        default: 'Saving',
     },
     notSaving: {
-        default: 'Save'
+        default: 'Save',
     },
     type: {
-        default: 'submit'
+        default: 'submit',
     },
-})
+});
 </script>

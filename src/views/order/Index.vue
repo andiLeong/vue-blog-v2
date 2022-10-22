@@ -1,6 +1,6 @@
 <template>
     <section class="max-w-7xl mx-auto mt-10">
-<!--         {{ queryString }}-->
+        <!--         {{ queryString }}-->
         <!-- {{ selected }} -->
         <AppTableLayout>
             <template v-slot:title>
@@ -24,7 +24,11 @@
             </template>
 
             <div class="my-2 ml-2" v-if="selected.length > 0">
-                <OrderDeletion :id="selected" @deleted="deleted" :endpoint="endpoint"/>
+                <OrderDeletion
+                    :id="selected"
+                    @deleted="deleted"
+                    :endpoint="endpoint"
+                />
             </div>
 
             <AppTable>
@@ -62,7 +66,11 @@
                         :key="order.id"
                     >
                         <td class="table-data">
-                            <input type="checkbox" :value="order.id" v-model="selected"/>
+                            <input
+                                type="checkbox"
+                                :value="order.id"
+                                v-model="selected"
+                            />
                         </td>
 
                         <td class="table-data">
@@ -80,12 +88,13 @@
                         <td class="table-data">
                             <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                                :class="order.paid == 1
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-red-100 text-red-700'
-                              "
+                                :class="
+                                    order.paid == 1
+                                        ? 'bg-green-100 text-green-700'
+                                        : 'bg-red-100 text-red-700'
+                                "
                             >
-                            {{ order.paid == 1 ? 'YES' : 'NO' }}
+                                {{ order.paid == 1 ? 'YES' : 'NO' }}
                             </span>
                         </td>
 
@@ -132,14 +141,14 @@ import AppTableLayout from '@/components/AppTableLayout.vue';
 import OrderSorting from '@/components/order/OrderSorting.vue';
 import OrderDeletion from '@/components/order/OrderDeletion.vue';
 import _ from 'lodash';
-import {ref, watch} from "vue";
-import {useRoute, useRouter} from 'vue-router'
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
-const endpoint = ref('/api/order')
-const defaultSortColumn = ref('id')
+const endpoint = ref('/api/order');
+const defaultSortColumn = ref('id');
 const columns = ref([
     'id',
     'number',
@@ -148,15 +157,15 @@ const columns = ref([
     'status',
     'customer',
     'country',
-])
-const per_page = ref(10)
-const orders = ref([])
-const pagination = ref({})
-const page = ref(route.query.page || 1)
-const selected = ref([])
-const queryString = ref({})
-const sortQuery = ref('order_by[]=id&direction[]=desc')
-const showPannel = ref(false)
+]);
+const per_page = ref(10);
+const orders = ref([]);
+const pagination = ref({});
+const page = ref(route.query.page || 1);
+const selected = ref([]);
+const queryString = ref({});
+const sortQuery = ref('order_by[]=id&direction[]=desc');
+const showPannel = ref(false);
 
 function fetch(page, query = '') {
     return axios
@@ -168,8 +177,8 @@ function fetch(page, query = '') {
         });
 }
 
-function orderQuery(query){
-    sortQuery.value = query
+function orderQuery(query) {
+    sortQuery.value = query;
     fetch(page.value, toQueryString(queryString.value));
 }
 
@@ -179,7 +188,7 @@ function getherQuery(query) {
 }
 
 function toQueryString(query) {
-    if(sortQuery.value === ''){
+    if (sortQuery.value === '') {
         return new URLSearchParams(query).toString();
     }
     return new URLSearchParams(query).toString() + '&' + sortQuery.value;
@@ -222,9 +231,8 @@ function toggleSelectAll() {
 
 watch(
     () => route.query.page,
-    page => fetch(page, toQueryString(queryString.value))
-)
+    (page) => fetch(page, toQueryString(queryString.value))
+);
 
-fetch(page.value,toQueryString(queryString.value));
-
+fetch(page.value, toQueryString(queryString.value));
 </script>

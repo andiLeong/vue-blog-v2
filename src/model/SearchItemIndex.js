@@ -1,28 +1,26 @@
-import {ref} from "vue";
+import { ref } from 'vue';
 
 class SearchItemIndex {
-
-    currentIndex = null
+    currentIndex = null;
 
     constructor(items = []) {
-
-        this.currentIndex = ref(null)
-        this.items = items
+        this.currentIndex = ref(null);
+        this.items = items;
     }
 
     next() {
-        return this.whenHasCurrentIndex( () => this.increase())
+        return this.whenHasCurrentIndex(() => this.increase());
     }
 
     previous() {
-        return this.whenHasCurrentIndex( () => this.decrease(),false)
+        return this.whenHasCurrentIndex(() => this.decrease(), false);
     }
 
-    hasCurrentIndex(){
+    hasCurrentIndex() {
         return this.currentIndex.value !== null;
     }
 
-    whenHasCurrentIndex(fn,toFirst = true){
+    whenHasCurrentIndex(fn, toFirst = true) {
         if (this.hasCurrentIndex()) {
             return fn();
         }
@@ -30,49 +28,40 @@ class SearchItemIndex {
         return toFirst ? this.toFirst() : this.toLast();
     }
 
-    decrease(){
+    decrease() {
         if (this.currentIndex.value === 0) {
-            return this.toLast()
+            return this.toLast();
         }
         return this.currentIndex.value--;
     }
 
-    increase(){
+    increase() {
         if (this.currentIndex.value === this.lastIndex()) {
-            return this.toFirst()
+            return this.toFirst();
         }
 
-        return this.currentIndex.value ++;
+        return this.currentIndex.value++;
     }
 
-    toFirst(){
-        return this.currentIndex.value = 0
+    toFirst() {
+        return (this.currentIndex.value = 0);
     }
 
-    toLast(){
-        this.currentIndex.value = this.lastIndex()
+    toLast() {
+        this.currentIndex.value = this.lastIndex();
     }
 
-    clear(){
-        this.currentIndex.value = null
+    clear() {
+        this.currentIndex.value = null;
     }
 
-    lastIndex(){
-        return this.items.length === 0 ? null : this.items.length - 1  ;
+    lastIndex() {
+        return this.items.length === 0 ? null : this.items.length - 1;
     }
 
-    setItems(items){
-       this.items = items
+    setItems(items) {
+        this.items = items;
     }
-
-
-
-
-
-
-
-
 }
-
 
 export default SearchItemIndex;

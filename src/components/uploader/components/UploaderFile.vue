@@ -1,166 +1,168 @@
 <template>
-  <div class="bg-white rounded-lg p-4 flex items-stretch mb-1">
-    <div>
-      <UploaderProgress :progress="progress" />
-    </div>
-    <div class="flex flex-col justify-between">
-      <div class="mb-2">
-        <div class="font-medium mr-3 text-gray-700 leading-tight">
-          {{ upload.file.name }}
+    <div class="bg-white rounded-lg p-4 flex items-stretch mb-1">
+        <div>
+            <UploaderProgress :progress="progress" />
         </div>
+        <div class="flex flex-col justify-between">
+            <div class="mb-2">
+                <div class="font-medium mr-3 text-gray-700 leading-tight">
+                    {{ upload.file.name }}
+                </div>
 
-        <div class="text-gray-600 text-sm leading-tight">
-          {{ sizeDisplay }} MB
+                <div class="text-gray-600 text-sm leading-tight">
+                    {{ sizeDisplay }} MB
+                </div>
+            </div>
+
+            <div class="text-gray-600 text-sm align-baseline">
+                <template v-if="state === states.WAITING">Waiting</template>
+                <template v-if="state === states.FAILED">Failed</template>
+                <template v-if="state === states.CANCELLED">Cancelled</template>
+                <template v-if="state === states.COMPLETE">Complete</template>
+                <template v-if="state === states.UNSUPPORTED"
+                    >Sorry, this file type isn't supported</template
+                >
+                <template v-if="state === states.UPLOADING">
+                    <a href="#" class="text-blue-500" @click.prevent="cancel">
+                        Cancel
+                    </a>
+                </template>
+            </div>
         </div>
-      </div>
-
-      <div class="text-gray-600 text-sm align-baseline">
-        <template v-if="state === states.WAITING">Waiting</template>
-        <template v-if="state === states.FAILED">Failed</template>
-        <template v-if="state === states.CANCELLED">Cancelled</template>
-        <template v-if="state === states.COMPLETE">Complete</template>
-        <template v-if="state === states.UNSUPPORTED"
-          >Sorry, this file type isn't supported</template
-        >
-        <template v-if="state === states.UPLOADING">
-          <a href="#" class="text-blue-500" @click.prevent="cancel"> Cancel </a>
-        </template>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
 import states from '@/components/uploader/states.js';
-import useHandleAjaxError from "@/composable/useHandleAjaxError";
+import useHandleAjaxError from '@/composable/useHandleAjaxError';
 
 import UploaderProgress from '@/components/uploader/components/UploaderProgress.vue';
 
 export default {
-  components: {
-    UploaderProgress,
-  },
-
-  props: {
-    upload: {
-      required: true,
-      type: Object,
+    components: {
+        UploaderProgress,
     },
 
-    baseURL: {
-      required: true,
-      type: String,
+    props: {
+        upload: {
+            required: true,
+            type: Object,
+        },
+
+        baseURL: {
+            required: true,
+            type: String,
+        },
+
+        endpoint: {
+            required: true,
+        },
     },
 
-    endpoint: {
-      required: true,
-    },
-  },
+    data() {
+        return {
+            state: null,
+            progress: 0,
 
-  data() {
-    return {
-      state: null,
-      progress: 0,
+            axios: {
+                cancel: null,
+            },
 
-      axios: {
-        cancel: null,
-      },
-
-      states,
-    };
-  },
-
-  computed: {
-    sizeDisplay() {
-      return (this.upload.file.size / 1000000).toFixed(2);
-    },
-  },
-
-  watch: {
-    'upload.queued'(queued) {
-      if (this.state === states.UNSUPPORTED) {
-        return;
-      }
-
-      if (queued === false) {
-        this.startUpload();
-      }
+            states,
+        };
     },
 
-    progress(progress) {
-      this.$emit('progress', {
-        id: this.upload.id,
-        progress,
-      });
+    computed: {
+        sizeDisplay() {
+            return (this.upload.file.size / 1000000).toFixed(2);
+        },
     },
 
-    state(state) {
-      this.$emit('change', {
-        id: this.upload.id,
-        state,
-      });
+    watch: {
+        'upload.queued'(queued) {
+            if (this.state === states.UNSUPPORTED) {
+                return;
+            }
 
-      switch (state) {
-        case states.CANCELLED:
-        case states.FAILED:
-          this.progress = 0;
-          break;
-      }
-    },
-  },
+            if (queued === false) {
+                this.startUpload();
+            }
+        },
 
-  methods: {
-    cancel() {
-      this.axios.cancel();
-    },
+        progress(progress) {
+            this.$emit('progress', {
+                id: this.upload.id,
+                progress,
+            });
+        },
 
-    makeFormData(file) {
-      const form = new FormData();
-      form.append('file', file, file.name);
-      form.append('last_modified', file.lastModified);
-      form.append('fileable_id', 1);
-      form.append('fileable_type', 'Gallery');
-      console.log('submit data is   ::  ' + JSON.stringify(form));
+        state(state) {
+            this.$emit('change', {
+                id: this.upload.id,
+                state,
+            });
 
-      return form;
-    },
-
-    handleUploadProgress(e) {
-      this.progress = Math.round((e.loaded * 100) / e.total);
+            switch (state) {
+                case states.CANCELLED:
+                case states.FAILED:
+                    this.progress = 0;
+                    break;
+            }
+        },
     },
 
-    startUpload() {
-      this.state = states.UPLOADING;
+    methods: {
+        cancel() {
+            this.axios.cancel();
+        },
 
-      axios
-        .post(this.endpoint, this.makeFormData(this.upload.file), {
-          baseURL: this.baseURL,
-          onUploadProgress: this.handleUploadProgress,
-          cancelToken: new axios.CancelToken((token) => {
-            this.axios.cancel = token;
-          }),
-        })
-        .then(() => {
-          this.state = states.COMPLETE;
-        })
-        .catch((e) => {
-           useHandleAjaxError(e)
+        makeFormData(file) {
+            const form = new FormData();
+            form.append('file', file, file.name);
+            form.append('last_modified', file.lastModified);
+            form.append('fileable_id', 1);
+            form.append('fileable_type', 'Gallery');
+            console.log('submit data is   ::  ' + JSON.stringify(form));
 
-          if (e instanceof axios.Cancel) {
-            return (this.state = states.CANCELLED);
-          }
+            return form;
+        },
 
-          this.state = states.FAILED;
-        });
+        handleUploadProgress(e) {
+            this.progress = Math.round((e.loaded * 100) / e.total);
+        },
+
+        startUpload() {
+            this.state = states.UPLOADING;
+
+            axios
+                .post(this.endpoint, this.makeFormData(this.upload.file), {
+                    baseURL: this.baseURL,
+                    onUploadProgress: this.handleUploadProgress,
+                    cancelToken: new axios.CancelToken((token) => {
+                        this.axios.cancel = token;
+                    }),
+                })
+                .then(() => {
+                    this.state = states.COMPLETE;
+                })
+                .catch((e) => {
+                    useHandleAjaxError(e);
+
+                    if (e instanceof axios.Cancel) {
+                        return (this.state = states.CANCELLED);
+                    }
+
+                    this.state = states.FAILED;
+                });
+        },
     },
-  },
 
-  mounted() {
-    if (this.endpoint === null) {
-      return (this.state = states.UNSUPPORTED);
-    }
+    mounted() {
+        if (this.endpoint === null) {
+            return (this.state = states.UNSUPPORTED);
+        }
 
-    this.state = states.WAITING;
-  },
+        this.state = states.WAITING;
+    },
 };
 </script>

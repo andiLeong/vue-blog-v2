@@ -1,46 +1,25 @@
 <template>
     <ComponentLayout title="CSS Grid Columns" class="my-20">
         <div class="row">
-            <div class="col first">
-                some text here
-            </div>
-            <div class="col second">
-                some text here
-            </div>
-            <div class="col third">
-                some text here
-            </div>
-            <div class="col forth">
-                some text here
-            </div>
-            <div class="col fifth">
-                some text here
-            </div>
-            <div class="col sixth">
-                some text here
-            </div>
-            <div class="col seventh">
-                i am no 7
-            </div>
-            <div class="col eighth">
-                i am no 8
-            </div>
-            <div class="col ninth">
-                some text here
-            </div>
-            <div class="col tenth">
-                some text here
-            </div>
+            <div class="col first">some text here</div>
+            <div class="col second">some text here</div>
+            <div class="col third">some text here</div>
+            <div class="col forth">some text here</div>
+            <div class="col fifth">some text here</div>
+            <div class="col sixth">some text here</div>
+            <div class="col seventh">i am no 7</div>
+            <div class="col eighth">i am no 8</div>
+            <div class="col ninth">some text here</div>
+            <div class="col tenth">some text here</div>
         </div>
     </ComponentLayout>
 </template>
 
 <script setup>
-import ComponentLayout from '@/components/ComponentLayout.vue'
+import ComponentLayout from '@/components/ComponentLayout.vue';
 </script>
 
 <style scoped>
-
 .row {
     display: grid;
     gap: 0.8rem 0.5rem;
@@ -56,9 +35,8 @@ import ComponentLayout from '@/components/ComponentLayout.vue'
 }
 
 @media (min-width: 768px) {
-
     .row {
-        grid-template-columns: repeat(8,1fr);
+        grid-template-columns: repeat(8, 1fr);
     }
 
     .first {
@@ -92,19 +70,16 @@ import ComponentLayout from '@/components/ComponentLayout.vue'
     }
 
     .eighth {
-        grid-column-start: 5 ;
-        grid-column-end: span 4 ;
-        grid-row: 4 / 5 ;
+        grid-column-start: 5;
+        grid-column-end: span 4;
+        grid-row: 4 / 5;
     }
 
     .ninth {
-        grid-column:  span 4 ;
+        grid-column: span 4;
     }
     .tenth {
-        grid-column:  span 8 ;
+        grid-column: span 8;
     }
-
 }
-
-
 </style>

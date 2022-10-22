@@ -1,15 +1,32 @@
 <template>
-    <InputGroupLayout space="space-y-1" label="Tags" description="Press @ to auto complete a tag">
+    <InputGroupLayout
+        space="space-y-1"
+        label="Tags"
+        description="Press @ to auto complete a tag"
+    >
         <div>
-            <input id="Tags" type="text" class="form-input" v-model="tag" @input="onInput" @blur="push" placeholder="Typing your tags"/>
+            <input
+                id="Tags"
+                type="text"
+                class="form-input"
+                v-model="tag"
+                @input="onInput"
+                @blur="push"
+                placeholder="Typing your tags"
+            />
             <div class="flex items-center mt-3">
                 <div
                     class="flex items-center mr-2 px-2 py-1 border border-gray-300 bg-white text-gray-700 rounded-md shadow"
-                    v-for="(tag,index) in tags"
+                    v-for="(tag, index) in tags"
                     :key="index"
                 >
                     <p class="text-sm mr-3" v-html="tag"></p>
-                    <button @click.prevent="remove(index)" class="text-red-500 text-xs">x</button>
+                    <button
+                        @click.prevent="remove(index)"
+                        class="text-red-500 text-xs"
+                    >
+                        x
+                    </button>
                 </div>
             </div>
         </div>
@@ -17,14 +34,13 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
-import InputGroupLayout from "@/components/forms/InputGroupLayout.vue";
+import { ref } from 'vue';
+import InputGroupLayout from '@/components/forms/InputGroupLayout.vue';
 
-const props = defineProps(['tags'])
-const emits = defineEmits(['updateTag'])
+const props = defineProps(['tags']);
+const emits = defineEmits(['updateTag']);
 const tags = ref(props.tags || []);
 const tag = ref(null);
-
 
 function onInput(e) {
     if (e.data !== '@') {
@@ -34,24 +50,22 @@ function onInput(e) {
     push();
 }
 
-function push(){
-
-    if(tag.value === null){
+function push() {
+    if (tag.value === null) {
         return;
     }
 
-    let savedTag = tag.value.replace('@', '').trim()
+    let savedTag = tag.value.replace('@', '').trim();
     if (!tags.value.includes(savedTag) && savedTag !== '') {
-        tags.value.push(savedTag)
+        tags.value.push(savedTag);
     }
 
-    tag.value = null
-    emits('updateTag', tags.value)
+    tag.value = null;
+    emits('updateTag', tags.value);
 }
 
 function remove(index) {
     tags.value = tags.value.filter((tag, tagIndex) => tagIndex !== index);
-    emits('updateTag', tags.value)
+    emits('updateTag', tags.value);
 }
-
 </script>

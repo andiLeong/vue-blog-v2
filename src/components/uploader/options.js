@@ -1,4 +1,4 @@
 export default {
-  baseURL: '',
-  maxConcurrentUploads: 2
-}
+    baseURL: '',
+    maxConcurrentUploads: 2,
+};

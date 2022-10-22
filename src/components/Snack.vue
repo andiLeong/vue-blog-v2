@@ -8,7 +8,10 @@
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
         >
-            <div class="text-white px-8 py-2 rounded-lg text-sm mt-6" :class="getType">
+            <div
+                class="text-white px-8 py-2 rounded-lg text-sm mt-6"
+                :class="getType"
+            >
                 {{ text }}
             </div>
         </transition>
@@ -16,7 +19,7 @@
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     type: {
@@ -25,17 +28,16 @@ const props = defineProps({
     text: {
         required: true,
     },
-})
+});
 const show = ref(true);
 
 setTimeout(() => {
     if (show.value) {
         show.value = false;
     }
-}, 2000)
+}, 2000);
 
 const getType = computed(() => {
-
     if (props.type === 'success') {
         return 'bg-gradient-to-r from-teal-500 to-teal-300';
     }
@@ -48,6 +50,5 @@ const getType = computed(() => {
         return 'bg-gradient-to-r from-amber-500 to-amber-300';
     }
     return 'bg-gradient-to-r from-sky-500 to-sky-300';
-})
-
+});
 </script>

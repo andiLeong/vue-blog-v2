@@ -1,12 +1,11 @@
-import {useUserStore} from "@/store/user"
-import router from "@/router";
+import { useUserStore } from '@/store/user';
+import router from '@/router';
 
-export default function useHandleAjaxError(error){
-
+export default function useHandleAjaxError(error) {
     let status = error.response.status;
-    if (status === 401 || status === 419 ) {
-        useUserStore().logout()
-        return router.push({name: 'login'});
+    if (status === 401 || status === 419) {
+        useUserStore().logout();
+        return router.push({ name: 'login' });
     }
 
     if (status === 403 || status === 401) {

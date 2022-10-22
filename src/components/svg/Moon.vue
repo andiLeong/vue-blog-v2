@@ -1,6 +1,5 @@
 <template>
-
-    <svg viewBox="0 0 24 24" fill="none" >
+    <svg viewBox="0 0 24 24" fill="none">
         <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -18,5 +17,4 @@
             class="fill-sky-500"
         ></path>
     </svg>
-
 </template>

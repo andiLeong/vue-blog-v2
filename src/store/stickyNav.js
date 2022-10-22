@@ -1,17 +1,14 @@
-import {defineStore} from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useStickyNavStore = defineStore({
     id: 'sticky-nav',
     state: () => ({
-        shouldApply: false
+        shouldApply: false,
     }),
-    getters: {
-
-    },
+    getters: {},
     actions: {
         apply(apply) {
-            this.shouldApply = apply
-        }
-
-    }
-})
+            this.shouldApply = apply;
+        },
+    },
+});

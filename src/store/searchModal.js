@@ -1,16 +1,14 @@
-import {defineStore} from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useSearchModalStore = defineStore({
     id: 'search-modal',
     state: () => ({
-        show: false
+        show: false,
     }),
-    getters: {
-
-    },
+    getters: {},
     actions: {
         setTo(bool = true) {
-            this.show = bool
-        }
-    }
-})
+            this.show = bool;
+        },
+    },
+});

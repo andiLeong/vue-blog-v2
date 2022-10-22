@@ -1,18 +1,17 @@
-import {useSearchModalStore} from '@/store/searchModal'
+import { useSearchModalStore } from '@/store/searchModal';
 
-class SearchModal{
-
+class SearchModal {
     constructor() {
-        this.store = useSearchModalStore()
-        this.open = this.store.show
+        this.store = useSearchModalStore();
+        this.open = this.store.show;
     }
 
-    opens(){
-        return this.store.setTo()
+    opens() {
+        return this.store.setTo();
     }
 
-    close(){
-        return this.store.setTo(false)
+    close() {
+        return this.store.setTo(false);
     }
 
     // toggle() {
@@ -24,16 +23,14 @@ class SearchModal{
     //     return this.opens()
     // }
 
-    isOpen(){
-        return this.store.show
-       // return this.open
+    isOpen() {
+        return this.store.show;
+        // return this.open
     }
 
     // isClose(){
     //    return !this.isOpen()
     // }
-
 }
-
 
 export default SearchModal;

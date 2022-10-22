@@ -13,14 +13,14 @@
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                 >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                />
-            </svg>
-            <p class="sr-only">up</p>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 15l7-7 7 7"
+                    />
+                </svg>
+                <p class="sr-only">up</p>
             </span>
             <span v-if="sort.direction === 'desc'">
                 <svg
@@ -31,27 +31,27 @@
                     stroke="currentColor"
                 >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
                     />
                 </svg>
-            <p class="sr-only">down</p>
-        </span>
+                <p class="sr-only">down</p>
+            </span>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import { ref } from 'vue';
 
-const props = defineProps(['column', 'sortedColumn'])
-const emit = defineEmits(['sort', 'sortedColumn'])
+const props = defineProps(['column', 'sortedColumn']);
+const emit = defineEmits(['sort', 'sortedColumn']);
 const sort = ref({
     order_by: 'id',
     direction: 'desc',
-})
+});
 
 function sortBy(key, direction = 'desc') {
     sort.value.order_by = key;

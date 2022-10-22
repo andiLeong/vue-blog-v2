@@ -14,26 +14,21 @@
 </template>
 
 <script setup>
-import {ref,onMounted} from "vue";
+import { ref, onMounted } from 'vue';
 
-const props = defineProps(['element'])
-const show = ref(false)
+const props = defineProps(['element']);
+const show = ref(false);
 
-onMounted( () => {
-
-    let observer = new IntersectionObserver( entries => {
-        if(entries[0].isIntersecting === false){
-           show.value = true
-        }else{
-            show.value = false
+onMounted(() => {
+    let observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting === false) {
+            show.value = true;
+        } else {
+            show.value = false;
         }
         // console.log(entries)
-    })
+    });
 
-    observer.observe(
-        document.querySelector(props.element)
-    )
-
-})
-
+    observer.observe(document.querySelector(props.element));
+});
 </script>

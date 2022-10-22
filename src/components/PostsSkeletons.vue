@@ -1,7 +1,7 @@
 <template>
-  <div v-for="index in generatedArray" :key="index">
-    <PostsSkeleton />
-    <!-- <div class="border border-sky-50 shadow rounded-md p-4 max-w-sm w-full mx-auto h-96">
+    <div v-for="index in generatedArray" :key="index">
+        <PostsSkeleton />
+        <!-- <div class="border border-sky-50 shadow rounded-md p-4 max-w-sm w-full mx-auto h-96">
       <div class="animate-pulse flex space-x-4">
         <div class="flex-1 space-y-6 py-1">
           <div class="h-10 bg-gray-200 rounded"></div>
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div> -->
-  </div>
+    </div>
 </template>
 
 <script setup>

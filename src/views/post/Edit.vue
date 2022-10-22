@@ -7,7 +7,9 @@
     >
         <div class="space-y-8 divide-y divide-gray-200">
             <div v-if="post">
-                <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div
+                    class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6"
+                >
                     <div class="sm:col-span-4">
                         <BaseInput
                             labelClass="block text-sm font-medium text-gray-700 dark:text-white"
@@ -28,7 +30,10 @@
                         </label>
                         {{ post.body }}
                         <div class="mt-1">
-                            <tiptap v-model="post.body" @typing="post.body = $event"/>
+                            <tiptap
+                                v-model="post.body"
+                                @typing="post.body = $event"
+                            />
                         </div>
                     </div>
                 </div>
@@ -39,10 +44,10 @@
 
         <div class="pt-5">
             <div class="mb-2">
-                <ValidationErrors v-if="errors" :errors="errors"/>
+                <ValidationErrors v-if="errors" :errors="errors" />
             </div>
             <div class="flex justify-start">
-                <SubmitButton :loading="isLoading"/>
+                <SubmitButton :loading="isLoading" />
             </div>
         </div>
     </form>
@@ -51,43 +56,42 @@
 <script setup>
 import BaseInput from '@/components/forms/BaseInput.vue';
 import Tiptap from '@/components/Tiptap.vue';
-import {ref} from "vue";
-import useHandleAjaxError from "@/composable/useHandleAjaxError";
-import {useFetchAPost} from "@/composable/useFetchAPost";
-import {useRouter} from "vue-router";
+import { ref } from 'vue';
+import useHandleAjaxError from '@/composable/useHandleAjaxError';
+import { useFetchAPost } from '@/composable/useFetchAPost';
+import { useRouter } from 'vue-router';
 
-const props = defineProps(['slug'])
+const props = defineProps(['slug']);
 
-const post = ref('')
-const errors = ref({})
-const isLoading = ref(false)
-const submitted = ref(false)
-const router = useRouter()
+const post = ref('');
+const errors = ref({});
+const isLoading = ref(false);
+const submitted = ref(false);
+const router = useRouter();
 
 function reassignTags() {
     let tags = post.value.tags;
-    tags = tags.map((tag) => tag.name)
+    tags = tags.map((tag) => tag.name);
     post.value.tags = tags;
 }
 
 function update() {
     isLoading.value = true;
-    reassignTags()
+    reassignTags();
 
     axios
         .patch(`/api/posts/${props.slug}`, post.value)
-        .then(({data}) => {
+        .then(({ data }) => {
             isLoading.value = false;
             submitted.value = true;
-            router.push({name: 'posts.show', params: {slug: data.slug}})
+            router.push({ name: 'posts.show', params: { slug: data.slug } });
             console.log(data);
         })
         .catch((error) => {
             isLoading.value = false;
-            errors.value = useHandleAjaxError(error)
+            errors.value = useHandleAjaxError(error);
         });
 }
 
 useFetchAPost(props.slug, post);
-
 </script>

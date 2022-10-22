@@ -1,23 +1,23 @@
 <template>
-  <div class="max-w-7xl mx-auto mt-10 px-4">
-    <Uploader
-      :options="{
-        baseURL: appUrl + '/api',
-        maxConcurrentUploads: 2,
-      }"
-      :handlers="{
-        'image/jpg': {
-          endpoint: 'files',
-        },
-        'image/jpeg': {
-          endpoint: 'files',
-        },
-        'image/png': {
-          endpoint: 'files',
-        },
-      }"
-    />
-  </div>
+    <div class="max-w-7xl mx-auto mt-10 px-4">
+        <Uploader
+            :options="{
+                baseURL: appUrl + '/api',
+                maxConcurrentUploads: 2,
+            }"
+            :handlers="{
+                'image/jpg': {
+                    endpoint: 'files',
+                },
+                'image/jpeg': {
+                    endpoint: 'files',
+                },
+                'image/png': {
+                    endpoint: 'files',
+                },
+            }"
+        />
+    </div>
 </template>
 
 <script setup>

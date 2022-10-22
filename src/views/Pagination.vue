@@ -1,34 +1,34 @@
 <template>
-  <section class="max-w-7xl mx-auto mt-10">
-    <AppTableLayout>
-      <template v-slot:title>
-        <h2 class="text-gray-600 mb-10">Paginator example</h2>
-      </template>
+    <section class="max-w-7xl mx-auto mt-10">
+        <AppTableLayout>
+            <template v-slot:title>
+                <h2 class="text-gray-600 mb-10">Paginator example</h2>
+            </template>
 
-      <AppTable>
-        <template v-slot:th>
-          <th scope="col" class="table-heading">Title</th>
-        </template>
+            <AppTable>
+                <template v-slot:th>
+                    <th scope="col" class="table-heading">Title</th>
+                </template>
 
-        <template v-slot:tb>
-          <tr class="bg-white" v-for="post in posts" :key="post.id">
-            <td class="table-data">
-              {{ post.title }}
-            </td>
-          </tr>
-        </template>
+                <template v-slot:tb>
+                    <tr class="bg-white" v-for="post in posts" :key="post.id">
+                        <td class="table-data">
+                            {{ post.title }}
+                        </td>
+                    </tr>
+                </template>
 
-        <template v-slot:footer>
-          <Paginator
-            v-if="pagination.current_page"
-            :pagination="pagination"
-            @switched-page="switchPage"
-          />
-          <!-- <Paginator :pagination="pagination" @switched-page="fetch" /> -->
-        </template>
-      </AppTable>
-    </AppTableLayout>
-  </section>
+                <template v-slot:footer>
+                    <Paginator
+                        v-if="pagination.current_page"
+                        :pagination="pagination"
+                        @switched-page="switchPage"
+                    />
+                    <!-- <Paginator :pagination="pagination" @switched-page="fetch" /> -->
+                </template>
+            </AppTable>
+        </AppTableLayout>
+    </section>
 </template>
 
 <script setup>
@@ -45,35 +45,35 @@ const router = useRouter();
 const page = route.query.page || 1;
 
 watch(
-  () => route.query.page,
-  (page, prevPage) => {
-    fetch(page);
-  }
+    () => route.query.page,
+    (page, prevPage) => {
+        fetch(page);
+    }
 );
 
 console.log(route.query);
 
 function fetch(page) {
-  console.log('fetching data at page   :   ' + page);
-  axios
-    .get(`/api/posts?page=${page}`)
-    .then(function (response) {
-      posts.value = response.data.data;
-      pagination.value = response.data;
-      delete pagination.value.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    console.log('fetching data at page   :   ' + page);
+    axios
+        .get(`/api/posts?page=${page}`)
+        .then(function (response) {
+            posts.value = response.data.data;
+            pagination.value = response.data;
+            delete pagination.value.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 function switchPage(page) {
-  router.replace({
-    name: 'pagination',
-    query: {
-      page,
-    },
-  });
+    router.replace({
+        name: 'pagination',
+        query: {
+            page,
+        },
+    });
 }
 
 fetch(page);

@@ -1,39 +1,39 @@
 let defaults = {
-  time: 2000,
-  delay: 0,
-  text: '',
+    time: 2000,
+    delay: 0,
+    text: '',
 };
 
 export default {
-  namespaced: true,
+    namespaced: true,
 
-  state: {
-    snack: null,
-  },
-
-  getters: {
-    snack(state) {
-      return state.snack;
+    state: {
+        snack: null,
     },
-  },
 
-  mutations: {
-    SET_SNACK(state, text) {
-      state.snack = text;
+    getters: {
+        snack(state) {
+            return state.snack;
+        },
     },
-  },
 
-  actions: {
-    snack({ commit }, options) {
-      options = { ...defaults, ...options };
-
-      setTimeout(() => {
-        commit('SET_SNACK', options.text);
-
-        setTimeout(() => {
-          commit('SET_SNACK', null);
-        }, options.time);
-      }, options.delay);
+    mutations: {
+        SET_SNACK(state, text) {
+            state.snack = text;
+        },
     },
-  },
+
+    actions: {
+        snack({ commit }, options) {
+            options = { ...defaults, ...options };
+
+            setTimeout(() => {
+                commit('SET_SNACK', options.text);
+
+                setTimeout(() => {
+                    commit('SET_SNACK', null);
+                }, options.time);
+            }, options.delay);
+        },
+    },
 };

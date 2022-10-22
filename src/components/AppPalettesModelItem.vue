@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-defineProps(['post'])
+defineProps(['post']);
 </script>

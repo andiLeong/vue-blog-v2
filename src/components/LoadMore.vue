@@ -1,25 +1,23 @@
 <template>
     <div ref="more">
-        <slot/>
+        <slot />
     </div>
 </template>
 
 <script setup>
-import {ref,onMounted} from "vue";
+import { ref, onMounted } from 'vue';
 
-const emit = defineEmits(['load'])
-const more = ref(null)
+const emit = defineEmits(['load']);
+const more = ref(null);
 
-onMounted( () => {
-
-    let observer = new IntersectionObserver(entries => {
+onMounted(() => {
+    let observer = new IntersectionObserver((entries) => {
         // console.log(entries)
-        if(entries[0].isIntersecting){
+        if (entries[0].isIntersecting) {
             // console.log('bottom now')
-            emit('load')
+            emit('load');
         }
-    })
-    observer.observe(more.value)
-})
-
+    });
+    observer.observe(more.value);
+});
 </script>

@@ -1,27 +1,27 @@
 <template>
-  <div>
-    <UploaderForm @chosen="handleFilesChosen" />
+    <div>
+        <UploaderForm @chosen="handleFilesChosen" />
 
-    <div
-      class="mb-4 flex justify-between px-4 text-gray-600 text-sm dark:text-gray-100"
-    >
-      <span
-        >{{ this.uploads.length }} uploads ({{ currentUploadCount }} in progress
-        / {{ completedUploadCount }} complete)</span
-      >
-      <span>{{ overallProgress }}% complete</span>
+        <div
+            class="mb-4 flex justify-between px-4 text-gray-600 text-sm dark:text-gray-100"
+        >
+            <span
+                >{{ this.uploads.length }} uploads ({{ currentUploadCount }} in
+                progress / {{ completedUploadCount }} complete)</span
+            >
+            <span>{{ overallProgress }}% complete</span>
+        </div>
+
+        <UploaderFile
+            :endpoint="determineEndpointFor(upload.file.type)"
+            :baseURL="options.baseURL"
+            v-for="(upload, index) in uploads"
+            :key="index"
+            :upload="upload"
+            @progress="handleUploadProgress"
+            @change="handleUploadChange"
+        />
     </div>
-
-    <UploaderFile
-      :endpoint="determineEndpointFor(upload.file.type)"
-      :baseURL="options.baseURL"
-      v-for="(upload, index) in uploads"
-      :key="index"
-      :upload="upload"
-      @progress="handleUploadProgress"
-      @change="handleUploadChange"
-    />
-  </div>
 </template>
 
 <script>
@@ -34,144 +34,146 @@ import UploaderForm from '@/components/uploader/components/UploaderForm.vue';
 import UploaderFile from '@/components/uploader/components/UploaderFile.vue';
 
 export default {
-  components: {
-    UploaderForm,
-    UploaderFile,
-  },
-
-  props: {
-    options: {
-      required: false,
-      type: Object,
-      default: () => options,
+    components: {
+        UploaderForm,
+        UploaderFile,
     },
 
-    handlers: {
-      required: true,
-      type: Object,
-    },
-  },
+    props: {
+        options: {
+            required: false,
+            type: Object,
+            default: () => options,
+        },
 
-  data() {
-    return {
-      uploads: [],
-    };
-  },
-
-  computed: {
-    currentUploadCount() {
-      return this.uploads.filter((upload) => upload.uploading).length;
+        handlers: {
+            required: true,
+            type: Object,
+        },
     },
 
-    completedUploadCount() {
-      return this.uploads.filter((upload) => upload.complete).length;
+    data() {
+        return {
+            uploads: [],
+        };
     },
 
-    overallProgress() {
-      let uploads = this.uploads.filter(
-        (upload) => !upload.cancelled && !upload.failed
-      );
+    computed: {
+        currentUploadCount() {
+            return this.uploads.filter((upload) => upload.uploading).length;
+        },
 
-      if (uploads.length === 0) {
-        return 0;
-      }
+        completedUploadCount() {
+            return this.uploads.filter((upload) => upload.complete).length;
+        },
 
-      return parseInt(
-        uploads.reduce((a, b) => a + b.progress, 0) / uploads.length
-      );
-    },
-  },
+        overallProgress() {
+            let uploads = this.uploads.filter(
+                (upload) => !upload.cancelled && !upload.failed
+            );
 
-  methods: {
-    handleUploadChange(e) {
-      switch (e.state) {
-        case states.UPLOADING:
-          this.uploads = this.uploads.map((upload) => {
-            if (e.id === upload.id) {
-              upload.uploading = true;
+            if (uploads.length === 0) {
+                return 0;
             }
 
-            return upload;
-          });
-          break;
-        case states.COMPLETE:
-          this.uploads = this.uploads.map((upload) => {
-            if (e.id === upload.id) {
-              upload.complete = true;
-              upload.uploading = false;
+            return parseInt(
+                uploads.reduce((a, b) => a + b.progress, 0) / uploads.length
+            );
+        },
+    },
+
+    methods: {
+        handleUploadChange(e) {
+            switch (e.state) {
+                case states.UPLOADING:
+                    this.uploads = this.uploads.map((upload) => {
+                        if (e.id === upload.id) {
+                            upload.uploading = true;
+                        }
+
+                        return upload;
+                    });
+                    break;
+                case states.COMPLETE:
+                    this.uploads = this.uploads.map((upload) => {
+                        if (e.id === upload.id) {
+                            upload.complete = true;
+                            upload.uploading = false;
+                        }
+
+                        return upload;
+                    });
+                    break;
+                case states.CANCELLED:
+                    this.uploads = this.uploads.map((upload) => {
+                        if (e.id === upload.id) {
+                            upload.cancelled = true;
+                            upload.uploading = false;
+                        }
+
+                        return upload;
+                    });
+                    break;
+                case states.FAILED:
+                    this.uploads = this.uploads.map((upload) => {
+                        if (e.id === upload.id) {
+                            upload.failed = true;
+                            upload.uploading = false;
+                        }
+
+                        return upload;
+                    });
+                    break;
+            }
+        },
+
+        handleUploadProgress(e) {
+            this.uploads = this.uploads.map((upload) => {
+                if (e.id === upload.id) {
+                    upload.progress = e.progress;
+                }
+
+                return upload;
+            });
+        },
+
+        determineEndpointFor(fileType) {
+            return get(this.handlers[fileType], 'endpoint', null);
+        },
+
+        handleFilesChosen(files) {
+            console.log(files);
+            this.uploads.push(
+                ...Array.from(files).map((file) => {
+                    return {
+                        id: uuidv4(),
+                        progress: 0,
+                        uploading: false,
+                        complete: false,
+                        cancelled: false,
+                        failed: false,
+                        queued: true,
+                        file,
+                    };
+                })
+            );
+        },
+    },
+
+    mounted() {
+        setInterval(() => {
+            if (this.currentUploadCount >= this.options.maxConcurrentUploads) {
+                return;
             }
 
-            return upload;
-          });
-          break;
-        case states.CANCELLED:
-          this.uploads = this.uploads.map((upload) => {
-            if (e.id === upload.id) {
-              upload.cancelled = true;
-              upload.uploading = false;
+            let queued = this.uploads.filter(
+                (upload) => upload.queued === true
+            );
+
+            if (queued.length) {
+                queued[0].queued = false;
             }
-
-            return upload;
-          });
-          break;
-        case states.FAILED:
-          this.uploads = this.uploads.map((upload) => {
-            if (e.id === upload.id) {
-              upload.failed = true;
-              upload.uploading = false;
-            }
-
-            return upload;
-          });
-          break;
-      }
+        }, 1000);
     },
-
-    handleUploadProgress(e) {
-      this.uploads = this.uploads.map((upload) => {
-        if (e.id === upload.id) {
-          upload.progress = e.progress;
-        }
-
-        return upload;
-      });
-    },
-
-    determineEndpointFor(fileType) {
-      return get(this.handlers[fileType], 'endpoint', null);
-    },
-
-    handleFilesChosen(files) {
-      console.log(files);
-      this.uploads.push(
-        ...Array.from(files).map((file) => {
-          return {
-            id: uuidv4(),
-            progress: 0,
-            uploading: false,
-            complete: false,
-            cancelled: false,
-            failed: false,
-            queued: true,
-            file,
-          };
-        })
-      );
-    },
-  },
-
-  mounted() {
-    setInterval(() => {
-      if (this.currentUploadCount >= this.options.maxConcurrentUploads) {
-        return;
-      }
-
-      let queued = this.uploads.filter((upload) => upload.queued === true);
-
-      if (queued.length) {
-        queued[0].queued = false;
-      }
-    }, 1000);
-  },
 };
 </script>
