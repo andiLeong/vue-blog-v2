@@ -41,14 +41,15 @@
                                     <p>
                                         A 2 years full stack php
                                         <span
-                                            class="text-red-500 font-semibold dark:text-red-400"
-                                            >laravel</span
+                                            class="inline-block rotate-1 p-1 rounded bg-red-200 text-red-700 font-semibold dark:text-red-400"
                                         >
+                                            laravel
+                                        </span>
                                         +
                                         <span
-                                            class="text-green-500 font-semibold"
-                                            >vue</span
-                                        >
+                                            class="inline-block rotate-1 p-1 rounded bg-green-200 text-green-700 font-semibold"
+                                            >vue
+                                        </span>
                                         web developer. Actually this blog was
                                         built on top of laravel + vue. Make use
                                         of laravel act as backend, utilities vue
@@ -109,14 +110,23 @@
                                 <div
                                     class="mt-6 prose prose-indigo prose-lg text-gray-500 dark:text-white lg:mt-0"
                                 >
-                                    <h3 class="dark:text-white text-sky-300">
+                                    <h3
+                                        class="bg-gradient-to-r from-sky-400 to-purple-600 text-transparent bg-clip-text"
+                                    >
                                         Advantage
                                     </h3>
 
                                     <div class="space-y-3">
                                         <div
                                             style="font-size: 1.1rem"
-                                            v-for="advantage in advantages"
+                                            :class="
+                                                index === 0
+                                                    ? 'bg-gradient-to-r from-sky-400 to-purple-600 text-transparent bg-clip-text font-semibold'
+                                                    : ''
+                                            "
+                                            v-for="(
+                                                advantage, index
+                                            ) in advantages"
                                             :key="advantage"
                                         >
                                             {{ advantage }}
@@ -182,6 +192,7 @@ const codeReviews = ref([
         url: 'https://github.com/andiLeong/validation',
     },
     { name: 'vue component collection', url: '/components' },
+    { name: 'react app', url: 'https://react-show-case.andiliang.com' },
 ]);
 
 const advantages = ref([
