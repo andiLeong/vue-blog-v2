@@ -154,32 +154,6 @@ const resume = ref({
     educations: [],
     skills: [],
 });
-const defaultSection = ref([
-    {
-        section: 'skills',
-        value: { name: '' },
-    },
-    {
-        section: 'educations',
-        value: {
-            from: '',
-            to: '',
-            school: '',
-            degree: '',
-            about: '',
-        },
-    },
-    {
-        section: 'experiences',
-        value: {
-            position: '',
-            from: '',
-            to: '',
-            company: '',
-            experience: '',
-        },
-    },
-]);
 
 resume.value.educations[0] = getDefault('educations');
 resume.value.skills[0] = getDefault('skills');
@@ -194,9 +168,31 @@ function remove(section, index) {
 }
 
 function getDefault(section) {
-    return defaultSection.value.filter((sectionLookup) => {
-        return sectionLookup.section === section;
-    })[0].value;
+    if (section === 'experiences') {
+        return {
+            position: '',
+            from: '',
+            to: '',
+            company: '',
+            experience: '',
+        };
+    }
+
+    if (section === 'educations') {
+        return {
+            from: '',
+            to: '',
+            school: '',
+            degree: '',
+            about: '',
+        };
+    }
+
+    if (section === 'skills') {
+        return {
+            name: '',
+        };
+    }
 }
 
 onMounted(() => {
