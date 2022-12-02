@@ -64,7 +64,9 @@
 
             <div>
                 <p class="text-gray-500 text-xl font-semibold">Statement</p>
-                <p class="text-gray-400 tracking-wide">{{ resume.about }}</p>
+                <p class="text-gray-400 tracking-wide whitespace-pre-wrap">
+                    {{ resume.about }}
+                </p>
             </div>
         </div>
 
