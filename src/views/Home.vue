@@ -54,7 +54,8 @@
                                         of laravel act as backend, utilities vue
                                         router to make SPA to improve user
                                         experience. For the style I love using
-                                        utility css framework tailwind.
+                                        utility css framework tailwind.In free
+                                        time I also study react & react native.
                                     </p>
 
                                     <h3 class="dark:text-white">Skills</h3>
@@ -84,30 +85,6 @@
                                             <div>{{ skill }}</div>
                                         </div>
                                     </div>
-                                </div>
-                                <div
-                                    class="mt-6 prose prose-indigo prose-lg text-gray-500 dark:text-white lg:mt-0"
-                                >
-                                    <h3 class="dark:text-white">Advantage</h3>
-
-                                    <div class="space-y-2">
-                                        <div
-                                            v-for="advantage in advantages"
-                                            :key="advantage"
-                                        >
-                                            {{ advantage }}
-                                        </div>
-                                    </div>
-
-                                    <h3 class="dark:text-white">Experience</h3>
-                                    <p>
-                                        Maintain and develop several projects
-                                        from previous company, that includes a
-                                        small ecommerce site, a job posting
-                                        site, A social insurance buying
-                                        platform, a construction monitor
-                                        platform
-                                    </p>
 
                                     <h3 class="dark:text-white">Code Review</h3>
                                     <p class="sticky-nav">
@@ -128,6 +105,33 @@
                                             >
                                         </div>
                                     </div>
+                                </div>
+                                <div
+                                    class="mt-6 prose prose-indigo prose-lg text-gray-500 dark:text-white lg:mt-0"
+                                >
+                                    <h3 class="dark:text-white text-sky-300">
+                                        Advantage
+                                    </h3>
+
+                                    <div class="space-y-3">
+                                        <div
+                                            style="font-size: 1.1rem"
+                                            v-for="advantage in advantages"
+                                            :key="advantage"
+                                        >
+                                            {{ advantage }}
+                                        </div>
+                                    </div>
+
+                                    <h3 class="dark:text-white">Experience</h3>
+                                    <p>
+                                        Maintain and develop several projects
+                                        from previous company, that includes a
+                                        small ecommerce site, a job posting
+                                        site, A social insurance buying
+                                        platform, a construction monitor
+                                        platform
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +157,7 @@ const show = ref(false);
 const skills = ref([
     'native php',
     'php framework --- laravel, codeigniter',
-    'javascript framework --- vue js',
+    'javascript framework --- vue/react js',
     'database -- redis , mysql',
     'server -- nginx',
     'version control -- git',
@@ -167,25 +171,26 @@ const skills = ref([
 ]);
 
 const codeReviews = ref([
-    { name: 'collection', url: 'https://github.com/andiLeong/collection' },
     {
-        name: 'a simple mvc php',
-        url: 'https://github.com/andiLeong/php-journey',
+        name: 'php mvc framework',
+        url: 'https://github.com/andiLeong/framework',
     },
+    { name: 'collection', url: 'https://github.com/andiLeong/collection' },
     { name: 'aliyun sms', url: 'https://github.com/andiLeong/aliyunSms' },
     {
-        name: 'a simple e-commerce',
-        url: 'https://github.com/andiLeong/my-e-commence',
+        name: 'validation package',
+        url: 'https://github.com/andiLeong/validation',
     },
     { name: 'vue component collection', url: '/components' },
 ]);
 
 const advantages = ref([
+    'Having habit to review laravel source code to understand how it works under the hood',
     'Has strong oop fundamental concept, aim to write clean , expressive and maintainable codes.',
     "Understand and use major design principles/pattern, like strategy pattern, tell don't ask, solid, decorator, adaptor etc..",
     'Having a habit refactor code after written aims to make it perfect, not a guy write code then go home.',
-    'Having a moderate level of understanding to laravel, from bootstrap the app, IOC container, Eloquent, service provider, collection etc.. .',
-    'Always write test first, or sometimes later to make sure the application is well tested before going live to reduce unnecessary bugs.',
+    'Having a moderate level of understanding to laravel, from bootstrapping, IOC container, Eloquent, collection etc.. .',
+    'Write test, to make sure the application is well tested before going live to reduce unnecessary bugs.',
     'Always write raw sql to see whats happening without reply on Eloquent too much.',
 ]);
 
