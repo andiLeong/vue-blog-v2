@@ -100,6 +100,30 @@
             <!-- education -->
             <div class="space-y-4">
                 <h2 class="font-semibold text-xl text-gray-700">Educations</h2>
+
+                <div class="">
+                    <p>Ignore education</p>
+                    <div class="mt-2 flex items-center space-x-2">
+                        <div class="space-x-1.5">
+                            <input
+                                v-model="resume.ignoreEducation"
+                                type="radio"
+                                id="no-ignore-education"
+                                :value="false"
+                            />
+                            <label for="no-ignore-education">No</label>
+                        </div>
+                        <div class="space-x-1.5">
+                            <input
+                                v-model="resume.ignoreEducation"
+                                type="radio"
+                                id="ignore-education"
+                                :value="true"
+                            />
+                            <label for="ignore-education">Yes</label>
+                        </div>
+                    </div>
+                </div>
                 <EducationCollection
                     :educations="resume.educations"
                     @remove="remove"
@@ -153,6 +177,7 @@ const resume = ref({
     experiences: [],
     educations: [],
     skills: [],
+    ignoreEducation: false,
 });
 
 resume.value.educations[0] = getDefault('educations');

@@ -184,7 +184,7 @@
             </div>
         </div>
 
-        <div class="resume-experience space-y-4">
+        <div class="resume-experience space-y-4" v-if="!resume.ignoreEducation">
             <div class="resume-content-header">
                 <div>
                     <p class="text-2xl font-bold text-gray-600">Education</p>
