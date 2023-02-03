@@ -28,7 +28,6 @@
                         >
                             About
                         </label>
-                        {{ post.body }}
                         <div class="mt-1">
                             <tiptap
                                 v-model="post.body"
@@ -63,7 +62,7 @@ import { useRouter } from 'vue-router';
 
 const props = defineProps(['slug']);
 
-const post = ref('');
+let { post } = useFetchAPost(props.slug);
 const errors = ref({});
 const isLoading = ref(false);
 const submitted = ref(false);
@@ -92,6 +91,4 @@ function update() {
             errors.value = useHandleAjaxError(error);
         });
 }
-
-useFetchAPost(props.slug, post);
 </script>
