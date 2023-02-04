@@ -14,6 +14,19 @@
                             </h1>
                         </div>
 
+                        <div class="mt-4 grid grid-cols-3 gap-2">
+                            <div class="">
+                                <BaseSelect
+                                    labelClass="form-label"
+                                    class="mt-1 form-select"
+                                    label="Order By"
+                                    :options="orderByOption"
+                                    v-model="orderBy"
+                                    @update:modelValue="fetch(1, true)"
+                                />
+                            </div>
+                        </div>
+
                         <section
                             class="mt-8 pb-16"
                             aria-labelledby="gallery-heading"
@@ -160,7 +173,7 @@
                                         <dt
                                             class="text-gray-500 dark:text-gray-200"
                                         >
-                                            Taken At :
+                                            Taken at :
                                         </dt>
                                         <dd
                                             class="text-gray-900 dark:text-white"
@@ -185,6 +198,7 @@ import InfiniteScroll from '@/components/InfiniteScroll.vue';
 import Pinned from '@/components/Pinned.vue';
 import _ from 'lodash';
 import moment from 'moment';
+import BaseSelect from '@/components/forms/BaseSelect.vue';
 
 const currentFile = ref(null);
 
@@ -192,6 +206,8 @@ const files = ref([]);
 const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
+const orderByOption = ['latest', 'oldest'];
+const orderBy = ref('latest');
 
 const published_at = computed(() => toFormat(currentFile.value.created_at));
 const taken_at = computed(() => toFormat(currentFile.value.last_modified));
@@ -206,7 +222,7 @@ function toFormat(date, format = 'YYYY-MM-DD HH:mm:ss') {
     return moment(date).format(format);
 }
 
-function fetch(page) {
+function fetch(page, resetFetch = false) {
     if (page > lastPage.value) {
         return;
     }
@@ -215,7 +231,7 @@ function fetch(page) {
     }
 
     axios
-        .get(`/api/gallery/1?page=${page}`)
+        .get(`/api/gallery/1?page=${page}&${orderBy.value}=1`)
         .then(function (response) {
             if (response.data.next_page_url === null) {
                 noMoreFiles.value = true;
@@ -223,6 +239,11 @@ function fetch(page) {
 
             if (page == 1) {
                 currentFile.value = response.data.data[0];
+            }
+
+            if (resetFetch) {
+                files.value = response.data.data;
+                return;
             }
 
             files.value.push(...response.data.data);
