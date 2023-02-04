@@ -60,9 +60,9 @@
                                                 </button>
                                             </div>
                                             <p
-                                                class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none dark:text-gray-200"
+                                                class="mt-2 block text-sm font-medium text-sky-500 truncate pointer-events-none dark:text-gray-200"
                                             >
-                                                {{ item.name }}
+                                                {{ item.age }}
                                             </p>
                                             <p
                                                 class="block text-sm font-medium text-gray-500 pointer-events-none dark:text-gray-100"
@@ -160,12 +160,12 @@
                                         <dt
                                             class="text-gray-500 dark:text-gray-200"
                                         >
-                                            Last modified :
+                                            Taken At :
                                         </dt>
                                         <dd
                                             class="text-gray-900 dark:text-white"
                                         >
-                                            {{ currentFile.last_modified }}
+                                            {{ taken_at }}
                                         </dd>
                                     </div>
                                 </dl>
@@ -193,16 +193,18 @@ const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
 
-const published_at = computed(() =>
-    moment(currentFile.value.created_at).format('YYYY-MM-DD HH:mm:ss')
-);
+const published_at = computed(() => toFormat(currentFile.value.created_at));
+const taken_at = computed(() => toFormat(currentFile.value.last_modified));
 
 const updateFeatureGallery = _.debounce(function (gallery) {
     if (window.innerWidth >= 988) {
         currentFile.value = gallery;
-        console.log('called   ');
     }
 }, 300);
+
+function toFormat(date, format = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(date).format(format);
+}
 
 function fetch(page) {
     if (page > lastPage.value) {
