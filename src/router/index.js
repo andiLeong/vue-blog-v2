@@ -129,6 +129,11 @@ const routes = [
         component: () => import('@/views/Notes.vue'),
     },
     {
+        path: '/v',
+        name: 'v',
+        component: () => import('@/views/Vtest.vue'),
+    },
+    {
         path: '/search',
         name: 'search',
         component: () => import('@/views/Search.vue'),

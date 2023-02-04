@@ -1,6 +1,6 @@
 <template>
-    <Pinned>
-        <div class="space-y-6 mr-20 w-full" v-if="file">
+    <Pinned :classes="['mr-8']">
+        <div class="space-y-6 w-full" v-if="file">
             <div>
                 <div
                     class="block w-full aspect-w-10 aspect-h-12 rounded-lg overflow-hidden"
