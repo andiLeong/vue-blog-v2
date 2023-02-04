@@ -96,7 +96,7 @@ const routes = [
     {
         path: '/gallery',
         name: 'gallery',
-        component: () => import('@/views/Gallery.vue'),
+        component: () => import('@/views/gallery/Gallery.vue'),
     },
     {
         path: '/when-visible',

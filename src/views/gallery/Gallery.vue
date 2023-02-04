@@ -112,79 +112,7 @@
                 <aside
                     class="hidden w-96 bg-white dark:bg-gray-800 p-8 border-l dark:border-l-2 border-gray-200 border-t-2 overflow-y-auto lg:block"
                 >
-                    <Pinned>
-                        <div class="space-y-6 mr-20 w-full" v-if="currentFile">
-                            <div>
-                                <div
-                                    class="block w-full aspect-w-10 aspect-h-12 rounded-lg overflow-hidden"
-                                >
-                                    <img
-                                        :src="currentFile.url"
-                                        alt=""
-                                        class="object-cover"
-                                    />
-                                </div>
-                                <div
-                                    class="mt-4 flex items-start justify-between"
-                                >
-                                    <div>
-                                        <h2
-                                            class="text-lg font-medium text-gray-900 dark:text-white"
-                                        >
-                                            <span class="sr-only"
-                                                >Details for </span
-                                            >{{ currentFile.name }}
-                                        </h2>
-                                        <p
-                                            class="text-sm font-medium text-gray-500 dark:text-gray-400"
-                                        >
-                                            {{ currentFile.size }} MB
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3
-                                    class="font-medium text-gray-900 dark:text-gray-200"
-                                >
-                                    Information
-                                </h3>
-                                <dl
-                                    class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                                >
-                                    <div
-                                        class="py-3 flex justify-between text-sm font-medium"
-                                    >
-                                        <dt
-                                            class="text-gray-500 dark:text-gray-200"
-                                        >
-                                            Created at :
-                                        </dt>
-                                        <dd
-                                            class="text-gray-900 dark:text-white"
-                                        >
-                                            {{ published_at }}
-                                        </dd>
-                                    </div>
-
-                                    <div
-                                        class="py-3 flex justify-between text-sm font-medium"
-                                    >
-                                        <dt
-                                            class="text-gray-500 dark:text-gray-200"
-                                        >
-                                            Taken at :
-                                        </dt>
-                                        <dd
-                                            class="text-gray-900 dark:text-white"
-                                        >
-                                            {{ taken_at }}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                    </Pinned>
+                    <GalleryDetails :file="currentFile" />
                 </aside>
             </div>
         </div>
@@ -192,13 +120,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import Spinner from '@/components/Spinner.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
-import Pinned from '@/components/Pinned.vue';
 import _ from 'lodash';
-import moment from 'moment';
 import BaseSelect from '@/components/forms/BaseSelect.vue';
+import GalleryDetails from '@/views/gallery/GalleryDetails.vue';
 
 const currentFile = ref(null);
 
@@ -209,18 +136,11 @@ const fetching = ref(false);
 const orderByOption = ['latest', 'oldest'];
 const orderBy = ref('latest');
 
-const published_at = computed(() => toFormat(currentFile.value.created_at));
-const taken_at = computed(() => toFormat(currentFile.value.last_modified));
-
 const updateFeatureGallery = _.debounce(function (gallery) {
     if (window.innerWidth >= 988) {
         currentFile.value = gallery;
     }
 }, 300);
-
-function toFormat(date, format = 'YYYY-MM-DD HH:mm:ss') {
-    return moment(date).format(format);
-}
 
 function fetch(page, resetFetch = false) {
     if (page > lastPage.value) {
