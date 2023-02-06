@@ -99,6 +99,11 @@ const routes = [
         component: () => import('@/views/gallery/Gallery.vue'),
     },
     {
+        path: '/video',
+        name: 'video',
+        component: () => import('@/views/video/Video.vue'),
+    },
+    {
         path: '/when-visible',
         name: 'when.visible',
         component: () => import('@/views/WhenVisible.vue'),

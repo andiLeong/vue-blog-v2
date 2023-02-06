@@ -18,10 +18,10 @@
                 'video/mp4': {
                     endpoint: 'files',
                 },
-                'video/hevc': {
+                'video/quicktime': {
                     endpoint: 'files',
                 },
-                'video/MOV': {
+                'video/mov': {
                     endpoint: 'files',
                 },
             }"
