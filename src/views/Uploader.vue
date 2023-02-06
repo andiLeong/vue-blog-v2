@@ -21,6 +21,9 @@
                 'video/hevc': {
                     endpoint: 'files',
                 },
+                'video/mov': {
+                    endpoint: 'files',
+                },
             }"
         />
     </div>
