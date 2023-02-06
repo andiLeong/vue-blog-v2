@@ -39,6 +39,7 @@ import useHandleAjaxError from '@/composable/useHandleAjaxError';
 import UploaderProgress from '@/components/uploader/components/UploaderProgress.vue';
 
 export default {
+    inject: ['model'],
     components: {
         UploaderProgress,
     },
@@ -120,10 +121,8 @@ export default {
             const form = new FormData();
             form.append('file', file, file.name);
             form.append('last_modified', file.lastModified);
-            form.append('fileable_id', 1);
-            form.append('fileable_type', 'Gallery');
-            console.log('submit data is   ::  ' + JSON.stringify(form));
-
+            form.append('fileable_id', this.model.id);
+            form.append('fileable_type', this.model.name.value);
             return form;
         },
 
