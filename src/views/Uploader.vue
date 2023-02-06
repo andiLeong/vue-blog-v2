@@ -15,6 +15,12 @@
                 'image/png': {
                     endpoint: 'files',
                 },
+                'video/mp4': {
+                    endpoint: 'files',
+                },
+                'video/hevc': {
+                    endpoint: 'files',
+                },
             }"
         />
     </div>
