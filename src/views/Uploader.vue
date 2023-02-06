@@ -21,7 +21,7 @@
                 'video/hevc': {
                     endpoint: 'files',
                 },
-                'video/mov': {
+                'video/MOV': {
                     endpoint: 'files',
                 },
             }"
