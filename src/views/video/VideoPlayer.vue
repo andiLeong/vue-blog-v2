@@ -73,7 +73,6 @@ function destroy() {
 
 function initPlayer() {
     if (canBeInit()) {
-        console.log('ini player js');
         player.value = videojs(id.value, defaultConfig.value);
     }
 }

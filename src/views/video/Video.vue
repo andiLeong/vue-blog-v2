@@ -5,10 +5,7 @@
             <div class="flex-1 flex items-stretch overflow-hidden">
                 <main class="flex-1 overflow-y-auto">
                     <div class="pt-8 max-w-7xl mx-auto px-10 sm:px-6 lg:px-8">
-                        <section
-                            class="mt-8 pb-16"
-                            aria-labelledby="gallery-heading"
-                        >
+                        <section class="mt-8 pb-16">
                             <ul
                                 v-if="files.length > 0"
                                 role="list"
@@ -18,11 +15,14 @@
                                     <template v-slot:item="{ item }">
                                         <li class="relative">
                                             <div
-                                                :class="[
-                                                    'group block w-full aspect-w-10 aspect-h-12 rounded-lg bg-gray-100 overflow-hidden dark:rounded-md',
-                                                ]"
+                                                class="bg-gradient-to-r from-slate-200 to-slate-100 rounded-md"
                                             >
-                                                <video controls>
+                                                <video
+                                                    class="cursor-pointer w-64 h-60"
+                                                    @click.prevent="
+                                                        openModal(item.url)
+                                                    "
+                                                >
                                                     <source
                                                         :src="item.url"
                                                         type="video/mp4"
@@ -61,24 +61,26 @@
                 </main>
             </div>
         </div>
+        <VideoModal :source="selectedVideo" />
     </div>
 </template>
 
-<!--<video width="400" controls autoplay>-->
-<!--        <source-->
-<!--            src="https://andiliang.sgp1.cdn.digitaloceanspaces.com/test/IMG_0513.MOV"-->
-<!--            type="video/mp4"-->
-<!--        />-->
-<!--    </video>-->
 <script setup>
 import { ref } from 'vue';
 import Spinner from '@/components/Spinner.vue';
 import InfiniteScroll from '@/components/InfiniteScroll.vue';
+import VideoModal from '@/views/video/VideoModal.vue';
+import { v4 as uuidv4 } from 'uuid';
 
 const files = ref([]);
 const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
+const selectedVideo = ref(null);
+
+function openModal(source) {
+    selectedVideo.value = source + '?id=' + uuidv4();
+}
 
 function fetch(page, resetFetch = false) {
     if (page > lastPage.value) {
