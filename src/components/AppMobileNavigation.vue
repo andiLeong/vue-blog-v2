@@ -28,6 +28,7 @@
                 >
                     {{ dropdown.description }}
                 </a>
+                <SignOut />
             </li>
         </ul>
     </div>
@@ -37,6 +38,7 @@
 import { useUserStore } from '@/store/user';
 import { ref } from 'vue';
 import useCapitalise from '@/composable/useCapitalise';
+import SignOut from '@/components/SignOut.vue';
 
 const props = defineProps(['routes', 'dropdowns']);
 
