@@ -1,13 +1,14 @@
 <template>
     <ul class="">
         <li v-for="(route, index) in routes">
-            <AppLink
-                :to="route"
+            <a
                 :key="index"
+                @click.prevent="to(route.name)"
+                href="#"
                 class="dark:bg-gray-700 dark:text-white text-gray-700 font-medium block px-3 py-2"
             >
                 {{ useCapitalise(route.name) }}
-            </AppLink>
+            </a>
         </li>
     </ul>
     <div class="space-y-4 my-4" v-if="auth">
@@ -41,10 +42,19 @@ import { useUserStore } from '@/store/user';
 import { ref } from 'vue';
 import useCapitalise from '@/composable/useCapitalise';
 import SignOut from '@/components/SignOut.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps(['routes', 'dropdowns']);
+const emit = defineEmits(['goTo']);
 
 const userStore = useUserStore();
 const auth = ref(userStore.isLoggedIn);
 const user = ref(userStore.user);
+const router = useRouter();
+
+function to(routeName) {
+    console.log(routeName);
+    emit('goTo');
+    router.push({ name: routeName });
+}
 </script>

@@ -85,7 +85,11 @@
     </nav>
 
     <div v-if="open" class="bg-white dark:bg-gray-700 sm:hidden space-y-3 pb-6">
-        <AppMobileNavigation :routes="routes" :dropdowns="dropdowns" />
+        <AppMobileNavigation
+            :routes="routes"
+            :dropdowns="dropdowns"
+            @go-to="open = false"
+        />
     </div>
 </template>
 
