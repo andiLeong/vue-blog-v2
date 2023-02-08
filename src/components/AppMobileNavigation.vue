@@ -28,7 +28,9 @@
                 >
                     {{ dropdown.description }}
                 </a>
-                <SignOut />
+            </li>
+            <li>
+                <SignOut :is-mobile="true" />
             </li>
         </ul>
     </div>
