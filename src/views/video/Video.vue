@@ -15,7 +15,7 @@
                                     <template v-slot:item="{ item }">
                                         <li class="relative">
                                             <div
-                                                class="bg-gradient-to-r from-slate-200 to-slate-100 rounded-md"
+                                                class="flex justify-center items-center bg-gradient-to-r from-slate-200 to-slate-100 rounded-md"
                                             >
                                                 <video
                                                     class="cursor-pointer w-64 h-60"
