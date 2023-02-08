@@ -11,22 +11,14 @@ export const useUserStore = defineStore({
         },
 
         isAdmin(state) {
-            if (!this.isLoggedIn) {
+            const user = localStorage.getItem('user');
+
+            if (!this.isLoggedIn || user === null) {
                 return false;
             }
 
-            const user = localStorage.getItem('user');
-            if (user !== null) {
-                const userData = JSON.parse(user);
-                if (userData.id === 1) {
-                    return true;
-                }
-            }
-
-            if (state.user?.id === 1) {
-                return true;
-            }
-            return false;
+            const userData = JSON.parse(user);
+            return userData.is_admin || state.user?.is_admin;
         },
     },
     actions: {

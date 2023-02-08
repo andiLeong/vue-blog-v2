@@ -53,7 +53,6 @@ const user = ref(userStore.user);
 const router = useRouter();
 
 function to(routeName) {
-    console.log(routeName);
     emit('goTo');
     router.push({ name: routeName });
 }
