@@ -50,12 +50,6 @@
                                     </template>
                                 </InfiniteScroll>
                             </ul>
-
-                            <div v-else>
-                                <Spinner
-                                    class="animate-spin -ml-1 h-5 w-5 text-sky-600"
-                                />
-                            </div>
                         </section>
                     </div>
                 </main>

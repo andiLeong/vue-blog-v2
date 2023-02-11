@@ -3,7 +3,10 @@
         <!-- Content area -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Main content -->
-            <div class="flex-1 flex items-stretch overflow-hidden">
+            <div
+                v-if="files.length > 0"
+                class="flex-1 flex items-stretch overflow-hidden"
+            >
                 <main class="flex-1 overflow-y-auto">
                     <div class="pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex">
@@ -32,7 +35,6 @@
                             aria-labelledby="gallery-heading"
                         >
                             <ul
-                                v-if="files.length > 0"
                                 role="list"
                                 class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
                             >
@@ -98,12 +100,6 @@
                                     </template>
                                 </InfiniteScroll>
                             </ul>
-
-                            <div v-else>
-                                <Spinner
-                                    class="animate-spin -ml-1 h-5 w-5 text-sky-600"
-                                />
-                            </div>
                         </section>
                     </div>
                 </main>
