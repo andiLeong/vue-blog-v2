@@ -18,6 +18,7 @@
                                                 class="flex justify-center items-center bg-gradient-to-r from-slate-200 to-slate-100 rounded-md"
                                             >
                                                 <video
+                                                    playsinline
                                                     class="cursor-pointer w-64 h-60"
                                                     @click.prevent="
                                                         openModal(item.url)
