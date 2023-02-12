@@ -25,7 +25,10 @@
                                                     "
                                                 >
                                                     <source
-                                                        :src="item.url"
+                                                        :src="
+                                                            item.url +
+                                                            '#t=0.001'
+                                                        "
                                                         type="video/mp4"
                                                     />
                                                 </video>
