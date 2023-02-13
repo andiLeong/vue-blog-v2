@@ -21,7 +21,7 @@
                                                     playsinline
                                                     class="cursor-pointer w-64 h-60"
                                                     @click.prevent="
-                                                        openModal(item.url)
+                                                        openModal(item)
                                                     "
                                                 >
                                                     <source
@@ -59,7 +59,7 @@
                 </main>
             </div>
         </div>
-        <VideoModal :source="selectedVideo" />
+        <VideoModal :source="selectedVideo" @next-video="prepareNextVideo" />
     </div>
 </template>
 
@@ -75,9 +75,13 @@ const lastPage = ref(1);
 const noMoreFiles = ref(false);
 const fetching = ref(false);
 const selectedVideo = ref(null);
+const selectedVideoId = ref(null);
 
-function openModal(source) {
-    selectedVideo.value = source + '?id=' + uuidv4();
+function openModal(video) {
+    // selectedVideo.value = null;
+    // selectedVideoId.value = null;
+    selectedVideo.value = appendUuid(video.url);
+    selectedVideoId.value = video.id;
 }
 
 function fetch(page, resetFetch = false) {
@@ -107,6 +111,27 @@ function fetch(page, resetFetch = false) {
             alert('remote server response with: ' + error.response.status);
             console.log(error);
         });
+}
+
+function prepareNextVideo() {
+    let index = files.value.findIndex(
+        (files) => files.id === selectedVideoId.value
+    );
+
+    if (index !== -1 && index + 1 in files.value) {
+        let item = files.value[index + 1];
+        selectedVideo.value = appendUuid(item.url);
+        selectedVideoId.value = item.id;
+    } else {
+        selectedVideo.value = null;
+        selectedVideoId.value = null;
+    }
+
+    // selectedVideo.value = 'https://www.w3schools.com/html/mov_bbb.mp4';
+}
+
+function appendUuid(url) {
+    return url + '?id=' + uuidv4();
 }
 
 fetch(1);

@@ -18,7 +18,12 @@ const props = defineProps({
         type: [String, null],
         required: false,
     },
+    autoPlay: {
+        type: Boolean,
+        default: false,
+    },
 });
+const emit = defineEmits(['videoEnded']);
 
 const player = ref(null);
 const root = ref(null);
@@ -74,6 +79,20 @@ function destroy() {
 function initPlayer() {
     if (canBeInit()) {
         player.value = videojs(id.value, defaultConfig.value);
+
+        player.value.one('ended', function () {
+            console.log('video ended');
+            if (props.autoPlay) {
+                console.log(
+                    'auto play is enabled ask parent to give me new video source'
+                );
+
+                destroy();
+                createDom();
+
+                emit('videoEnded');
+            }
+        });
     }
 }
 

@@ -16,8 +16,22 @@
                         &times;
                     </button>
                 </div>
+
+                <div class="flex justify-center">
+                    <div class="mr-3">
+                        <p class="text-sm">auto play</p>
+                    </div>
+                    <ToggleButton
+                        storage="video-auto-play"
+                        @changed="toggleChanged"
+                    />
+                </div>
                 <div id="video-container" class="mt-5 sm:mt-6 flex-1">
-                    <VideoPlayer :source="src" />
+                    <VideoPlayer
+                        :source="src"
+                        :auto-play="autoPlay"
+                        @video-ended="onVideoEnded"
+                    />
                 </div>
             </div>
         </div>
@@ -28,6 +42,7 @@
 import { VueFinalModal } from 'vue-final-modal';
 import VideoPlayer from '@/views/video/VideoPlayer.vue';
 import { ref, watch } from 'vue';
+import ToggleButton from '@/components/forms/ToggleButton.vue';
 
 const props = defineProps({
     source: {
@@ -36,7 +51,9 @@ const props = defineProps({
 });
 
 const show = ref(false);
+const autoPlay = ref(localStorage.getItem('video-auto-play') === 'true');
 const src = ref(props.source);
+const emit = defineEmits(['nextVideo']);
 
 watch(
     () => props.source,
@@ -57,6 +74,14 @@ function onClickAway(e) {
 function close() {
     show.value = false;
     src.value = null;
+}
+
+function toggleChanged(value) {
+    autoPlay.value = value;
+}
+
+function onVideoEnded() {
+    emit('nextVideo');
 }
 </script>
 
