@@ -1,5 +1,4 @@
 <template>
-    <!--    {{ toggle }}-->
     <button
         type="button"
         @click.prevent="change"

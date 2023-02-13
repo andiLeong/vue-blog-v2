@@ -81,15 +81,9 @@ function initPlayer() {
         player.value = videojs(id.value, defaultConfig.value);
 
         player.value.one('ended', function () {
-            console.log('video ended');
             if (props.autoPlay) {
-                console.log(
-                    'auto play is enabled ask parent to give me new video source'
-                );
-
                 destroy();
                 createDom();
-
                 emit('videoEnded');
             }
         });

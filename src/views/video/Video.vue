@@ -78,8 +78,6 @@ const selectedVideo = ref(null);
 const selectedVideoId = ref(null);
 
 function openModal(video) {
-    // selectedVideo.value = null;
-    // selectedVideoId.value = null;
     selectedVideo.value = appendUuid(video.url);
     selectedVideoId.value = video.id;
 }
@@ -126,8 +124,6 @@ function prepareNextVideo() {
         selectedVideo.value = null;
         selectedVideoId.value = null;
     }
-
-    // selectedVideo.value = 'https://www.w3schools.com/html/mov_bbb.mp4';
 }
 
 function appendUuid(url) {
