@@ -128,6 +128,7 @@
                     :educations="resume.educations"
                     @remove="remove"
                     @add="add"
+                    :should-required="!resume.ignoreEducation"
                 />
             </div>
 
@@ -228,6 +229,16 @@ onMounted(() => {
 });
 
 function store() {
+    resume.value.educations = resume.value.educations.filter((value) => {
+        return (
+            value.from !== '' ||
+            value.to !== '' ||
+            value.school !== '' ||
+            value.degree !== '' ||
+            value.about !== ''
+        );
+    });
+
     localStorage.setItem('resume', JSON.stringify(resume.value));
     router.push('resume');
 }

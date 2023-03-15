@@ -7,7 +7,7 @@
                 <input
                     v-model="education.degree"
                     placeholder="Degree"
-                    required
+                    :required="shouldRequired"
                     type="text"
                     class="form-input"
                 />
@@ -18,7 +18,7 @@
                 <input
                     v-model="education.from"
                     placeholder="Starts which year and month"
-                    required
+                    :required="shouldRequired"
                     type="text"
                     class="form-input"
                 />
@@ -29,7 +29,7 @@
                 <input
                     v-model="education.to"
                     placeholder="Ended in which year"
-                    required
+                    :required="shouldRequired"
                     type="text"
                     class="form-input"
                 />
@@ -40,7 +40,7 @@
                 <input
                     v-model="education.school"
                     placeholder="Schools's name"
-                    required
+                    :required="shouldRequired"
                     type="text"
                     class="form-input"
                 />
@@ -53,7 +53,7 @@
                     @update:body="(newValue) => (education.about = newValue)"
                     class="js-textarea form-textarea w-full overflow-hidden"
                     placeholder="How you doing in school"
-                    required
+                    :required="shouldRequired"
                     rows="3"
                 />
             </div>
@@ -74,7 +74,7 @@ import AddButton from '@/components/resume/AddButton.vue';
 import RemoveButton from '@/components/resume/RemoveButton.vue';
 import AppTextarea from '@/components/AppTextarea.vue';
 
-defineProps(['educations']);
+defineProps(['educations', 'shouldRequired']);
 
 defineEmits(['add', 'remove']);
 </script>
